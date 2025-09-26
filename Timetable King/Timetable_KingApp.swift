@@ -6,6 +6,10 @@ struct Timetable_KingApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
+            Habit.self,
+            Weekday.self,
+            WeekdayHabit.self,
+            WeekdayHabitResult.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
