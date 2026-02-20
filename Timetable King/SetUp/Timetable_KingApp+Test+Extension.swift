@@ -3,8 +3,8 @@ import SwiftData
 
 extension Timetable_KingApp {
     func setUpTestData(into context: ModelContext) {
-        let sport = Habit(title: "Sport")
-        let trash = Habit(title: "Müll raus")
+        let sport = Habit(title: "Training")
+        let trash = Habit(title: "Bring trash out")
         context.insert(sport)
         context.insert(trash)
 

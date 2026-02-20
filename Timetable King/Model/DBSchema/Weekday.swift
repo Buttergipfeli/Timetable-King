@@ -1,3 +1,5 @@
+import Foundation
+
 enum Weekday: String, Codable, CaseIterable, Sendable {
     case monday, tuesday, wednesday, thursday, friday, saturday, sunday
     
@@ -13,7 +15,7 @@ enum Weekday: String, Codable, CaseIterable, Sendable {
         }
     }
     
-    var label: String {
-        "\(rawValue.firstLetterUppercased.prefix(2))."
+    var shortLabel: String {
+        "weekday.\(rawValue).short".localized
     }
 }

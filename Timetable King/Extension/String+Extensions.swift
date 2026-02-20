@@ -1,5 +1,7 @@
+import Foundation
+
 extension String {
-    var firstLetterUppercased: String {
-        prefix(1).uppercased() + dropFirst()
+    var localized: String {
+        String(localized: LocalizationValue(self))
     }
 }
