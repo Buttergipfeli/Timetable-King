@@ -59,7 +59,6 @@ struct TimetableKingAppView: View {
                     .glassEffect(.clear, in: .rect(cornerRadius: .cardCornerRadius))
                     .background(RoundedRectangle(cornerRadius: .cardCornerRadius).fill(.orange))
                 }
-//                .glassEffect(.clear.tint(.orange), in: .rect(cornerRadius: .cardCornerRadius))
                 .matchedTransitionSource(id: "Card", in: cardNamespace)
                 .fullScreenCover(isPresented: $isPresented) {
                     Color.green

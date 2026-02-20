@@ -34,9 +34,9 @@ final class TimetableKingAppViewModel: ModelContextInjectable {
                 TimetableEntry(
                     id: habit.persistentModelID,
                     title: habit.habit.title,
-                    weekdayLabel: Self.weekdayLabel(for: habit.weekday),
+                    weekdayLabel: habit.weekday.weekdayLabel,
                     time: habit.timeString,
-                    weekdaySortIndex: Self.weekdaySortIndex(for: habit.weekday)
+                    weekdaySortIndex: habit.weekday.weekdaySortIndex
                 )
             }
             .sorted { lhs, rhs in
@@ -45,29 +45,5 @@ final class TimetableKingAppViewModel: ModelContextInjectable {
                 }
                 return lhs.weekdaySortIndex < rhs.weekdaySortIndex
             }
-    }
-
-    private static func weekdaySortIndex(for weekday: Weekday) -> Int {
-        switch weekday {
-        case .monday: 1
-        case .tuesday: 2
-        case .wednesday: 3
-        case .thursday: 4
-        case .friday: 5
-        case .saturday: 6
-        case .sunday: 7
-        }
-    }
-
-    private static func weekdayLabel(for weekday: Weekday) -> String {
-        switch weekday {
-        case .monday: "Mo"
-        case .tuesday: "Di"
-        case .wednesday: "Mi"
-        case .thursday: "Do"
-        case .friday: "Fr"
-        case .saturday: "Sa"
-        case .sunday: "So"
-        }
     }
 }
