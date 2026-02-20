@@ -13,6 +13,7 @@ struct CardView: View {
         } label: {
             VStack(alignment: .leading) {
                 CardTitleView(title: "timetable.card.title")
+                    .padding([.horizontal, .top], .cardPadding)
                 
                 ScrollView {
                     VStack(spacing: .entryListSpacing) {
@@ -24,11 +25,11 @@ struct CardView: View {
                             }
                         }
                     }
+                    .padding([.horizontal], .cardPadding)
                 }
                 .contentMargins(.bottom, .cardPadding)
                 .frame(height: .entriesScrollHeight)
             }
-            .padding([.horizontal, .top], .cardPadding)
             .glassEffect(.clear, in: .rect(cornerRadius: .cardCornerRadius))
             .background(RoundedRectangle(cornerRadius: .cardCornerRadius).fill(.orange))
         }
