@@ -25,6 +25,7 @@ struct CardView: View {
                         }
                     }
                 }
+                .contentMargins(.bottom, .cardPadding)
                 .frame(height: .entriesScrollHeight)
             }
             .padding([.horizontal, .top], .cardPadding)

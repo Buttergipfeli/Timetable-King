@@ -2,7 +2,6 @@ import SwiftUI
 import SwiftData
 
 struct TimetableKingAppView: View {
-    @Environment(\.modelContext) private var modelContext
     @State private var viewModel = TimetableKingAppViewModel()
     
     var body: some View {
@@ -12,9 +11,7 @@ struct TimetableKingAppView: View {
             }
             .padding()
         }
-        .task {
-            viewModel.injectModelContext(modelContext)
-        }
+        .injectModelContext(in: viewModel)
     }
 }
 

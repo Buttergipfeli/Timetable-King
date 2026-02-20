@@ -1,6 +1,12 @@
 import SwiftData
 
-@MainActor
-protocol ModelContextInjectable: AnyObject {
-    func injectModelContext(_ modelContext: ModelContext)
+class ModelContextInjectable: AnyObject {
+    @ObservationIgnored var modelContext: ModelContext?
+    
+    func injectModelContext(_ modelContext: ModelContext) {
+        self.modelContext = modelContext
+        refresh()
+    }
+    
+    func refresh() { }
 }
