@@ -1,7 +1,7 @@
 enum Weekday: String, Codable, CaseIterable, Sendable {
     case monday, tuesday, wednesday, thursday, friday, saturday, sunday
     
-    var weekdaySortIndex: Int {
+    var sortIndex: Int {
         switch self {
         case .monday: 1
         case .tuesday: 2
@@ -13,7 +13,7 @@ enum Weekday: String, Codable, CaseIterable, Sendable {
         }
     }
     
-    var weekdayLabel: String {
+    var label: String {
         "\(rawValue.firstLetterUppercased.prefix(2))."
     }
 }

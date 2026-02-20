@@ -4,15 +4,7 @@ import SwiftData
 @MainActor
 @Observable
 final class TimetableKingAppViewModel: ModelContextInjectable {
-    struct TimetableEntry: Identifiable {
-        let id: PersistentIdentifier
-        let title: String
-        let weekdayLabel: String
-        let time: String
-        let weekdaySortIndex: Int
-    }
-
-    private(set) var entries: [TimetableEntry] = []
+    private(set) var entries: [WeekdayHabit] = []
 
     @ObservationIgnored private var modelContext: ModelContext?
 
@@ -29,21 +21,11 @@ final class TimetableKingAppViewModel: ModelContextInjectable {
     private func refresh(from context: ModelContext) {
         guard let habits = try? context.fetch(FetchDescriptor<WeekdayHabit>()) else { return }
         
-        entries = habits
-            .map { habit in
-                TimetableEntry(
-                    id: habit.persistentModelID,
-                    title: habit.habit.title,
-                    weekdayLabel: habit.weekday.weekdayLabel,
-                    time: habit.timeString,
-                    weekdaySortIndex: habit.weekday.weekdaySortIndex
-                )
+        entries = habits.sorted { lhs, rhs in
+            if lhs.weekday.sortIndex == rhs.weekday.sortIndex {
+                return lhs.timeString < rhs.timeString
             }
-            .sorted { lhs, rhs in
-                if lhs.weekdaySortIndex == rhs.weekdaySortIndex {
-                    return lhs.time < rhs.time
-                }
-                return lhs.weekdaySortIndex < rhs.weekdaySortIndex
-            }
+            return lhs.weekday.sortIndex < rhs.weekday.sortIndex
+        }
     }
 }

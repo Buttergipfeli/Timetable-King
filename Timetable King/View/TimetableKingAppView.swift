@@ -29,17 +29,17 @@ struct TimetableKingAppView: View {
                                     ForEach(viewModel.entries) { entry in
                                         HStack(spacing: 12) {
                                             VStack(alignment: .leading, spacing: 2) {
-                                                Text(entry.title)
+                                                Text(entry.habit.title)
                                                     .font(.subheadline.weight(.semibold))
                                                     .foregroundStyle(.primary)
-                                                Text(entry.weekdayLabel)
+                                                Text(entry.weekday.label)
                                                     .font(.caption)
                                                     .foregroundStyle(.secondary)
                                             }
 
                                             Spacer(minLength: 8)
 
-                                            Text(entry.time)
+                                            Text(entry.timeString)
                                                 .font(.caption.monospacedDigit())
                                                 .foregroundStyle(.primary)
                                                 .padding(.horizontal, 8)
