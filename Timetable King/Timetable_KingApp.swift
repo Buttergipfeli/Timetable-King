@@ -6,11 +6,16 @@ struct Timetable_KingApp: App {
     let container: ModelContainer
     
     init() {
-        container = Timetable_KingApp.setUpModelContainer()
+#if DEBUG
+        container = Timetable_KingApp.setUpModelContainer(isStoredInMemoryOnly: true)
+#else
+        container = Timetable_KingApp.setUpModelContainer(isStoredInMemoryOnly: false)
+#endif
         
-        #if DEBUG
+#if DEBUG
         setUpTestData(into: container.mainContext)
-        #endif
+#endif
+        ModelContainerService.initialize(container: container)
     }
     
     var body: some Scene {

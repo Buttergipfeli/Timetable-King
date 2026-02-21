@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct TimetableKingAppView: View {
-    @State private var viewModel = TimetableKingAppViewModel()
+    @State private var viewModel = TimetableKingAppViewModel(modelContainerService: .shared)
     
     var body: some View {
         ScrollView {
@@ -11,7 +11,6 @@ struct TimetableKingAppView: View {
             }
             .padding()
         }
-        .injectModelContext(in: viewModel)
     }
 }
 

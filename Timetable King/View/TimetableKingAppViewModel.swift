@@ -3,11 +3,18 @@ import SwiftData
 
 @MainActor
 @Observable
-final class TimetableKingAppViewModel: ModelContextInjectable {
+final class TimetableKingAppViewModel {
+    private let modelContainerService: ModelContainerService
+    
     private(set) var entries: [WeekdayHabit] = []
+    
+    init(modelContainerService: ModelContainerService) {
+        self.modelContainerService = modelContainerService
+        load()
+    }
 
-    override func refresh() {
-        guard let modelContext, let habits = try? modelContext.fetch(FetchDescriptor<WeekdayHabit>()) else { return }
+    func load() {
+        guard let habits = try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()) else { return }
         
         entries = habits.sorted { lhs, rhs in
             if lhs.weekday.sortIndex == rhs.weekday.sortIndex {

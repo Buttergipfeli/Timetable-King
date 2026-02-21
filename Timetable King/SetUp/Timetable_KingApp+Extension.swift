@@ -1,14 +1,14 @@
 import SwiftData
 
 extension Timetable_KingApp {
-    static func setUpModelContainer() -> ModelContainer {
+    static func setUpModelContainer(isStoredInMemoryOnly: Bool) -> ModelContainer {
         let schema = Schema([
             Item.self,
             Habit.self,
             WeekdayHabit.self,
             WeekdayHabitResult.self
         ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: isStoredInMemoryOnly)
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
