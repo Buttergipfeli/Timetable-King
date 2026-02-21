@@ -6,8 +6,8 @@ import SwiftData
 final class TimetableKingAppViewModel {
     private let modelContainerService: ModelContainerService
     
+    private(set) var weekdayHabits: [WeekdayHabit] = []
     private(set) var results: [WeekdayHabitResult] = []
-    private(set) var habits: [WeekdayHabit] = []
     
     init(modelContainerService: ModelContainerService) {
         self.modelContainerService = modelContainerService
@@ -15,6 +15,11 @@ final class TimetableKingAppViewModel {
     }
 
     func load() {
+        loadWeekdayHabits()
+        fetchAllResultsForCurrentWeek()
+    }
+
+    private func fetchAllResultsForCurrentWeek() {
         guard let weekInterval = Calendar.current.dateInterval(of: .weekOfYear, for: Date()) else { return }
         let weekStart = weekInterval.start
         let nextWeekStart = weekInterval.end
@@ -29,8 +34,8 @@ final class TimetableKingAppViewModel {
         results = fetchedResults.sorted(using: WeekdayHabitResultComparator())
     }
     
-    private func loadHabits() {
-        guard let fetchedHabits = try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()) else { return }
-        habits = fetchedHabits
+    private func loadWeekdayHabits() {
+        guard let fetchedWeekdayHabits = try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()) else { return }
+        weekdayHabits = fetchedWeekdayHabits
     }
 }

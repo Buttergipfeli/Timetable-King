@@ -1,11 +1,12 @@
 import SwiftUI
 
-struct CardView: View {
+struct CardView<Content: View>: View {
     @State private var isPresented: Bool = false
     
     @Namespace private var cardNamespace
     
-    let entries: [WeekdayHabitResult]
+    let isEmpty: Bool
+    let content: () -> Content
     
     var body: some View {
         Button {
@@ -17,12 +18,10 @@ struct CardView: View {
                 
                 ScrollView {
                     VStack(spacing: .entryListSpacing) {
-                        if entries.isEmpty {
+                        if isEmpty {
                             CardEmptyView(errorMessage: "timetable.card.empty")
                         } else {
-                            ForEach(entries) { entry in
-                                CardEntryView(entry: entry)
-                            }
+                            content()
                         }
                     }
                     .padding([.horizontal], .cardPadding)

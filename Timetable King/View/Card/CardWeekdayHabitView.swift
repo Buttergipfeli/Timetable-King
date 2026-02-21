@@ -1,11 +1,11 @@
 import SwiftUI
 
-struct CardEntryTodoView: View {
-    let entry: WeekdayHabitResult
+struct CardWeekdayHabitView: View {
+    let weekdayHabit: WeekdayHabit
     
     var body: some View {
         HStack(spacing: .entryRowSpacing) {
-            Text(entry.weekdayHabit.timeString)
+            Text(weekdayHabit.timeString)
                 .font(.caption.monospacedDigit())
                 .foregroundStyle(.primary)
                 .padding(.horizontal, .entryTimeHorizontalPadding)
@@ -14,7 +14,7 @@ struct CardEntryTodoView: View {
             
             Divider()
                         
-            Text(entry.weekdayHabit.habit.title)
+            Text(weekdayHabit.habit.title)
                 .foregroundStyle(.primary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)

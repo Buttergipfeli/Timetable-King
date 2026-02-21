@@ -7,11 +7,19 @@ struct TimetableKingAppView: View {
     var body: some View {
         ScrollView {
             VStack {
-                CardView(entries: viewModel.results)
+                CardView(isEmpty: viewModel.weekdayHabits.isEmpty) {
+                    ForEach(viewModel.weekdayHabits) { weekdayHabit in
+                        CardWeekdayHabitView(weekdayHabit: weekdayHabit)
+                    }
+                }
             }
-            .padding()
+            .padding(.containerPadding)
         }
     }
+}
+
+private extension CGFloat {
+    static let containerPadding = 16.0
 }
 
 #Preview {
