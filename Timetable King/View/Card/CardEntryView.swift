@@ -1,21 +1,11 @@
 import SwiftUI
 
-struct CardWeekdayHabitView: View {
-    let weekdayHabit: WeekdayHabit
+struct CardEntryView<Content: View>: View {
+    @ViewBuilder let content: () -> Content
     
     var body: some View {
         HStack(spacing: .entryRowSpacing) {
-            Text(weekdayHabit.timeString)
-                .font(.caption.monospacedDigit())
-                .foregroundStyle(.primary)
-                .padding(.horizontal, .entryTimeHorizontalPadding)
-                .padding(.vertical, .entryTimeVerticalPadding)
-                .background(.thinMaterial, in: Capsule())
-            
-            Divider()
-                        
-            Text(weekdayHabit.habit.title)
-                .foregroundStyle(.primary)
+            content()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, .entryHorizontalPadding)
@@ -29,8 +19,6 @@ struct CardWeekdayHabitView: View {
 
 private extension CGFloat {
     static let entryRowSpacing = 12.0
-    static let entryTimeHorizontalPadding = 8.0
-    static let entryTimeVerticalPadding = 4.0
     static let entryHorizontalPadding = 10.0
     static let entryVerticalPadding = 8.0
     static let entryCornerRadius = 12.0

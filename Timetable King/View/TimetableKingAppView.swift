@@ -9,7 +9,7 @@ struct TimetableKingAppView: View {
             VStack {
                 CardView(isEmpty: viewModel.weekdayHabits.isEmpty) {
                     ForEach(viewModel.weekdayHabits) { weekdayHabit in
-                        CardWeekdayHabitView(weekdayHabit: weekdayHabit)
+                        CardWeekdayHabitEntryView(weekdayHabit: weekdayHabit)
                     }
                 }
             }
