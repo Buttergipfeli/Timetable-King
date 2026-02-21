@@ -8,13 +8,11 @@ struct Timetable_KingApp: App {
     init() {
 #if DEBUG
         container = Timetable_KingApp.setUpModelContainer(isStoredInMemoryOnly: true)
+        setUpTestData(into: container.mainContext)
 #else
         container = Timetable_KingApp.setUpModelContainer(isStoredInMemoryOnly: false)
 #endif
         
-#if DEBUG
-        setUpTestData(into: container.mainContext)
-#endif
         ModelContainerService.initialize(container: container)
     }
     

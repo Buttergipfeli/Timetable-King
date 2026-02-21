@@ -5,7 +5,7 @@ struct CardView: View {
     
     @Namespace private var cardNamespace
     
-    let entries: [WeekdayHabit]
+    let entries: [WeekdayHabitResult]
     
     var body: some View {
         Button {

@@ -7,7 +7,7 @@ struct TimetableKingAppView: View {
     var body: some View {
         ScrollView {
             VStack {
-                CardView(entries: viewModel.entries)
+                CardView(entries: viewModel.results)
             }
             .padding()
         }

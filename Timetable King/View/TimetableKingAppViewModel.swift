@@ -6,7 +6,8 @@ import SwiftData
 final class TimetableKingAppViewModel {
     private let modelContainerService: ModelContainerService
     
-    private(set) var entries: [WeekdayHabit] = []
+    private(set) var results: [WeekdayHabitResult] = []
+    private(set) var habits: [WeekdayHabit] = []
     
     init(modelContainerService: ModelContainerService) {
         self.modelContainerService = modelContainerService
@@ -14,13 +15,37 @@ final class TimetableKingAppViewModel {
     }
 
     func load() {
-        guard let habits = try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()) else { return }
+        var calendar = Calendar(identifier: .iso8601)
+        calendar.timeZone = .current
         
-        entries = habits.sorted { lhs, rhs in
-            if lhs.weekday.sortIndex == rhs.weekday.sortIndex {
-                return lhs.timeString < rhs.timeString
+        guard let weekInterval = calendar.dateInterval(of: .weekOfYear, for: Date()) else { return }
+        let weekStart = weekInterval.start
+        let nextWeekStart = weekInterval.end
+        
+        let descriptor = FetchDescriptor<WeekdayHabitResult>(
+            predicate: #Predicate<WeekdayHabitResult> { result in
+                result.day >= weekStart && result.day < nextWeekStart
             }
-            return lhs.weekday.sortIndex < rhs.weekday.sortIndex
+        )
+        
+        guard let fetchedResults = try? modelContainerService.context.fetch(descriptor) else { return }
+        
+        results = fetchedResults.sorted { lhs, rhs in
+            if lhs.day != rhs.day {
+                return lhs.day < rhs.day
+            }
+            if lhs.weekdayHabit.hour != rhs.weekdayHabit.hour {
+                return lhs.weekdayHabit.hour < rhs.weekdayHabit.hour
+            }
+            if lhs.weekdayHabit.minute != rhs.weekdayHabit.minute {
+                return lhs.weekdayHabit.minute < rhs.weekdayHabit.minute
+            }
+            return lhs.weekdayHabit.habit.title < rhs.weekdayHabit.habit.title
         }
+    }
+    
+    private func loadHabits() {
+        guard let fetchedHabits = try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()) else { return }
+        habits = fetchedHabits
     }
 }
