@@ -18,7 +18,7 @@ struct CardWeekdayHabitResultsView: View {
             
             Divider()
             
-            Text("\(completedResultsCount) / \(resultsForWeekday.results.count) Done")
+            Text("timetable.weekday.results.done".localized(completedResultsCount, resultsForWeekday.results.count))
                 .foregroundStyle(.primary)
         }
     }
