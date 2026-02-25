@@ -12,8 +12,17 @@ struct TimetableKingAppView: View {
                         CardWeekdayHabitEntryView(weekdayHabit: weekdayHabit)
                     }
                 }
+                
+                CardView(isEmpty: viewModel.resultsByWeekday.isEmpty) {
+                    ForEach(viewModel.resultsByWeekday) { resultsForWeekday in
+                        CardWeekdayHabitResultsView(resultsForWeekday: resultsForWeekday)
+                    }
+                }
             }
             .padding(.containerPadding)
+        }
+        .task {
+            viewModel.load()
         }
     }
 }
