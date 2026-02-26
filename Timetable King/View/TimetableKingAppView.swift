@@ -7,15 +7,15 @@ struct TimetableKingAppView: View {
     var body: some View {
         ScrollView {
             VStack {
-                CardView(isEmpty: viewModel.weekdayHabits.isEmpty) {
-                    ForEach(viewModel.weekdayHabits) { weekdayHabit in
+                CardView(isEmpty: viewModel.todayHabits.isEmpty) {
+                    ForEach(viewModel.todayHabits) { weekdayHabit in
                         CardWeekdayHabitEntryView(weekdayHabit: weekdayHabit)
                     }
                 }
                 
-                CardView(isEmpty: viewModel.resultsByWeekday.isEmpty) {
-                    ForEach(viewModel.resultsByWeekday) { resultsForWeekday in
-                        CardWeekdayHabitResultsView(resultsForWeekday: resultsForWeekday)
+                CardView(isEmpty: viewModel.nonEmptyHabitablesForWeekdays.isEmpty) {
+                    ForEach(viewModel.nonEmptyHabitablesForWeekdays) { habitablesForWeekday in
+                        CardWeekdayHabitResultsView(habitablesForWeekday: habitablesForWeekday)
                     }
                 }
             }

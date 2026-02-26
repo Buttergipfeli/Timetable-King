@@ -1,13 +1,13 @@
 import Foundation
 
-struct WeekdayHabitResultComparator: SortComparator {
+struct WeekdayHabitableComparator<Habitable: WeekdayHabitable>: SortComparator {
     var order: SortOrder = .forward
     
-    func compare(_ lhs: WeekdayHabitResult, _ rhs: WeekdayHabitResult) -> ComparisonResult {
+    func compare(_ lhs: Habitable, _ rhs: Habitable) -> ComparisonResult {
         let result: ComparisonResult
         
-        if lhs.day != rhs.day {
-            result = lhs.day < rhs.day ? .orderedAscending : .orderedDescending
+        if lhs.weekdayHabit.weekday != rhs.weekdayHabit.weekday {
+            result = lhs.weekdayHabit.weekday.sortIndex < rhs.weekdayHabit.weekday.sortIndex ? .orderedAscending : .orderedDescending
         } else if lhs.weekdayHabit.hour != rhs.weekdayHabit.hour {
             result = lhs.weekdayHabit.hour < rhs.weekdayHabit.hour ? .orderedAscending : .orderedDescending
         } else if lhs.weekdayHabit.minute != rhs.weekdayHabit.minute {

@@ -6,48 +6,52 @@ import SwiftData
 final class TimetableKingAppViewModel {
     private let modelContainerService: ModelContainerService
     
-    private(set) var weekdayHabits: [WeekdayHabit] = []
-    private(set) var resultsByWeekday: [WeekdayHabitResultsByWeekday] = []
+    private(set) var habitablesForWeekdays = [PairedWeekdayHabitablesByWeekday]()
+    
+    var nonEmptyHabitablesForWeekdays: [PairedWeekdayHabitablesByWeekday] {
+        habitablesForWeekdays.filter(\.habits.isEmpty.not)
+    }
+    
+    var todayHabits: [WeekdayHabit] {
+        habitablesForWeekdays.first(where: \.weekday.isToday)?.habits ?? []
+    }
     
     init(modelContainerService: ModelContainerService) {
         self.modelContainerService = modelContainerService
     }
 
     func load() {
-        loadWeekdayHabits()
-        fetchAllResultsForCurrentWeekByWeekday()
+        guard let fetchedWeekdayHabits = try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()),
+        let fetchWeekdayHabitResults = fetchWeekdayHabitResultsForCurrentWeek() else { return }
+        
+        let weekdayHabitablesByWeekdayForHabits = convertHabitableForCurrentWeekToHabitableByWeekday(weekdayHabitables: fetchedWeekdayHabits)
+        let weekdayHabitablesByWeekdayForResults = convertHabitableForCurrentWeekToHabitableByWeekday(weekdayHabitables: fetchWeekdayHabitResults)
+        
+        habitablesForWeekdays = PairedWeekdayHabitablesByWeekdays(
+            habits: weekdayHabitablesByWeekdayForHabits,
+            results: weekdayHabitablesByWeekdayForResults
+        ).zipSortedByWeekdays()
     }
 
-    private func fetchAllResultsForCurrentWeekByWeekday() {
-        guard let fetchedResultsForCurrentWeek = fetchWeekdayHabitResultsForCurrentWeek() else { return }
-        resultsByWeekday = fetchedResultsForCurrentWeek
-            .sorted(using: WeekdayHabitResultComparator())
-            .reduce([WeekdayHabitResultsByWeekday]()) { resultsByWeekday, result in
-                var newResultsByWeekday = resultsByWeekday
-                let previousResult = resultsByWeekday.last
+    private func convertHabitableForCurrentWeekToHabitableByWeekday<Habitable: WeekdayHabitable>(
+        weekdayHabitables: [Habitable]
+    ) -> [WeekdayHabitablesByWeekday<Habitable>] {
+        weekdayHabitables
+            .sorted(using: WeekdayHabitableComparator())
+            .reduce([WeekdayHabitablesByWeekday]()) { habitablesByWeekday, habitable in
+                var newHabitablesByWeekday = habitablesByWeekday
+                let previousHabit = habitablesByWeekday.last
                 
-                if previousResult?.weekday == result.weekdayHabit.weekday {
-                    let resultsForWeekday = newResultsByWeekday[newResultsByWeekday.count - 1]
-                    newResultsByWeekday[newResultsByWeekday.count - 1] = WeekdayHabitResultsByWeekday(
-                        weekday: result.weekdayHabit.weekday,
-                        results: resultsForWeekday.results + [result]
-                    )
-                    
-                    return newResultsByWeekday
+                if previousHabit?.weekday == habitable.weekdayHabit.weekday {
+                    let weekdayHabitablesForWeekday = newHabitablesByWeekday[newHabitablesByWeekday.count - 1]
+                    newHabitablesByWeekday[newHabitablesByWeekday.count - 1] = weekdayHabitablesForWeekday.appending(habitable)
                 } else {
-                    newResultsByWeekday.append(WeekdayHabitResultsByWeekday(
-                        weekday: result.weekdayHabit.weekday,
-                        results: [result]
-                    ))
-                    
-                    return newResultsByWeekday
+                    let weekdayHabitablesForWeekday = WeekdayHabitablesByWeekday(weekday: habitable.weekdayHabit.weekday, habitables: [habitable])
+                    newHabitablesByWeekday.append(weekdayHabitablesForWeekday)
                 }
+                
+                return newHabitablesByWeekday
             }
-    }
-    
-    private func loadWeekdayHabits() {
-        guard let fetchedWeekdayHabits = try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()) else { return }
-        weekdayHabits = fetchedWeekdayHabits
     }
     
     private func fetchWeekdayHabitResultsForCurrentWeek() -> [WeekdayHabitResult]? {

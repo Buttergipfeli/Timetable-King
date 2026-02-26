@@ -35,3 +35,9 @@ final class WeekdayHabit {
         String(format: "%02d:%02d", hour, minute)
     }
 }
+
+extension WeekdayHabit: WeekdayHabitable {
+    var weekdayHabit: WeekdayHabit {
+        self
+    }
+}

@@ -20,3 +20,5 @@ final class WeekdayHabitResult {
         status == .done
     }
 }
+
+extension WeekdayHabitResult: WeekdayHabitable { }
