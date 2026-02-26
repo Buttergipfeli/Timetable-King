@@ -18,6 +18,12 @@ struct TimetableKingAppView: View {
                         CardWeekdayHabitResultsView(weekdayDigest: weekdayDigest)
                     }
                 }
+                
+                CardView(isEmpty: viewModel.activeWeekdayDigests.isEmpty) {
+                    ForEach(viewModel.activeWeekdayDigests) { weekdayDigest in
+                        CardWeeklyTasksEntryView(weekday: weekdayDigest.weekday, tasksForWeekdayCount: weekdayDigest.habits.count)
+                    }
+                }
             }
             .padding(.containerPadding)
         }
