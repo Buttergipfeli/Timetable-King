@@ -12,6 +12,18 @@ struct TimetableKingAppView: View {
                         CardWeekdayHabitEntryView(weekdayHabit: weekdayHabit)
                     }
                 }
+//                .matchedTransitionSource(id: transitionID, in: navigationTransitionNamespace)
+//                .fullScreenCover(isPresented: $isPresented) {
+//                    Color.green
+//                        .overlay {
+//                            Button {
+//                                isPresented = false
+//                            } label: {
+//                                Text("timetable.transition.title")
+//                            }
+//                        }
+//                        .navigationTransition(id: transitionID, in: navigationTransitionNamespace)
+//                }
                 
                 CardView(isEmpty: viewModel.activeWeekdayDigests.isEmpty, title: "timetable.card.weekly.summary") {
                     ForEach(viewModel.activeWeekdayDigests) { weekdayDigest in

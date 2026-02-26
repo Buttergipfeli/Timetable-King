@@ -1,23 +1,5 @@
 import SwiftUI
 
-private struct NavigationTransitionScreenViewModifier<HashID: Hashable, PageView: View>: ViewModifier {
-    @Namespace private var transitionNamespace
-    
-    @Binding var isPresented: Bool
-    
-    let transitionID: HashID
-    let pageView: () -> PageView
-    
-    func body(content: Content) -> some View {
-        content
-            .matchedTransitionSource(id: transitionID, in: transitionNamespace)
-            .fullScreenCover(isPresented: $isPresented) {
-                pageView()
-                    .navigationTransition(.zoom(sourceID: transitionID, in: transitionNamespace))
-            }
-    }
-}
-
 private struct NavigationZoomTransitionViewModifier: ViewModifier {
     let transitionID: String
     let namespace: Namespace.ID?

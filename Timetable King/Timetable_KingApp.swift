@@ -3,6 +3,8 @@ import SwiftData
 
 @main
 struct Timetable_KingApp: App {
+    @Namespace private var namespace
+    
     let container: ModelContainer
     
     init() {
@@ -20,6 +22,7 @@ struct Timetable_KingApp: App {
         WindowGroup {
             TimetableKingAppView()
         }
+        .environment(\.namespace, namespace)
         .modelContainer(container)
     }
 }
