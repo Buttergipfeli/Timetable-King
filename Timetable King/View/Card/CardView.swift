@@ -6,6 +6,7 @@ struct CardView<Content: View>: View {
     @Namespace private var cardNamespace
     
     let isEmpty: Bool
+    let title: LocalizedStringKey
     let content: () -> Content
     
     var body: some View {
@@ -13,7 +14,7 @@ struct CardView<Content: View>: View {
             isPresented = true
         } label: {
             VStack(alignment: .leading) {
-                CardTitleView(title: "timetable.card.title")
+                CardTitleView(title: title)
                     .padding([.horizontal, .top], .cardPadding)
                 
                 ScrollView {

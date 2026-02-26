@@ -58,20 +58,56 @@
         }
       }
     },
-    "timetable.card.title" : {
-      "comment" : "Title displayed on the timetable overview card.",
+    "timetable.card.today.tasks" : {
+      "comment" : "Title for the today tasks card.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stundenplan"
+            "value" : "Heutige Aufgaben"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Timetable"
+            "value" : "Upcoming tasks for today"
+          }
+        }
+      }
+    },
+    "timetable.card.weekly.summary" : {
+      "comment" : "Title for the weekly summary card.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wöchentliche Übersicht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weekly summary"
+          }
+        }
+      }
+    },
+    "timetable.card.my.weekly.tasks" : {
+      "comment" : "Title for the card with my weekly tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meine wöchentlichen Aufgaben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My weekly tasks"
           }
         }
       }
