@@ -1,4 +1,4 @@
-struct PairedWeekdayHabitablesByWeekday {
+struct WeekdayDigest {
     let weekday: Weekday
     let habits: [WeekdayHabit]
     let results: [WeekdayHabitResult]
@@ -8,7 +8,7 @@ struct PairedWeekdayHabitablesByWeekday {
     }
 }
 
-extension PairedWeekdayHabitablesByWeekday: Identifiable {
+extension WeekdayDigest: Identifiable {
     var id: Weekday {
         weekday
     }

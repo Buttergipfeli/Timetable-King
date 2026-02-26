@@ -1,15 +1,15 @@
 import SwiftUI
 
 struct CardWeekdayHabitResultsView: View {
-    let habitablesForWeekday: PairedWeekdayHabitablesByWeekday
+    let weekdayDigest: WeekdayDigest
     
     private var completedResultsCount: Int {
-        habitablesForWeekday.results.count(where: \.isDone)
+        weekdayDigest.results.count(where: \.isDone)
     }
     
     var body: some View {
         CardEntryView {
-            Text(habitablesForWeekday.weekday.shortLabel)
+            Text(weekdayDigest.weekday.shortLabel)
                 .font(.caption.monospacedDigit())
                 .foregroundStyle(.primary)
                 .padding(.horizontal, .entryTimeHorizontalPadding)
@@ -18,7 +18,7 @@ struct CardWeekdayHabitResultsView: View {
             
             Divider()
             
-            Text("timetable.weekday.results.done".localized(completedResultsCount, habitablesForWeekday.habits.count))
+            Text("timetable.weekday.results.done".localized(completedResultsCount, weekdayDigest.habits.count))
                 .foregroundStyle(.primary)
         }
     }

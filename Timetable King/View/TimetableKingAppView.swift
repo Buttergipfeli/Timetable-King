@@ -13,9 +13,9 @@ struct TimetableKingAppView: View {
                     }
                 }
                 
-                CardView(isEmpty: viewModel.nonEmptyHabitablesForWeekdays.isEmpty) {
-                    ForEach(viewModel.nonEmptyHabitablesForWeekdays) { habitablesForWeekday in
-                        CardWeekdayHabitResultsView(habitablesForWeekday: habitablesForWeekday)
+                CardView(isEmpty: viewModel.activeWeekdayDigests.isEmpty) {
+                    ForEach(viewModel.activeWeekdayDigests) { weekdayDigest in
+                        CardWeekdayHabitResultsView(weekdayDigest: weekdayDigest)
                     }
                 }
             }
