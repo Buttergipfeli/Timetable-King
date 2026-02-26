@@ -7,9 +7,9 @@ final class WeekdayHabitResult {
     
     var day: Date
     var weekdayHabit: WeekdayHabit
-    var status: Status = Status.none
+    var status: Status
 
-    init(day: Date, weekdayHabit: WeekdayHabit, status: Status = .none) {
+    init(day: Date, weekdayHabit: WeekdayHabit, status: Status) {
         self.day = Calendar.current.startOfDay(for: day)
         self.weekdayHabit = weekdayHabit
         self.status = status

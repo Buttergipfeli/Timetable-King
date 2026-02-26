@@ -23,7 +23,7 @@ extension Timetable_KingApp {
         
         let weekStart = Calendar.current.dateInterval(of: .weekOfYear, for: .now)?.start ?? .now
         let monday = Calendar.current.startOfDay(for: Calendar.current.date(byAdding: .day, value: 1, to: weekStart) ?? weekStart)
-        context.insert(WeekdayHabitResult(day: monday, weekdayHabit: w1, status: .none))
+        context.insert(WeekdayHabitResult(day: monday, weekdayHabit: w1, status: .failed))
         context.insert(WeekdayHabitResult(day: monday, weekdayHabit: w2, status: .done))
 //        context.insert(WeekdayHabitResult(day: monday, weekdayHabit: w1, status: .failed))
     }
