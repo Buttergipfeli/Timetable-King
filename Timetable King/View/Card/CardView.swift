@@ -1,15 +1,14 @@
 import SwiftUI
 
 struct CardView<Content: View>: View {
-    @State private var isPresented: Bool = false
-    
     let isEmpty: Bool
     let title: LocalizedStringKey
+    let action: () -> Void
     let content: () -> Content
     
     var body: some View {
         Button {
-            isPresented = true
+            action()
         } label: {
             VStack(alignment: .leading) {
                 CardTitleView(title: title)
