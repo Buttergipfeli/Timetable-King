@@ -21,7 +21,10 @@ struct TimetableKingAppView: View {
                 }
                 .matchedTransitionSource(id: .todayTasksID, in: namespace)
                 
-                CardView(isEmpty: viewModel.activeWeekdayDigests.isEmpty, title: "timetable.card.weekly.summary") {
+                CardView(
+                    isEmpty: viewModel.activeWeekdayDigests.isEmpty,
+                    title: "timetable.card.weekly.summary"
+                ) {
                     viewModel.open(card: .weeklySummary)
                 } content: {
                     ForEach(viewModel.activeWeekdayDigests) { weekdayDigest in
@@ -30,7 +33,10 @@ struct TimetableKingAppView: View {
                 }
                 .matchedTransitionSource(id: .weeklySummaryID, in: namespace)
                 
-                CardView(isEmpty: viewModel.activeWeekdayDigests.isEmpty, title: "timetable.card.my.weekly.tasks") {
+                CardView(
+                    isEmpty: viewModel.activeWeekdayDigests.isEmpty,
+                    title: "timetable.card.my.weekly.tasks"
+                ) {
                     viewModel.open(card: .weeklyTasks)
                 } content: {
                     ForEach(viewModel.activeWeekdayDigests) { weekdayDigest in
