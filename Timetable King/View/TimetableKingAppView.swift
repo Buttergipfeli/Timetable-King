@@ -10,12 +10,12 @@ struct TimetableKingAppView: View {
         ScrollView {
             VStack {
                 CardView(
-                    isEmpty: viewModel.todayDigests?.habits.isEmpty == true,
+                    isEmpty: viewModel.todayDigest?.habits.isEmpty == true,
                     title: "timetable.card.today.tasks"
                 ) {
                     viewModel.open(card: .todayTasks)
                 } content: {
-                    ForEach(viewModel.todayDigests?.habits ?? []) { weekdayHabit in
+                    ForEach(viewModel.todayDigest?.habits ?? []) { weekdayHabit in
                         CardWeekdayHabitEntryView(weekdayHabit: weekdayHabit)
                     }
                 }
@@ -51,7 +51,7 @@ struct TimetableKingAppView: View {
             if let presentedCard = viewModel.presentedCard {
                 switch presentedCard {
                 case .todayTasks:
-                    Text("today")
+                    TodayTasksView(todayDigest: viewModel.todayDigest)
                         .navigationTransition(id: .todayTasksID, in: namespace)
                 case .weeklySummary:
                     Text("summary")

@@ -14,7 +14,7 @@ final class TimetableKingAppViewModel {
         weekdayDigests.filter(\.habits.isEmpty.not)
     }
     
-    var todayDigests: WeekdayDigest? {
+    var todayDigest: WeekdayDigest? {
         weekdayDigests.first(where: \.weekday.isToday)
     }
     
