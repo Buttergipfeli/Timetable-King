@@ -12,24 +12,24 @@ struct TodayTasksView: View {
             ScrollView {
                 VStack(spacing: .sectionSpacing) {
                     TodayTasksSectionView(
-                        title: "Finished",
+                        title: "timetable.today.tasks.section.finished",
                         entries: viewModel.finishedEntries,
-                        emptyTitle: "No finished entries",
-                        emptyMessage: "Tasks with a defined result appear here."
+                        emptyTitle: "timetable.today.tasks.empty.finished.title",
+                        emptyMessage: "timetable.today.tasks.empty.finished.message"
                     )
 
                     TodayTasksSectionView(
-                        title: "Todo",
+                        title: "timetable.today.tasks.section.todo",
                         entries: viewModel.todoEntries,
-                        emptyTitle: "No open entries",
-                        emptyMessage: "Tasks without a defined result appear here."
+                        emptyTitle: "timetable.today.tasks.empty.todo.title",
+                        emptyMessage: "timetable.today.tasks.empty.todo.message"
                     )
                 }
                 .padding(.horizontal, .screenPadding)
                 .padding(.vertical, .screenVerticalPadding)
             }
             .background(Color(.systemGroupedBackground))
-            .navigationTitle("Today's tasks")
+            .navigationTitle("timetable.today.tasks.title")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -62,7 +62,7 @@ private struct TodayTasksSectionView: View {
 
                 Spacer()
 
-                Text("Status")
+                Text("timetable.today.tasks.status.title")
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(.secondary)
             }

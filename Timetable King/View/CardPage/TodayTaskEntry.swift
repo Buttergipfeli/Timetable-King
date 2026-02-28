@@ -19,33 +19,33 @@ struct TodayTaskEntry: Identifiable {
     var statusTitle: String {
         switch status {
         case .done:
-            "Finished"
+            "timetable.today.task.status.done".localized
         case .failed:
-            "Not done"
+            "timetable.today.task.status.failed".localized
         case .none:
-            "Undefined"
+            "timetable.today.task.status.none".localized
         }
     }
 
     var statusDescription: String {
         switch status {
         case .done:
-            "This task has been completed."
+            "timetable.today.task.status.description.done".localized
         case .failed:
-            "This task was marked as not completed."
+            "timetable.today.task.status.description.failed".localized
         case .none:
-            "This task does not have a defined result yet."
+            "timetable.today.task.status.description.none".localized
         }
     }
 
     var detailDescription: String {
         switch status {
         case .done:
-            "Scheduled at \(timeString). This task is already finished."
+            "timetable.today.task.detail.description.done".localized(timeString)
         case .failed:
-            "Scheduled at \(timeString). This task has a defined result and is marked as not done."
+            "timetable.today.task.detail.description.failed".localized(timeString)
         case .none:
-            "Scheduled at \(timeString). This task does not have a status yet."
+            "timetable.today.task.detail.description.none".localized(timeString)
         }
     }
 

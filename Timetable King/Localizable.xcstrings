@@ -40,6 +40,12 @@
         }
       }
     },
+    "summary" : {
+
+    },
+    "tasks" : {
+
+    },
     "timetable.card.empty" : {
       "comment" : "Empty state shown when there are no timetable entries.",
       "extractionState" : "manual",
@@ -54,6 +60,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No entries available"
+          }
+        }
+      }
+    },
+    "timetable.card.my.weekly.tasks" : {
+      "comment" : "Title for the card with my weekly tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meine wöchentlichen Aufgaben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My weekly tasks"
           }
         }
       }
@@ -94,20 +118,380 @@
         }
       }
     },
-    "timetable.card.my.weekly.tasks" : {
-      "comment" : "Title for the card with my weekly tasks.",
+    "timetable.today.task.detail.description.done" : {
+      "comment" : "Detail description for a finished today task. Argument: time string.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Meine wöchentlichen Aufgaben"
+            "value" : "Geplant um %@. Diese Aufgabe ist bereits erledigt."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "My weekly tasks"
+            "value" : "Scheduled at %@. This task is already finished."
+          }
+        }
+      }
+    },
+    "timetable.today.task.detail.description.failed" : {
+      "comment" : "Detail description for a failed today task. Argument: time string.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geplant um %@. Diese Aufgabe hat ein definiertes Ergebnis und ist als nicht erledigt markiert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scheduled at %@. This task has a defined result and is marked as not done."
+          }
+        }
+      }
+    },
+    "timetable.today.task.detail.description.none" : {
+      "comment" : "Detail description for a task without a defined result yet. Argument: time string.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geplant um %@. Diese Aufgabe hat noch keinen Status."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scheduled at %@. This task does not have a status yet."
+          }
+        }
+      }
+    },
+    "timetable.today.task.detail.description.title" : {
+      "comment" : "Section title for the description field in today task detail.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beschreibung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Description"
+          }
+        }
+      }
+    },
+    "timetable.today.task.detail.status" : {
+      "comment" : "Section title for the status field in today task detail.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        }
+      }
+    },
+    "timetable.today.task.detail.time" : {
+      "comment" : "Section title for the time field in today task detail.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uhrzeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        }
+      }
+    },
+    "timetable.today.task.detail.title" : {
+      "comment" : "Section title for the title field in today task detail.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title"
+          }
+        }
+      }
+    },
+    "timetable.today.task.status.description.done" : {
+      "comment" : "Description for a finished today task.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Aufgabe wurde abgeschlossen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This task has been completed."
+          }
+        }
+      }
+    },
+    "timetable.today.task.status.description.failed" : {
+      "comment" : "Description for a failed today task.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Aufgabe wurde als nicht erledigt markiert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This task was marked as not completed."
+          }
+        }
+      }
+    },
+    "timetable.today.task.status.description.none" : {
+      "comment" : "Description for a today task without a defined result.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Aufgabe hat noch kein definiertes Ergebnis."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This task does not have a defined result yet."
+          }
+        }
+      }
+    },
+    "timetable.today.task.status.done" : {
+      "comment" : "Badge title for a finished today task.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erledigt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finished"
+          }
+        }
+      }
+    },
+    "timetable.today.task.status.failed" : {
+      "comment" : "Badge title for a failed today task.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht erledigt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not done"
+          }
+        }
+      }
+    },
+    "timetable.today.task.status.none" : {
+      "comment" : "Badge title for a today task without a defined result.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht definiert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undefined"
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.empty.finished.message" : {
+      "comment" : "Empty-state message for the finished section in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgaben mit definiertem Ergebnis erscheinen hier."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasks with a defined result appear here."
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.empty.finished.title" : {
+      "comment" : "Empty-state title for the finished section in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine erledigten Einträge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No finished entries"
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.empty.todo.message" : {
+      "comment" : "Empty-state message for the todo section in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgaben ohne definiertes Ergebnis erscheinen hier."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasks without a defined result appear here."
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.empty.todo.title" : {
+      "comment" : "Empty-state title for the todo section in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine offenen Einträge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No open entries"
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.section.finished" : {
+      "comment" : "Section title for finished tasks in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erledigt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finished"
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.section.todo" : {
+      "comment" : "Section title for open tasks in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todo"
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.status.title" : {
+      "comment" : "Column header for the status column in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.title" : {
+      "comment" : "Navigation title for the today's tasks screen.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heutige Aufgaben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today's tasks"
           }
         }
       }

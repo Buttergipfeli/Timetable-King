@@ -6,10 +6,10 @@ struct TodayTaskDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: .contentSpacing) {
-                detailCard(title: "Time", value: entry.timeString)
-                detailCard(title: "Title", value: entry.title)
-                detailCard(title: "Status", value: entry.statusTitle)
-                detailCard(title: "Description", value: entry.detailDescription)
+                detailCard(title: "timetable.today.task.detail.time", value: entry.timeString)
+                detailCard(title: "timetable.today.task.detail.title", value: entry.title)
+                detailCard(title: "timetable.today.task.detail.status", value: entry.statusTitle)
+                detailCard(title: "timetable.today.task.detail.description.title", value: entry.detailDescription)
             }
             .padding(.horizontal, .screenPadding)
             .padding(.vertical, .screenVerticalPadding)
