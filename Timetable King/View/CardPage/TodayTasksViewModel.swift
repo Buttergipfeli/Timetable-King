@@ -13,34 +13,18 @@ final class TodayTasksViewModel {
             return
         }
 
-        let resultsByHabit = Dictionary(
-            uniqueKeysWithValues: todayDigest.results.map { result in
-                (ObjectIdentifier(result.weekdayHabit), result)
-            }
-        )
-
-        let entries = todayDigest.habits
-            .sorted(by: Self.sortHabits)
-            .map { habit in
-                TodayTaskEntry(
-                    habit: habit,
-                    result: resultsByHabit[ObjectIdentifier(habit)]
-                )
-            }
-
-        finishedEntries = entries.filter { $0.result != nil }
-        todoEntries = entries.filter { $0.result == nil }
-    }
-
-    private static func sortHabits(lhs: WeekdayHabit, rhs: WeekdayHabit) -> Bool {
-        if lhs.hour != rhs.hour {
-            return lhs.hour < rhs.hour
+        var entries = todayDigest.habits.map { habit in
+            TodayTaskEntry(
+                habit: habit,
+                result: todayDigest.results.first { $0.weekdayHabit == habit }
+            )
         }
 
-        if lhs.minute != rhs.minute {
-            return lhs.minute < rhs.minute
+        let finishedUnfinishedIndex = entries.partition { entry in
+            entry.result?.isDone == true
         }
 
-        return lhs.habit.title.localizedCaseInsensitiveCompare(rhs.habit.title) == .orderedAscending
+        finishedEntries = Array(entries[finishedUnfinishedIndex...])
+        todoEntries = Array(entries[..<finishedUnfinishedIndex])
     }
 }

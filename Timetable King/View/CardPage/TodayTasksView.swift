@@ -160,12 +160,12 @@ private struct TodayTasksEmptyStateView: View {
 
 private extension TodayTaskEntry {
     var statusColor: Color {
-        switch state {
+        switch status {
         case .done:
             .green
         case .failed:
             .red
-        case .undefined:
+        case .none:
             .gray
         }
     }
