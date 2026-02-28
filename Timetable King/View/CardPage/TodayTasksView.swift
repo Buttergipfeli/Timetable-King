@@ -32,18 +32,23 @@ struct TodayTasksView: View {
             .navigationTitle("timetable.today.tasks.title")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark")
-                            .font(.headline.weight(.semibold))
-                    }
-                }
+                toolbar
             }
         }
         .onChange(of: todayDigest, initial: true) {
             viewModel.map(todayDigest: todayDigest)
+        }
+    }
+
+    @ToolbarContentBuilder
+    private var toolbar: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button {
+                dismiss()
+            } label: {
+                Image(systemName: "xmark")
+                    .font(.headline.weight(.semibold))
+            }
         }
     }
 }
