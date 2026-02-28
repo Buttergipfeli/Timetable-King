@@ -50,7 +50,7 @@ struct TodayTasksView: View {
 
 private struct TodayTasksSectionView: View {
     let title: LocalizedStringKey
-    let entries: [TodayTasksViewModel.Entry]
+    let entries: [TodayTaskEntry]
     let emptyTitle: LocalizedStringKey
     let emptyMessage: LocalizedStringKey
 
@@ -92,7 +92,7 @@ private struct TodayTasksSectionView: View {
 }
 
 private struct TodayTaskRowView: View {
-    let entry: TodayTasksViewModel.Entry
+    let entry: TodayTaskEntry
 
     var body: some View {
         HStack(spacing: .rowSpacing) {
@@ -123,7 +123,7 @@ private struct TodayTaskRowView: View {
 }
 
 private struct TodayTaskStatusBadge: View {
-    let entry: TodayTasksViewModel.Entry
+    let entry: TodayTaskEntry
 
     var body: some View {
         Text(entry.statusTitle)
@@ -158,7 +158,7 @@ private struct TodayTasksEmptyStateView: View {
     }
 }
 
-private extension TodayTasksViewModel.Entry {
+private extension TodayTaskEntry {
     var statusColor: Color {
         switch state {
         case .done:

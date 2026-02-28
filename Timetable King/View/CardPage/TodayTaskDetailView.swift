@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct TodayTaskDetailView: View {
-    let entry: TodayTasksViewModel.Entry
+    let entry: TodayTaskEntry
 
     var body: some View {
         ScrollView {
