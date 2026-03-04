@@ -20,7 +20,7 @@ struct TodayTaskDetailView: View {
     }
 
     private func detailCard(title: LocalizedStringKey, value: String) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: .cardContentSpacing) {
             Text(title)
                 .font(.headline.weight(.semibold))
                 .foregroundStyle(.secondary)
@@ -44,4 +44,5 @@ private extension CGFloat {
     static let contentSpacing = 16.0
     static let cardPadding = 16.0
     static let cardCornerRadius = 18.0
+    static let cardContentSpacing = 8.0
 }

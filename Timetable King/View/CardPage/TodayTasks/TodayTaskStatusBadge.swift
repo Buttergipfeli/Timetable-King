@@ -7,9 +7,9 @@ struct TodayTaskStatusBadge: View {
         Text(entry.statusTitle)
             .font(.caption.weight(.bold))
             .foregroundStyle(.white)
-            .padding(.horizontal, TodayTaskStatusBadgeLayout.badgeHorizontalPadding)
-            .padding(.vertical, TodayTaskStatusBadgeLayout.badgeVerticalPadding)
-            .frame(minWidth: TodayTaskStatusBadgeLayout.badgeMinWidth)
+            .padding(.horizontal, .badgeHorizontalPadding)
+            .padding(.vertical, .badgeVerticalPadding)
+            .frame(minWidth: .badgeMinWidth)
             .background(entry.statusColor, in: Capsule())
     }
 }
@@ -27,7 +27,7 @@ private extension TodayTaskEntry {
     }
 }
 
-private enum TodayTaskStatusBadgeLayout {
+private extension CGFloat {
     static let badgeHorizontalPadding = 12.0
     static let badgeVerticalPadding = 8.0
     static let badgeMinWidth = 92.0

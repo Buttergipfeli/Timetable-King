@@ -4,8 +4,8 @@ struct TodayTaskRowView: View {
     let entry: TodayTaskEntry
 
     var body: some View {
-        HStack(spacing: TodayTaskRowViewLayout.rowSpacing) {
-            VStack(alignment: .leading, spacing: 4) {
+        HStack(spacing: .rowSpacing) {
+            VStack(alignment: .leading, spacing: .contentSpacing) {
                 Text(entry.timeString)
                     .font(.subheadline.weight(.bold))
                     .monospacedDigit()
@@ -14,26 +14,32 @@ struct TodayTaskRowView: View {
                 Text(entry.title)
                     .font(.headline)
                     .foregroundStyle(.primary)
-                    .lineLimit(2)
+                    .lineLimit(.titleLineLimit)
             }
 
-            Spacer(minLength: 12)
+            Spacer(minLength: .spacerMinLength)
 
             TodayTaskStatusBadge(entry: entry)
         }
-        .padding(.horizontal, TodayTaskRowViewLayout.rowHorizontalPadding)
-        .padding(.vertical, TodayTaskRowViewLayout.rowVerticalPadding)
+        .padding(.horizontal, .rowHorizontalPadding)
+        .padding(.vertical, .rowVerticalPadding)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
-            RoundedRectangle(cornerRadius: TodayTaskRowViewLayout.rowCornerRadius)
+            RoundedRectangle(cornerRadius: .rowCornerRadius)
                 .fill(Color(.systemBackground))
         )
     }
 }
 
-private enum TodayTaskRowViewLayout {
+private extension CGFloat {
     static let rowSpacing = 12.0
     static let rowHorizontalPadding = 14.0
     static let rowVerticalPadding = 12.0
     static let rowCornerRadius = 16.0
+    static let spacerMinLength = 12.0
+    static let contentSpacing = 4.0
+}
+
+private extension Int {
+    static let titleLineLimit = 2
 }

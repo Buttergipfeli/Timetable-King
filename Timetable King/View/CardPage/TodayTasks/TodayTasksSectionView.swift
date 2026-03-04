@@ -7,7 +7,7 @@ struct TodayTasksSectionView: View {
     let emptyMessage: LocalizedStringKey
 
     var body: some View {
-        VStack(alignment: .leading, spacing: TodayTasksSectionViewLayout.sectionInnerSpacing) {
+        VStack(alignment: .leading, spacing: .sectionInnerSpacing) {
             HStack(alignment: .firstTextBaseline) {
                 Text(title)
                     .font(.title3.weight(.bold))
@@ -22,7 +22,7 @@ struct TodayTasksSectionView: View {
             if entries.isEmpty {
                 TodayTasksEmptyStateView(title: emptyTitle, message: emptyMessage)
             } else {
-                VStack(spacing: TodayTasksSectionViewLayout.rowSpacing) {
+                VStack(spacing: .rowSpacing) {
                     ForEach(entries) { entry in
                         NavigationLink {
                             TodayTaskDetailView(entry: entry)
@@ -34,16 +34,16 @@ struct TodayTasksSectionView: View {
                 }
             }
         }
-        .padding(TodayTasksSectionViewLayout.sectionPadding)
+        .padding(.sectionPadding)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
-            RoundedRectangle(cornerRadius: TodayTasksSectionViewLayout.sectionCornerRadius)
+            RoundedRectangle(cornerRadius: .sectionCornerRadius)
                 .fill(Color(.secondarySystemGroupedBackground))
         )
     }
 }
 
-private enum TodayTasksSectionViewLayout {
+private extension CGFloat {
     static let sectionInnerSpacing = 14.0
     static let sectionPadding = 16.0
     static let sectionCornerRadius = 20.0

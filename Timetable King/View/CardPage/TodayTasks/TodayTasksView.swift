@@ -10,7 +10,7 @@ struct TodayTasksView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: TodayTasksViewLayout.sectionSpacing) {
+                VStack(spacing: .sectionSpacing) {
                     TodayTasksSectionView(
                         title: "timetable.today.tasks.section.finished",
                         entries: viewModel.finishedEntries,
@@ -25,8 +25,8 @@ struct TodayTasksView: View {
                         emptyMessage: "timetable.today.tasks.empty.todo.message"
                     )
                 }
-                .padding(.horizontal, TodayTasksViewLayout.screenPadding)
-                .padding(.vertical, TodayTasksViewLayout.screenVerticalPadding)
+                .padding(.horizontal, .screenPadding)
+                .padding(.vertical, .screenVerticalPadding)
             }
             .background(Color(.systemGroupedBackground))
             .navigationTitle("timetable.today.tasks.title")
@@ -53,7 +53,7 @@ struct TodayTasksView: View {
     }
 }
 
-private enum TodayTasksViewLayout {
+private extension CGFloat {
     static let screenPadding = 16.0
     static let screenVerticalPadding = 20.0
     static let sectionSpacing = 20.0
