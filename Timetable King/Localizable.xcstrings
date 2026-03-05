@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%lld tasks" : {
-
-    },
     "seed.habit.sport" : {
       "comment" : "Debug seed habit title for sport.",
       "extractionState" : "manual",
@@ -510,6 +507,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld / %2$lld Done"
+          }
+        }
+      }
+    },
+    "timetable.weekday.tasks.count" : {
+      "comment" : "Label showing the number of tasks for a weekday. Argument: task count.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld Aufgaben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld Tasks"
           }
         }
       }

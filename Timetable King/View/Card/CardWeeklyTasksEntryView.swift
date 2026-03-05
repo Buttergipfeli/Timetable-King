@@ -15,7 +15,7 @@ struct CardWeeklyTasksEntryView: View {
             
             Divider()
                         
-            Text("\(tasksForWeekdayCount) tasks")
+            Text("timetable.weekday.tasks.count".localized(tasksForWeekdayCount))
                 .foregroundStyle(.primary)
         }
     }
