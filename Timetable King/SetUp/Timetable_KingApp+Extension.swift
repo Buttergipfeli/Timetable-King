@@ -3,7 +3,6 @@ import SwiftData
 extension Timetable_KingApp {
     static func setUpModelContainer(isStoredInMemoryOnly: Bool) -> ModelContainer {
         let schema = Schema([
-            Item.self,
             Habit.self,
             WeekdayHabit.self,
             WeekdayHabitResult.self

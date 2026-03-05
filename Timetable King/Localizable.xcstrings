@@ -496,24 +496,6 @@
         }
       }
     },
-    "timetable.transition.title" : {
-      "comment" : "Button title shown in the fullscreen transition destination.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Übergangsansicht"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Transition View"
-          }
-        }
-      }
-    },
     "timetable.weekday.results.done" : {
       "comment" : "Progress label for completed results in a weekday card. Arguments: completed count, total count.",
       "extractionState" : "manual",
