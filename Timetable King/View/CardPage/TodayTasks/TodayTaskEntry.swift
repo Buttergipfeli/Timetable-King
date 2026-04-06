@@ -1,6 +1,6 @@
 import Foundation
 
-struct TodayTaskEntry: Identifiable {
+struct TodayTaskEntry: Identifiable, Hashable {
     let habit: WeekdayHabit
     let result: WeekdayHabitResult?
 

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct TodayTaskDetailView: View {
     let entry: TodayTaskEntry
+    let showCloseButton: Bool
 
     var body: some View {
         ScrollView {
@@ -17,6 +18,11 @@ struct TodayTaskDetailView: View {
         .background(Color(.systemGroupedBackground))
         .navigationTitle(entry.title)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if showCloseButton {
+                DismissToolbarItem()
+            }
+        }
     }
 
     private func detailCard(title: LocalizedStringKey, value: String) -> some View {

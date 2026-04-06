@@ -16,9 +16,7 @@ struct TodayTasksSectionView: View {
             } else {
                 VStack(spacing: .rowSpacing) {
                     ForEach(entries) { entry in
-                        NavigationLink {
-                            TodayTaskDetailView(entry: entry)
-                        } label: {
+                        NavigationLink(value: entry) {
                             TodayTaskRowView(entry: entry)
                         }
                         .buttonStyle(.plain)

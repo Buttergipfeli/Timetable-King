@@ -16,7 +16,12 @@ struct TimetableKingAppView: View {
                     viewModel.open(card: .todayTasks)
                 } content: {
                     ForEach(viewModel.todayDigest?.habits ?? []) { weekdayHabit in
-                        CardWeekdayHabitEntryView(weekdayHabit: weekdayHabit)
+                        Button {
+                            viewModel.open(habit: weekdayHabit)
+                        } label: {
+                            CardWeekdayHabitEntryView(weekdayHabit: weekdayHabit)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 .matchedTransitionSource(id: .todayTasksID, in: namespace)
@@ -46,6 +51,11 @@ struct TimetableKingAppView: View {
                 .matchedTransitionSource(id: .weeklyTasksID, in: namespace)
             }
             .padding(.containerPadding)
+        }
+        .sheet(item: $viewModel.presentedEntry) { entry in
+            NavigationStack {
+                TodayTaskDetailView(entry: entry, showCloseButton: true)
+            }
         }
         .fullScreenCover(isPresented: $viewModel.isCardPresented) {
             if let presentedCard = viewModel.presentedCard {

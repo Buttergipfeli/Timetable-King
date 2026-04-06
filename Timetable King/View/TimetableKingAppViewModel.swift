@@ -9,6 +9,7 @@ final class TimetableKingAppViewModel {
     private(set) var weekdayDigests = [WeekdayDigest]()
     private(set) var presentedCard: CardPage?
     var isCardPresented: Bool = false
+    var presentedEntry: TodayTaskEntry?
     
     var activeWeekdayDigests: [WeekdayDigest] {
         weekdayDigests.filter(\.habits.isEmpty.not)
@@ -30,5 +31,13 @@ final class TimetableKingAppViewModel {
     func open(card: CardPage) {
         presentedCard = card
         isCardPresented = true
+    }
+
+    func open(habit: WeekdayHabit) {
+        guard let digest = todayDigest else { return }
+        presentedEntry = TodayTaskEntry(
+            habit: habit,
+            result: digest.results.first { $0.weekdayHabit == habit }
+        )
     }
 }

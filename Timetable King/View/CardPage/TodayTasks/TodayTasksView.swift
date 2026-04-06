@@ -3,8 +3,6 @@ import SwiftUI
 struct TodayTasksView: View {
     @State private var viewModel = TodayTasksViewModel()
 
-    @Environment(\.dismiss) private var dismiss
-
     let todayDigest: WeekdayDigest?
 
     var body: some View {
@@ -31,24 +29,13 @@ struct TodayTasksView: View {
             .background(Color(.systemGroupedBackground))
             .navigationTitle("timetable.today.tasks.title")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                toolbar
+            .navigationDestination(for: TodayTaskEntry.self) { entry in
+                TodayTaskDetailView(entry: entry, showCloseButton: false)
             }
+            .toolbar { DismissToolbarItem() }
         }
         .onChange(of: todayDigest, initial: true) {
             viewModel.map(todayDigest: todayDigest)
-        }
-    }
-
-    @ToolbarContentBuilder
-    private var toolbar: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            Button {
-                dismiss()
-            } label: {
-                Image(systemName: "xmark")
-                    .font(.headline.weight(.semibold))
-            }
         }
     }
 }
