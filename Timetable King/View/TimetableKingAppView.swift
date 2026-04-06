@@ -64,7 +64,13 @@ struct TimetableKingAppView: View {
         }
         .sheet(item: $viewModel.presentedWeekdayDigest) { digest in
             NavigationStack {
-                WeeklyTasksDayView(digest: digest, showCloseButton: true, onAddTask: viewModel.addWeeklyTask)
+                WeeklyTasksDayView(
+                    showCloseButton: true,
+                    digest: digest,
+                    onAddTask: viewModel.addWeeklyTask,
+                    onDeleteTask: viewModel.deleteWeeklyTask,
+                    onUpdateTask: viewModel.updateWeeklyTask
+                )
             }
         }
         .fullScreenCover(isPresented: $viewModel.isCardPresented) {
@@ -80,7 +86,9 @@ struct TimetableKingAppView: View {
                     WeeklyTasksView(
                         weekdayDigests: viewModel.weekdayDigests,
                         initialWeekday: nil,
-                        onAddTask: viewModel.addWeeklyTask
+                        onAddTask: viewModel.addWeeklyTask,
+                        onDeleteTask: viewModel.deleteWeeklyTask,
+                        onUpdateTask: viewModel.updateWeeklyTask
                     )
                     .navigationTransition(id: .weeklyTasksID, in: namespace)
                 }

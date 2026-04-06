@@ -7,34 +7,46 @@ struct WeeklyTasksDayView: View {
 
     let digest: WeekdayDigest
     let onAddTask: (String, Weekday, Int, Int) -> Void
+    let onDeleteTask: (WeekdayHabit) -> Void
+    let onUpdateTask: (WeekdayHabit, String, Weekday, Int, Int) -> Void
 
     var body: some View {
-        ScrollView {
+        List {
+            ForEach(viewModel.habits) { habit in
+                Button {
+                    viewModel.selectedHabit = habit
+                } label: {
+                    WeeklyTaskRowView(habit: habit)
+                }
+                .buttonStyle(.plain)
+                .listRowBackground(Color(.systemGroupedBackground))
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: .rowSpacing / 2, leading: .screenPadding, bottom: .rowSpacing / 2, trailing: .screenPadding))
+                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                    Button(role: .destructive) {
+                        onDeleteTask(habit)
+                    } label: {
+                        Label("timetable.weekly.tasks.edit.delete", systemImage: "trash")
+                    }
+                }
+            }
+        }
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+        .background(Color(.systemGroupedBackground))
+        .overlay {
             if viewModel.habits.isEmpty {
                 ContentUnavailableView(
                     "timetable.weekly.tasks.day.empty.title",
                     systemImage: "checkmark.circle",
                     description: Text("timetable.weekly.tasks.day.empty.message")
                 )
-                .padding(.top, .emptyStatePadding)
-            } else {
-                VStack(spacing: .rowSpacing) {
-                    ForEach(viewModel.habits) { habit in
-                        NavigationLink(value: habit) {
-                            WeeklyTaskRowView(habit: habit)
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
-                .padding(.horizontal, .screenPadding)
-                .padding(.vertical, .screenVerticalPadding)
             }
         }
-        .background(Color(.systemGroupedBackground))
         .navigationTitle(digest.weekday.label)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: WeekdayHabit.self) { habit in
-            WeeklyTaskDetailView(habit: habit)
+        .navigationDestination(item: $viewModel.selectedHabit) { habit in
+            WeeklyTaskEditView(habit: habit, onSave: onUpdateTask, onDelete: onDeleteTask)
         }
         .toolbar {
             if showCloseButton {
@@ -59,7 +71,5 @@ struct WeeklyTasksDayView: View {
 
 private extension CGFloat {
     static let screenPadding = 16.0
-    static let screenVerticalPadding = 20.0
     static let rowSpacing = 12.0
-    static let emptyStatePadding = 60.0
 }

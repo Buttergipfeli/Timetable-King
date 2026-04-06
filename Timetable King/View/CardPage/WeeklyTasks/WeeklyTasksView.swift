@@ -6,6 +6,8 @@ struct WeeklyTasksView: View {
     let weekdayDigests: [WeekdayDigest]
     let initialWeekday: Weekday?
     let onAddTask: (String, Weekday, Int, Int) -> Void
+    let onDeleteTask: (WeekdayHabit) -> Void
+    let onUpdateTask: (WeekdayHabit, String, Weekday, Int, Int) -> Void
 
     var body: some View {
         NavigationStack(path: $viewModel.path) {
@@ -26,7 +28,7 @@ struct WeeklyTasksView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: Weekday.self) { weekday in
                 let digest = viewModel.weekdayDigests.first { $0.weekday == weekday } ?? WeekdayDigest(weekday: weekday, habits: [], results: [])
-                WeeklyTasksDayView(digest: digest, onAddTask: onAddTask)
+                WeeklyTasksDayView(digest: digest, onAddTask: onAddTask, onDeleteTask: onDeleteTask, onUpdateTask: onUpdateTask)
             }
             .toolbar {
                 DismissToolbarItem()

@@ -18,6 +18,10 @@ struct WeeklyTaskRowView: View {
             }
 
             Spacer(minLength: .spacerMinLength)
+
+            Image(systemName: "chevron.right")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.tertiary)
         }
         .padding(.horizontal, .rowHorizontalPadding)
         .padding(.vertical, .rowVerticalPadding)

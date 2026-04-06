@@ -52,4 +52,14 @@ final class TimetableKingAppViewModel {
         try? weeklyTaskService.save(title: title, weekday: weekday, hour: hour, minute: minute)
         load()
     }
+
+    func deleteWeeklyTask(habit: WeekdayHabit) {
+        try? weeklyTaskService.delete(habit: habit)
+        load()
+    }
+
+    func updateWeeklyTask(habit: WeekdayHabit, title: String, weekday: Weekday, hour: Int, minute: Int) {
+        try? weeklyTaskService.update(habit: habit, title: title, weekday: weekday, hour: hour, minute: minute)
+        load()
+    }
 }

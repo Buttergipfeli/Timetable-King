@@ -36,18 +36,16 @@ struct AddWeeklyTaskView: View {
             .navigationTitle("timetable.weekly.tasks.add.title")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("timetable.weekly.tasks.add.cancel") {
-                        dismiss()
-                    }
-                }
+                DismissToolbarItem()
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("timetable.weekly.tasks.add.save") {
+                    Button {
                         viewModel.save(onSave: onSave)
                         dismiss()
+                    } label: {
+                        Image(systemName: "checkmark")
+                            .font(.headline.weight(.semibold))
                     }
                     .disabled(!viewModel.isSaveable)
-                    .fontWeight(.semibold)
                 }
             }
         }

@@ -678,6 +678,13 @@
         }
       }
     },
+    "timetable.weekly.tasks.edit.delete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Aufgabe löschen" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete Task" } }
+      }
+    },
     "timetable.weekly.tasks.detail.day" : {
       "extractionState" : "manual",
       "localizations" : {
