@@ -4,7 +4,7 @@ struct DismissToolbarItem: ToolbarContent {
     @Environment(\.dismiss) private var dismiss
 
     var body: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .topBarLeading) {
             Button {
                 dismiss()
             } label: {
