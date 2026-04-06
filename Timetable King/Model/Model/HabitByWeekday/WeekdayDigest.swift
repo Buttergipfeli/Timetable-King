@@ -1,4 +1,4 @@
-struct WeekdayDigest: Equatable {
+struct WeekdayDigest: Equatable, Hashable {
     let weekday: Weekday
     let habits: [WeekdayHabit]
     let results: [WeekdayHabitResult]

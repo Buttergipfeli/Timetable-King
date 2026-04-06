@@ -40,9 +40,6 @@
     "summary" : {
 
     },
-    "tasks" : {
-
-    },
     "timetable.card.empty" : {
       "comment" : "Empty state shown when there are no timetable entries.",
       "extractionState" : "manual",
@@ -511,6 +508,261 @@
         }
       }
     },
+    "timetable.weekly.tasks.add.cancel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe eingeben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter task name"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.schedule" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeitplan"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.task.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Task"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.time" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uhrzeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Task"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.weekday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.day.empty.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippe auf + um eine Aufgabe hinzuzufügen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap + to add a task for this day."
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.day.empty.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Aufgaben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Tasks"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.detail.day" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.detail.time" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uhrzeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.detail.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Task"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wöchentliche Aufgaben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weekly Tasks"
+          }
+        }
+      }
+    },
+    "weekday.friday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freitag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Friday"
+          }
+        }
+      }
+    },
     "weekday.friday.short" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -524,6 +776,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fri."
+          }
+        }
+      }
+    },
+    "weekday.monday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Montag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monday"
           }
         }
       }
@@ -545,6 +814,23 @@
         }
       }
     },
+    "weekday.saturday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Samstag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saturday"
+          }
+        }
+      }
+    },
     "weekday.saturday.short" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -558,6 +844,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sat."
+          }
+        }
+      }
+    },
+    "weekday.sunday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonntag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunday"
           }
         }
       }
@@ -579,6 +882,23 @@
         }
       }
     },
+    "weekday.thursday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Donnerstag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thursday"
+          }
+        }
+      }
+    },
     "weekday.thursday.short" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -596,6 +916,23 @@
         }
       }
     },
+    "weekday.tuesday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dienstag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tuesday"
+          }
+        }
+      }
+    },
     "weekday.tuesday.short" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -609,6 +946,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tue."
+          }
+        }
+      }
+    },
+    "weekday.wednesday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mittwoch"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wednesday"
           }
         }
       }

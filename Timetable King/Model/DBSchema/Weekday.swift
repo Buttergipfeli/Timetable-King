@@ -34,6 +34,10 @@ enum Weekday: String, Codable, CaseIterable, Sendable {
         }
     }
     
+    var label: String {
+        "weekday.\(rawValue)".localized
+    }
+
     var shortLabel: String {
         "weekday.\(rawValue).short".localized
     }

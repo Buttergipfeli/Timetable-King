@@ -2,9 +2,9 @@ import SwiftUI
 import SwiftData
 
 struct TimetableKingAppView: View {
-    @State private var viewModel = TimetableKingAppViewModel(modelContainerService: .shared)
-    
     @Environment(\.namespace) private var namespace
+
+    @State private var viewModel = TimetableKingAppViewModel(modelContainerService: .shared)
     
     var body: some View {
         ScrollView {
@@ -45,7 +45,12 @@ struct TimetableKingAppView: View {
                     viewModel.open(card: .weeklyTasks)
                 } content: {
                     ForEach(viewModel.activeWeekdayDigests) { weekdayDigest in
-                        CardWeeklyTasksEntryView(weekday: weekdayDigest.weekday, tasksForWeekdayCount: weekdayDigest.habits.count)
+                        Button {
+                            viewModel.open(weekdayDigest: weekdayDigest)
+                        } label: {
+                            CardWeeklyTasksEntryView(weekday: weekdayDigest.weekday, tasksForWeekdayCount: weekdayDigest.habits.count)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 .matchedTransitionSource(id: .weeklyTasksID, in: namespace)
@@ -55,6 +60,11 @@ struct TimetableKingAppView: View {
         .sheet(item: $viewModel.presentedEntry) { entry in
             NavigationStack {
                 TodayTaskDetailView(entry: entry, showCloseButton: true)
+            }
+        }
+        .sheet(item: $viewModel.presentedWeekdayDigest) { digest in
+            NavigationStack {
+                WeeklyTasksDayView(digest: digest, showCloseButton: true, onAddTask: viewModel.addWeeklyTask)
             }
         }
         .fullScreenCover(isPresented: $viewModel.isCardPresented) {
@@ -67,8 +77,12 @@ struct TimetableKingAppView: View {
                     Text("summary")
                         .navigationTransition(id: .weeklySummaryID, in: namespace)
                 case .weeklyTasks:
-                    Text("tasks")
-                        .navigationTransition(id: .weeklyTasksID, in: namespace)
+                    WeeklyTasksView(
+                        weekdayDigests: viewModel.weekdayDigests,
+                        initialWeekday: nil,
+                        onAddTask: viewModel.addWeeklyTask
+                    )
+                    .navigationTransition(id: .weeklyTasksID, in: namespace)
                 }
             }
         }
