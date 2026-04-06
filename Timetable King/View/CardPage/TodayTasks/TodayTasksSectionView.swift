@@ -8,16 +8,8 @@ struct TodayTasksSectionView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: .sectionInnerSpacing) {
-            HStack(alignment: .firstTextBaseline) {
-                Text(title)
-                    .font(.title3.weight(.bold))
-
-                Spacer()
-
-                Text("timetable.today.tasks.status.title")
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(.secondary)
-            }
+            Text(title)
+                .font(.title3.weight(.bold))
 
             if entries.isEmpty {
                 TodayTasksEmptyStateView(title: emptyTitle, message: emptyMessage)

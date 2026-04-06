@@ -457,24 +457,6 @@
         }
       }
     },
-    "timetable.today.tasks.status.title" : {
-      "comment" : "Column header for the status column in today's tasks.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Status"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Status"
-          }
-        }
-      }
-    },
     "timetable.today.tasks.title" : {
       "comment" : "Navigation title for the today's tasks screen.",
       "extractionState" : "manual",
