@@ -1,11 +1,13 @@
 import SwiftUI
 
 struct CardWeekdayHabitEntryView: View {
-    let weekdayHabit: WeekdayHabit
+    let entry: TodayTaskEntry
+    var allowsStatusEditing: Bool = false
+    var onSelectStatus: ((TodayTaskEntry, HabitState) -> Void)? = nil
     
     var body: some View {
         CardEntryView {
-            Text(weekdayHabit.timeString)
+            Text(entry.timeString)
                 .font(.caption.monospacedDigit())
                 .foregroundStyle(.primary)
                 .padding(.horizontal, .entryTimeHorizontalPadding)
@@ -14,8 +16,18 @@ struct CardWeekdayHabitEntryView: View {
             
             Divider()
                         
-            Text(weekdayHabit.habit.title)
+            Text(entry.title)
                 .foregroundStyle(.primary)
+
+            Spacer()
+
+            TodayTaskStatusBadge(
+                entry: entry,
+                allowsEditing: allowsStatusEditing,
+                onSelectStatus: { status in
+                    onSelectStatus?(entry, status)
+                }
+            )
         }
     }
 }

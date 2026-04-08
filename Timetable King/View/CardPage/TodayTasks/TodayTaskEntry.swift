@@ -28,16 +28,7 @@ struct TodayTaskEntry: Identifiable, Hashable {
     }
 
     var statusTitle: String {
-        switch displayStatus {
-        case .done:
-            "timetable.today.task.status.done".localized
-        case .failed:
-            "timetable.today.task.status.failed".localized
-        case .todo:
-            "timetable.today.task.status.none".localized
-        case .future:
-            "timetable.today.task.status.future".localized
-        }
+        displayStatus.title
     }
 
     var statusDescription: String {
@@ -54,16 +45,7 @@ struct TodayTaskEntry: Identifiable, Hashable {
     }
 
     var detailDescription: String {
-        switch displayStatus {
-        case .done:
-            "timetable.today.task.detail.description.done".localized(timeString)
-        case .failed:
-            "timetable.today.task.detail.description.failed".localized(timeString)
-        case .todo:
-            "timetable.today.task.detail.description.none".localized(timeString)
-        case .future:
-            "timetable.today.task.detail.description.future".localized(timeString)
-        }
+        displayStatus.detailDescription(timeString: timeString)
     }
 }
 
@@ -81,6 +63,34 @@ enum TodayTaskDisplayStatus: Hashable {
             self = .failed
         case .none:
             self = .todo
+        }
+    }
+}
+
+extension TodayTaskDisplayStatus {
+    var title: String {
+        switch self {
+        case .done:
+            "timetable.today.task.status.done".localized
+        case .failed:
+            "timetable.today.task.status.failed".localized
+        case .todo:
+            "timetable.today.task.status.none".localized
+        case .future:
+            "timetable.today.task.status.future".localized
+        }
+    }
+
+    func detailDescription(timeString: String) -> String {
+        switch self {
+        case .done:
+            "timetable.today.task.detail.description.done".localized(timeString)
+        case .failed:
+            "timetable.today.task.detail.description.failed".localized(timeString)
+        case .todo:
+            "timetable.today.task.detail.description.none".localized(timeString)
+        case .future:
+            "timetable.today.task.detail.description.future".localized(timeString)
         }
     }
 }

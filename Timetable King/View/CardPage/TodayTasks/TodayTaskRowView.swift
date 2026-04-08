@@ -2,6 +2,8 @@ import SwiftUI
 
 struct TodayTaskRowView: View {
     let entry: TodayTaskEntry
+    var allowsStatusEditing: Bool = false
+    var onSelectStatus: ((TodayTaskEntry, HabitState) -> Void)? = nil
 
     var body: some View {
         HStack(spacing: .rowSpacing) {
@@ -19,7 +21,13 @@ struct TodayTaskRowView: View {
 
             Spacer(minLength: .spacerMinLength)
 
-            TodayTaskStatusBadge(entry: entry)
+            TodayTaskStatusBadge(
+                entry: entry,
+                allowsEditing: allowsStatusEditing,
+                onSelectStatus: { status in
+                    onSelectStatus?(entry, status)
+                }
+            )
 
             Image(systemName: "chevron.right")
                 .font(.caption.weight(.semibold))

@@ -17,11 +17,15 @@ struct TimetableKingAppView: View {
                     ) {
                         viewModel.open(card: .todayTasks)
                     } content: {
-                        ForEach(viewModel.todayDigest?.habits ?? []) { weekdayHabit in
+                        ForEach(viewModel.todayEntries) { entry in
                             Button {
-                                viewModel.open(habit: weekdayHabit)
+                                viewModel.open(entry: entry)
                             } label: {
-                                CardWeekdayHabitEntryView(weekdayHabit: weekdayHabit)
+                                CardWeekdayHabitEntryView(
+                                    entry: entry,
+                                    allowsStatusEditing: true,
+                                    onSelectStatus: viewModel.updateTodayTaskStatus
+                                )
                             }
                             .buttonStyle(.plain)
                         }
@@ -64,7 +68,12 @@ struct TimetableKingAppView: View {
                 }
                 .padding(.containerPadding)
                 .sheet(item: $viewModel.presentedSummaryDigest) { digest in
-                    TodayTasksView(title: digest.weekday.label, todayDigest: digest)
+                    TodayTasksView(
+                        title: digest.weekday.label,
+                        allowsStatusEditing: digest.weekday.isToday,
+                        onUpdateStatus: viewModel.updateTodayTaskStatus,
+                        todayDigest: digest
+                    )
                 }
             }
             .toolbar {
@@ -79,7 +88,12 @@ struct TimetableKingAppView: View {
         }
         .sheet(item: $viewModel.presentedEntry) { entry in
             NavigationStack {
-                TodayTaskDetailView(entry: entry, showCloseButton: true)
+                TodayTaskDetailView(
+                    showCloseButton: true,
+                    allowsStatusEditing: true,
+                    entry: entry,
+                    onUpdateStatus: viewModel.updateTodayTaskStatus
+                )
             }
         }
         .sheet(item: $viewModel.presentedWeekdayDigest) { digest in
@@ -107,10 +121,14 @@ struct TimetableKingAppView: View {
             if let presentedCard = viewModel.presentedCard {
                 switch presentedCard {
                 case .todayTasks:
-                    TodayTasksView(todayDigest: viewModel.todayDigest)
+                    TodayTasksView(
+                        allowsStatusEditing: true,
+                        onUpdateStatus: viewModel.updateTodayTaskStatus,
+                        todayDigest: viewModel.todayDigest
+                    )
                         .navigationTransition(id: .todayTasksID, in: namespace)
                 case .weeklySummary:
-                    WeeklySummaryView()
+                    WeeklySummaryView(onUpdateStatus: viewModel.updateTodayTaskStatus)
                         .navigationTransition(id: .weeklySummaryID, in: namespace)
                 case .weeklyTasks:
                     WeeklyTasksView(

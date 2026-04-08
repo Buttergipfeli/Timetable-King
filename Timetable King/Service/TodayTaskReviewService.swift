@@ -21,7 +21,7 @@ final class TodayTaskReviewService {
             let scheduledDates = unresolvedPastScheduledDates(for: habit, before: startOfToday)
 
             for scheduledDate in scheduledDates {
-                guard result(for: habit, on: scheduledDate) == nil else { continue }
+                guard effectiveResult(for: habit, on: scheduledDate) == nil else { continue }
                 context.insert(WeekdayHabitResult(day: scheduledDate, weekdayHabit: habit, status: .failed))
                 createdResultsCount += 1
             }
@@ -44,7 +44,7 @@ final class TodayTaskReviewService {
                 let scheduledDate = scheduledDate(for: habit, on: startOfToday)
                 guard isOccurrenceValid(for: habit, scheduledDate: scheduledDate),
                       scheduledDate <= referenceDate,
-                      result(for: habit, on: startOfToday) == nil else { return nil }
+                      effectiveResult(for: habit, on: startOfToday) == nil else { return nil }
 
                 return TodayTaskReviewEntry(
                     habit: habit,
@@ -63,7 +63,15 @@ final class TodayTaskReviewService {
         let context = modelContainerService.context
         let normalizedDay = Calendar.current.startOfDay(for: day)
 
-        if let result = result(for: habit, on: normalizedDay) {
+        if status == .none {
+            if let result = storedResult(for: habit, on: normalizedDay) {
+                context.delete(result)
+                try context.save()
+            }
+            return
+        }
+
+        if let result = storedResult(for: habit, on: normalizedDay) {
             result.status = status
         } else {
             context.insert(WeekdayHabitResult(day: normalizedDay, weekdayHabit: habit, status: status))
@@ -92,9 +100,14 @@ final class TodayTaskReviewService {
         return scheduledDates
     }
 
-    private func result(for habit: WeekdayHabit, on day: Date) -> WeekdayHabitResult? {
+    private func storedResult(for habit: WeekdayHabit, on day: Date) -> WeekdayHabitResult? {
         let normalizedDay = Calendar.current.startOfDay(for: day)
         return habit.results.first { Calendar.current.isDate($0.day, inSameDayAs: normalizedDay) }
+    }
+
+    private func effectiveResult(for habit: WeekdayHabit, on day: Date) -> WeekdayHabitResult? {
+        guard let result = storedResult(for: habit, on: day) else { return nil }
+        return result.status == .none ? nil : result
     }
 
     private func isOccurrenceValid(for habit: WeekdayHabit, scheduledDate: Date) -> Bool {

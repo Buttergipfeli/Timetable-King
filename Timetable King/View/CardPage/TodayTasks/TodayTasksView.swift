@@ -5,6 +5,8 @@ struct TodayTasksView: View {
 
     var title: String? = nil
     var embedsNavigationStack: Bool = true
+    var allowsStatusEditing: Bool = false
+    var onUpdateStatus: ((TodayTaskEntry, HabitState) -> Void)? = nil
     let todayDigest: WeekdayDigest?
 
     var body: some View {
@@ -12,9 +14,6 @@ struct TodayTasksView: View {
             if embedsNavigationStack {
                 NavigationStack {
                     content
-                        .navigationDestination(for: TodayTaskEntry.self) { entry in
-                            TodayTaskDetailView(entry: entry, showCloseButton: false)
-                        }
                         .toolbar { DismissToolbarItem() }
                 }
             } else {
@@ -33,14 +32,18 @@ struct TodayTasksView: View {
                     title: "timetable.today.tasks.section.finished",
                     entries: viewModel.finishedEntries,
                     emptyTitle: "timetable.today.tasks.empty.finished.title",
-                    emptyMessage: "timetable.today.tasks.empty.finished.message"
+                    emptyMessage: "timetable.today.tasks.empty.finished.message",
+                    allowsStatusEditing: allowsStatusEditing,
+                    onSelectStatus: onUpdateStatus
                 )
 
                 TodayTasksSectionView(
                     title: "timetable.today.tasks.section.todo",
                     entries: viewModel.todoEntries,
                     emptyTitle: "timetable.today.tasks.empty.todo.title",
-                    emptyMessage: "timetable.today.tasks.empty.todo.message"
+                    emptyMessage: "timetable.today.tasks.empty.todo.message",
+                    allowsStatusEditing: allowsStatusEditing,
+                    onSelectStatus: onUpdateStatus
                 )
 
                 if viewModel.futureEntries.isEmpty.not {
@@ -48,7 +51,9 @@ struct TodayTasksView: View {
                         title: "timetable.today.tasks.section.future",
                         entries: viewModel.futureEntries,
                         emptyTitle: "timetable.today.tasks.empty.future.title",
-                        emptyMessage: "timetable.today.tasks.empty.future.message"
+                        emptyMessage: "timetable.today.tasks.empty.future.message",
+                        allowsStatusEditing: false,
+                        onSelectStatus: nil
                     )
                 }
             }
@@ -58,6 +63,14 @@ struct TodayTasksView: View {
         .background(Color(.systemGroupedBackground))
         .navigationTitle(title ?? String(localized: "timetable.today.tasks.title"))
         .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(for: TodayTaskEntry.self) { entry in
+            TodayTaskDetailView(
+                showCloseButton: false,
+                allowsStatusEditing: allowsStatusEditing,
+                entry: entry,
+                onUpdateStatus: onUpdateStatus
+            )
+        }
     }
 }
 

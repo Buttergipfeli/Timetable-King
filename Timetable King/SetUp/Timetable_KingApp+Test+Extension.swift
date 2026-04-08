@@ -22,7 +22,7 @@ extension Timetable_KingApp {
         context.insert(w5)
         
         let weekStart = Calendar.current.dateInterval(of: .weekOfYear, for: .now)?.start ?? .now
-        let wednesday = Calendar.current.startOfDay(for: Calendar.current.date(byAdding: .day, value: 0, to: weekStart) ?? weekStart)
+        let wednesday = Calendar.current.startOfDay(for: Calendar.current.date(byAdding: .day, value: 2, to: weekStart) ?? weekStart)
         context.insert(WeekdayHabitResult(day: wednesday, weekdayHabit: w1, status: .none))
         context.insert(WeekdayHabitResult(day: wednesday, weekdayHabit: w2, status: .done))
         context.insert(WeekdayHabitResult(day: wednesday, weekdayHabit: w3, status: .done))

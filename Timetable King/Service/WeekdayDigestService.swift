@@ -46,7 +46,7 @@ final class WeekdayDigestService {
         }
 
         let habitBuckets = groupByWeekday(items: filteredHabits)
-        let resultBuckets = groupByWeekday(items: fetchedResults)
+        let resultBuckets = groupResultsByDay(fetchedResults)
         let futureHabitBuckets = groupByWeekday(items: futureHabits)
 
         return WeekdayDigestBuilder(
@@ -112,5 +112,44 @@ final class WeekdayDigestService {
                 }
                 return nextBuckets
             }
+    }
+
+    private func groupResultsByDay(_ items: [WeekdayHabitResult]) -> [WeekdayBucket<WeekdayHabitResult>] {
+        items
+            .sorted { lhs, rhs in
+                if lhs.day != rhs.day { return lhs.day < rhs.day }
+                if lhs.weekdayHabit.hour != rhs.weekdayHabit.hour { return lhs.weekdayHabit.hour < rhs.weekdayHabit.hour }
+                if lhs.weekdayHabit.minute != rhs.weekdayHabit.minute { return lhs.weekdayHabit.minute < rhs.weekdayHabit.minute }
+                return lhs.weekdayHabit.habit.title < rhs.weekdayHabit.habit.title
+            }
+            .reduce([WeekdayBucket<WeekdayHabitResult>]()) { buckets, item in
+                var nextBuckets = buckets
+                let weekday = weekday(for: item.day)
+                let lastBucket = buckets.last
+
+                if lastBucket?.weekday == weekday {
+                    let lastIndex = nextBuckets.count - 1
+                    nextBuckets[lastIndex] = nextBuckets[lastIndex].appending(item)
+                } else {
+                    nextBuckets.append(WeekdayBucket(weekday: weekday, items: [item]))
+                }
+
+                return nextBuckets
+            }
+    }
+
+    private func weekday(for date: Date) -> Weekday {
+        let weekdayNumber = Calendar.current.component(.weekday, from: date)
+
+        return switch weekdayNumber {
+        case 2: .monday
+        case 3: .tuesday
+        case 4: .wednesday
+        case 5: .thursday
+        case 6: .friday
+        case 7: .saturday
+        case 1: .sunday
+        default: .monday
+        }
     }
 }

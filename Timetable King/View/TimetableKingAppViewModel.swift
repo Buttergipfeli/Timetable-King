@@ -24,6 +24,17 @@ final class TimetableKingAppViewModel {
     var activeWeeklyTaskDigests: [WeekdayDigest] {
         weeklyTaskDigests.filter(\.habits.isEmpty.not)
     }
+
+    var todayEntries: [TodayTaskEntry] {
+        guard let todayDigest else { return [] }
+
+        return todayDigest.habits.map { habit in
+            TodayTaskEntry(
+                habit: habit,
+                result: todayDigest.results.first { $0.weekdayHabit == habit }
+            )
+        }
+    }
     
     var todayDigest: WeekdayDigest? {
         weekdayDigests.first(where: \.weekday.isToday)
@@ -41,6 +52,7 @@ final class TimetableKingAppViewModel {
 
         weekdayDigests = fetchedDigests
         weeklyTaskDigests = fetchedWeeklyTaskDigests
+        syncPresentedData()
     }
 
     func refreshForActivation() {
@@ -58,12 +70,8 @@ final class TimetableKingAppViewModel {
         isCardPresented = true
     }
 
-    func open(habit: WeekdayHabit) {
-        guard let digest = todayDigest else { return }
-        presentedEntry = TodayTaskEntry(
-            habit: habit,
-            result: digest.results.first { $0.weekdayHabit == habit }
-        )
+    func open(entry: TodayTaskEntry) {
+        presentedEntry = entry
     }
 
     func open(weekdayDigest: WeekdayDigest) {
@@ -82,6 +90,15 @@ final class TimetableKingAppViewModel {
     func setTodayTaskStatus(for entry: TodayTaskReviewEntry, status: HabitState) {
         try? todayTaskReviewService.setStatus(status, for: entry)
         load()
+    }
+
+    func updateTodayTaskStatus(for entry: TodayTaskEntry, status: HabitState) {
+        try? todayTaskReviewService.setStatus(status, for: entry.habit, on: .now)
+        load()
+
+        if presentedEntry?.habit == entry.habit {
+            presentedEntry = todayEntries.first { $0.habit == entry.habit }
+        }
     }
 
     func dismissReviewSession() {
@@ -111,5 +128,19 @@ final class TimetableKingAppViewModel {
         presentedSummaryDigest == nil &&
         isCardPresented.not &&
         isShowingSettings.not
+    }
+
+    private func syncPresentedData() {
+        if let presentedEntry {
+            self.presentedEntry = todayEntries.first { $0.habit == presentedEntry.habit }
+        }
+
+        if let presentedWeekdayDigest {
+            self.presentedWeekdayDigest = weeklyTaskDigests.first { $0.weekday == presentedWeekdayDigest.weekday }
+        }
+
+        if let presentedSummaryDigest {
+            self.presentedSummaryDigest = weekdayDigests.first { $0.weekday == presentedSummaryDigest.weekday }
+        }
     }
 }

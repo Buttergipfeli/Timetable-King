@@ -292,11 +292,11 @@ private enum TodayTaskReviewAction {
     private var emojis: [String] {
         switch self {
         case .done:
-            ["🥳", "😄", "🤩", "😁", "😊", "😎"]
+            ["🥳", "😄", "🤩", "😁", "😊", "😎", "🙂", "🤓", "🫡"]
         case .failed:
-            ["😭", "😴", "🥱", "😪", "😵‍💫", "😮‍💨"]
+            ["😴", "🥱", "😪", "💤", "🛌", "😮‍💨", "😡", "😖", "🙄"]
         case .later:
-            ["🤷", "🤔", "😅"]
+            ["🤷", "🤔", "😅", "🤨"]
         }
     }
 

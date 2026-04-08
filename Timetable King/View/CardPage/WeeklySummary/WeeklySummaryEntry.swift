@@ -22,4 +22,9 @@ struct WeeklySummaryEntry: Identifiable, Hashable {
         guard totalCount > 0 else { return 0 }
         return Double(completedCount) / Double(totalCount)
     }
+
+    var isCurrentDay: Bool {
+        guard let currentWeek = Calendar.current.dateInterval(of: .weekOfYear, for: .now) else { return false }
+        return Calendar.current.isDate(weekStart, inSameDayAs: currentWeek.start) && digest.weekday.isToday
+    }
 }
