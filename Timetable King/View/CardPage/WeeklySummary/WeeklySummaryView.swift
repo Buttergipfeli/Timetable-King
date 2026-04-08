@@ -12,7 +12,6 @@ struct WeeklySummaryView: View {
             TabView(selection: $vm.currentWeekIndex) {
                 ForEach(Array(viewModel.availableWeeks.enumerated()), id: \.offset) { index, week in
                     WeekPageView(
-                        weekIndex: index,
                         weekInterval: week,
                         entries: viewModel.entries(for: week)
                     )
@@ -40,7 +39,6 @@ struct WeeklySummaryView: View {
 }
 
 private struct WeekPageView: View {
-    let weekIndex: Int
     let weekInterval: DateInterval
     let entries: [WeeklySummaryEntry]
 
@@ -66,15 +64,23 @@ private struct WeekPageView: View {
     }
 
     private var weekLabel: String {
-        switch weekIndex {
-        case 0: return String(localized: "weekly.summary.current.week")
-        case 1: return String(localized: "weekly.summary.last.week")
-        default:
-            let formatter = DateIntervalFormatter()
-            formatter.dateStyle = .medium
-            formatter.timeStyle = .none
-            return formatter.string(from: weekInterval.start, to: weekInterval.end - 1)
+        let currentWeekStart = Calendar.current.dateInterval(of: .weekOfYear, for: .now)?.start
+        let lastWeekStart = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentWeekStart ?? .now)
+
+        if let currentWeekStart,
+           Calendar.current.isDate(weekInterval.start, inSameDayAs: currentWeekStart) {
+            return String(localized: "weekly.summary.current.week")
         }
+
+        if let lastWeekStart,
+           Calendar.current.isDate(weekInterval.start, inSameDayAs: lastWeekStart) {
+            return String(localized: "weekly.summary.last.week")
+        }
+
+        let formatter = DateIntervalFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter.string(from: weekInterval.start, to: weekInterval.end - 1)
     }
 }
 

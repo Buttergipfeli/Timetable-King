@@ -13,8 +13,18 @@ final class WeeklySummaryViewModel {
     }
 
     func loadAvailableWeeks() {
+        let currentWeekStart = Calendar.current.dateInterval(of: .weekOfYear, for: .now)?.start
         availableWeeks = digestService.fetchAvailableWeekIntervals()
-        if let current = availableWeeks.first {
+            .sorted { $0.start < $1.start }
+
+        if let currentWeekStart,
+           let currentIndex = availableWeeks.firstIndex(where: {
+               Calendar.current.isDate($0.start, inSameDayAs: currentWeekStart)
+           }) {
+            currentWeekIndex = currentIndex
+            loadDigests(for: availableWeeks[currentIndex])
+        } else if let current = availableWeeks.last {
+            currentWeekIndex = max(availableWeeks.count - 1, 0)
             loadDigests(for: current)
         }
     }

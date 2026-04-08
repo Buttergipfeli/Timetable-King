@@ -23,7 +23,7 @@ struct WeeklySummaryRowView: View {
 
             Spacer(minLength: .spacerMinLength)
 
-            Text(entry.digest.performanceEmoji)
+            Text(entry.performanceEmoji)
                 .font(.title2)
 
             Image(systemName: "chevron.right")
