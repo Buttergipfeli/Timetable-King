@@ -10,7 +10,22 @@ final class WeeklyTaskService {
 
     func delete(habit: WeekdayHabit) throws {
         let context = modelContainerService.context
-        context.delete(habit)
+        if habit.results.isEmpty {
+            context.delete(habit)
+        } else {
+            habit.isDeleted = true
+        }
+        try context.save()
+    }
+
+    func deleteHistory() throws {
+        let context = modelContainerService.context
+        try context.delete(model: WeekdayHabitResult.self)
+        let descriptor = FetchDescriptor<WeekdayHabit>(
+            predicate: #Predicate { $0.isDeleted == true }
+        )
+        let softDeleted = try context.fetch(descriptor)
+        softDeleted.forEach { context.delete($0) }
         try context.save()
     }
 

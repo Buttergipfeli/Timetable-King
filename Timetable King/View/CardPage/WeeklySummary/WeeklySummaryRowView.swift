@@ -13,6 +13,12 @@ struct WeeklySummaryRowView: View {
                 Text("\(entry.completedCount) / \(entry.totalCount)")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
+
+                if entry.futureCount > 0 {
+                    Text("timetable.weekly.summary.future.count".localized(entry.futureCount))
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                }
             }
 
             Spacer(minLength: .spacerMinLength)

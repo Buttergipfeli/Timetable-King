@@ -18,8 +18,16 @@ struct CardWeekdayHabitResultsView: View {
             
             Divider()
 
-            Text("timetable.weekday.results.done".localized(completedResultsCount, weekdayDigest.habits.count))
-                .foregroundStyle(.primary)
+            VStack(alignment: .leading, spacing: .contentSpacing) {
+                Text("timetable.weekday.results.done".localized(completedResultsCount, weekdayDigest.habits.count))
+                    .foregroundStyle(.primary)
+
+                if weekdayDigest.futureHabits.isEmpty.not {
+                    Text("timetable.weekly.summary.future.count".localized(weekdayDigest.futureHabits.count))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
 
             Spacer()
 
@@ -31,4 +39,5 @@ struct CardWeekdayHabitResultsView: View {
 private extension CGFloat {
     static let entryTimeHorizontalPadding = 8.0
     static let entryTimeVerticalPadding = 4.0
+    static let contentSpacing = 2.0
 }

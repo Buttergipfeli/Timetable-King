@@ -7,14 +7,20 @@ final class TimetableKingAppViewModel {
     private let weeklyTaskService: WeeklyTaskService
 
     private(set) var weekdayDigests = [WeekdayDigest]()
+    private(set) var weeklyTaskDigests = [WeekdayDigest]()
     private(set) var presentedCard: CardPage?
     var isCardPresented: Bool = false
+    var isShowingSettings: Bool = false
     var presentedEntry: TodayTaskEntry?
     var presentedWeekdayDigest: WeekdayDigest?
     var presentedSummaryDigest: WeekdayDigest?
     
     var activeWeekdayDigests: [WeekdayDigest] {
-        weekdayDigests.filter(\.habits.isEmpty.not)
+        weekdayDigests.filter(\.isEmpty.not)
+    }
+
+    var activeWeeklyTaskDigests: [WeekdayDigest] {
+        weeklyTaskDigests.filter(\.habits.isEmpty.not)
     }
     
     var todayDigest: WeekdayDigest? {
@@ -27,8 +33,11 @@ final class TimetableKingAppViewModel {
     }
 
     func load() {
-        guard let fetchedDigests = weekdayDigestService.fetchWeekdayDigests() else { return }
+        guard let fetchedDigests = weekdayDigestService.fetchWeekdayDigests(),
+              let fetchedWeeklyTaskDigests = weekdayDigestService.fetchWeeklyTaskDigests() else { return }
+
         weekdayDigests = fetchedDigests
+        weeklyTaskDigests = fetchedWeeklyTaskDigests
     }
     
     func open(card: CardPage) {
@@ -50,6 +59,11 @@ final class TimetableKingAppViewModel {
 
     func openSummary(weekdayDigest: WeekdayDigest) {
         presentedSummaryDigest = weekdayDigest
+    }
+
+    func deleteHistory() {
+        try? weeklyTaskService.deleteHistory()
+        load()
     }
 
     func addWeeklyTask(title: String, weekday: Weekday, hour: Int, minute: Int) {

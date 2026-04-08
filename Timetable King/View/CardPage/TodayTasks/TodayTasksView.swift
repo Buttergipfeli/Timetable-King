@@ -42,6 +42,15 @@ struct TodayTasksView: View {
                     emptyTitle: "timetable.today.tasks.empty.todo.title",
                     emptyMessage: "timetable.today.tasks.empty.todo.message"
                 )
+
+                if viewModel.futureEntries.isEmpty.not {
+                    TodayTasksSectionView(
+                        title: "timetable.today.tasks.section.future",
+                        entries: viewModel.futureEntries,
+                        emptyTitle: "timetable.today.tasks.empty.future.title",
+                        emptyMessage: "timetable.today.tasks.empty.future.message"
+                    )
+                }
             }
             .padding(.horizontal, .screenPadding)
             .padding(.vertical, .screenVerticalPadding)

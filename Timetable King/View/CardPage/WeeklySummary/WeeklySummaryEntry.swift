@@ -2,8 +2,9 @@ import Foundation
 
 struct WeeklySummaryEntry: Identifiable, Hashable {
     let digest: WeekdayDigest
+    let weekStart: Date
 
-    var id: Weekday { digest.weekday }
+    var id: String { "\(weekStart.timeIntervalSinceReferenceDate)-\(digest.weekday.rawValue)" }
 
     var completedCount: Int {
         digest.results.filter(\.isDone).count
@@ -11,6 +12,10 @@ struct WeeklySummaryEntry: Identifiable, Hashable {
 
     var totalCount: Int {
         digest.habits.count
+    }
+
+    var futureCount: Int {
+        digest.futureHabits.count
     }
 
     var completionPercentage: Double {

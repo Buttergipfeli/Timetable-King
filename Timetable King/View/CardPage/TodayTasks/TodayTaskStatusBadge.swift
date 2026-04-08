@@ -16,13 +16,15 @@ struct TodayTaskStatusBadge: View {
 
 private extension TodayTaskEntry {
     var statusColor: Color {
-        switch status {
+        switch displayStatus {
         case .done:
             .green
         case .failed:
             .red
-        case .none:
+        case .todo:
             .gray
+        case .future:
+            .blue
         }
     }
 }

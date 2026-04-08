@@ -173,6 +173,24 @@
         }
       }
     },
+    "timetable.today.task.detail.description.future" : {
+      "comment" : "Detail description for a task that starts next week. Argument: time string.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geplant um %@. Diese Aufgabe gilt erst ab nächster Woche."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scheduled at %@. This task only starts next week."
+          }
+        }
+      }
+    },
     "timetable.today.task.detail.description.title" : {
       "comment" : "Section title for the description field in today task detail.",
       "extractionState" : "manual",
@@ -299,6 +317,24 @@
         }
       }
     },
+    "timetable.today.task.status.description.future" : {
+      "comment" : "Description for a today task that starts next week.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Aufgabe gilt erst ab nächster Woche."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This task only starts next week."
+          }
+        }
+      }
+    },
     "timetable.today.task.status.done" : {
       "comment" : "Badge title for a finished today task.",
       "extractionState" : "manual",
@@ -349,6 +385,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Undefined"
+          }
+        }
+      }
+    },
+    "timetable.today.task.status.future" : {
+      "comment" : "Badge title for a task that starts next week.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nächste Woche"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next Week"
           }
         }
       }
@@ -425,6 +479,42 @@
         }
       }
     },
+    "timetable.today.tasks.empty.future.message" : {
+      "comment" : "Empty-state message for the future section in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgaben, die erst ab nächster Woche gelten, erscheinen hier."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasks that only start next week appear here."
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.empty.future.title" : {
+      "comment" : "Empty-state title for the future section in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine geplanten Einträge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No planned entries"
+          }
+        }
+      }
+    },
     "timetable.today.tasks.section.finished" : {
       "comment" : "Section title for finished tasks in today's tasks.",
       "extractionState" : "manual",
@@ -461,6 +551,24 @@
         }
       }
     },
+    "timetable.today.tasks.section.future" : {
+      "comment" : "Section title for tasks that start next week in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ab nächster Woche"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starting Next Week"
+          }
+        }
+      }
+    },
     "timetable.today.tasks.title" : {
       "comment" : "Navigation title for the today's tasks screen.",
       "extractionState" : "manual",
@@ -475,6 +583,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Today's tasks"
+          }
+        }
+      }
+    },
+    "weekly.summary.current.week" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuelle Woche"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current Week"
+          }
+        }
+      }
+    },
+    "weekly.summary.last.week" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Letzte Woche"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last Week"
           }
         }
       }
@@ -497,6 +639,24 @@
         }
       }
     },
+    "timetable.weekly.summary.future.count" : {
+      "comment" : "Label showing how many tasks start next week. Argument: task count.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ab nächster Woche"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld starting next week"
+          }
+        }
+      }
+    },
     "timetable.weekday.tasks.count" : {
       "comment" : "Label showing the number of tasks for a weekday. Argument: task count.",
       "extractionState" : "manual",
@@ -511,6 +671,108 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld Tasks"
+          }
+        }
+      }
+    },
+    "common.cancel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "settings.delete.history" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesamte Historie löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Entire History"
+          }
+        }
+      }
+    },
+    "settings.delete.history.confirm" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        }
+      }
+    },
+    "settings.delete.history.confirmation.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Ergebnisse werden dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All results will be permanently deleted. This action cannot be undone."
+          }
+        }
+      }
+    },
+    "settings.delete.history.confirmation.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historie löschen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete History?"
+          }
+        }
+      }
+    },
+    "settings.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
           }
         }
       }

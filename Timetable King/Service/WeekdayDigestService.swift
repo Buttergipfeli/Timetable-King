@@ -1,7 +1,6 @@
 import Foundation
 import SwiftData
 
-@MainActor
 final class WeekdayDigestService {
     private let modelContainerService: ModelContainerService
 
@@ -10,50 +9,108 @@ final class WeekdayDigestService {
     }
 
     func fetchWeekdayDigests() -> [WeekdayDigest]? {
-        guard let fetchedHabits = try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()),
-              let fetchedResults = fetchWeekdayHabitResultsForCurrentWeek() else { return nil }
+        guard let weekInterval = Calendar.current.dateInterval(of: .weekOfYear, for: Date()) else { return nil }
+        return fetchWeekdayDigests(for: weekInterval)
+    }
 
-        let habitBuckets = groupByWeekday(items: fetchedHabits)
+    func fetchWeeklyTaskDigests() -> [WeekdayDigest]? {
+        guard let allHabits = try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()) else { return nil }
+
+        let activeHabits = allHabits.filter { !$0.isDeleted }
+        let habitBuckets = groupByWeekday(items: activeHabits)
+
+        return WeekdayDigestBuilder(habits: habitBuckets, results: [], futureHabits: []).build()
+    }
+
+    func fetchWeekdayDigests(for weekInterval: DateInterval) -> [WeekdayDigest]? {
+        guard let allHabits = try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()),
+              let fetchedResults = fetchResults(for: weekInterval) else { return nil }
+
+        let habitIDsWithResults = Set(fetchedResults.map { $0.weekdayHabit.persistentModelID })
+
+        let filteredHabits = allHabits.filter { habit in
+            if habitIDsWithResults.contains(habit.persistentModelID) { return true }
+            guard !habit.isDeleted else { return false }
+            let scheduled = scheduledDate(for: habit, in: weekInterval)
+            return habit.createdAt <= scheduled || isCreatedOnScheduledDay(for: habit, scheduledDate: scheduled)
+        }
+
+        let futureHabits = allHabits.filter { habit in
+            guard !habitIDsWithResults.contains(habit.persistentModelID),
+                  !habit.isDeleted else { return false }
+
+            let scheduled = scheduledDate(for: habit, in: weekInterval)
+            return habit.createdAt > scheduled &&
+                   habit.createdAt < weekInterval.end &&
+                   !isCreatedOnScheduledDay(for: habit, scheduledDate: scheduled)
+        }
+
+        let habitBuckets = groupByWeekday(items: filteredHabits)
         let resultBuckets = groupByWeekday(items: fetchedResults)
+        let futureHabitBuckets = groupByWeekday(items: futureHabits)
 
         return WeekdayDigestBuilder(
             habits: habitBuckets,
-            results: resultBuckets
-        ).build()
+            results: resultBuckets,
+            futureHabits: futureHabitBuckets
+        )
+        .build()
     }
 
-    private func groupByWeekday<Item: WeekdayHabitable>(
-        items: [Item]
-    ) -> [WeekdayBucket<Item>] {
+    func fetchAvailableWeekIntervals() -> [DateInterval] {
+        let results = (try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabitResult>())) ?? []
+        var seen = Set<Date>()
+        var intervals: [DateInterval] = []
+
+        for result in results {
+            guard let interval = Calendar.current.dateInterval(of: .weekOfYear, for: result.day) else { continue }
+            if seen.insert(interval.start).inserted {
+                intervals.append(interval)
+            }
+        }
+
+        let currentInterval = Calendar.current.dateInterval(of: .weekOfYear, for: Date())!
+        if !seen.contains(currentInterval.start) {
+            intervals.append(currentInterval)
+        }
+
+        return intervals.sorted { $0.start > $1.start }
+    }
+
+    private func scheduledDate(for habit: WeekdayHabit, in weekInterval: DateInterval) -> Date {
+        let dayOffset = habit.weekday.sortIndex - 1
+        let weekdayDate = Calendar.current.date(byAdding: .day, value: dayOffset, to: weekInterval.start) ?? weekInterval.start
+        return Calendar.current.date(bySettingHour: habit.hour, minute: habit.minute, second: 0, of: weekdayDate) ?? weekdayDate
+    }
+
+    private func isCreatedOnScheduledDay(for habit: WeekdayHabit, scheduledDate: Date) -> Bool {
+        Calendar.current.isDate(habit.createdAt, inSameDayAs: scheduledDate)
+    }
+
+    private func fetchResults(for weekInterval: DateInterval) -> [WeekdayHabitResult]? {
+        let weekStart = weekInterval.start
+        let weekEnd = weekInterval.end
+        let descriptor = FetchDescriptor<WeekdayHabitResult>(
+            predicate: #Predicate<WeekdayHabitResult> { result in
+                result.day >= weekStart && result.day < weekEnd
+            }
+        )
+        return try? modelContainerService.context.fetch(descriptor)
+    }
+
+    private func groupByWeekday<Item: WeekdayHabitable>(items: [Item]) -> [WeekdayBucket<Item>] {
         items
             .sorted(using: WeekdayHabitableComparator())
             .reduce([WeekdayBucket]()) { buckets, item in
                 var nextBuckets = buckets
                 let lastBucket = buckets.last
-
                 if lastBucket?.weekday == item.weekdayHabit.weekday {
                     let lastIndex = nextBuckets.count - 1
                     nextBuckets[lastIndex] = nextBuckets[lastIndex].appending(item)
                 } else {
-                    let newBucket = WeekdayBucket(weekday: item.weekdayHabit.weekday, items: [item])
-                    nextBuckets.append(newBucket)
+                    nextBuckets.append(WeekdayBucket(weekday: item.weekdayHabit.weekday, items: [item]))
                 }
-
                 return nextBuckets
             }
-    }
-
-    private func fetchWeekdayHabitResultsForCurrentWeek() -> [WeekdayHabitResult]? {
-        guard let weekInterval = Calendar.current.dateInterval(of: .weekOfYear, for: Date()) else { return nil }
-        let weekStart = weekInterval.start
-        let nextWeekStart = weekInterval.end
-
-        let descriptor = FetchDescriptor<WeekdayHabitResult>(
-            predicate: #Predicate<WeekdayHabitResult> { result in
-                result.day >= weekStart && result.day < nextWeekStart
-            }
-        )
-
-        return try? modelContainerService.context.fetch(descriptor)
     }
 }

@@ -20,6 +20,9 @@ final class WeekdayHabit {
         }
     }
 
+    var createdAt: Date = Date.now
+    var isDeleted: Bool = false
+
     @Relationship(deleteRule: .cascade, inverse: \WeekdayHabitResult.weekdayHabit)
     var results: [WeekdayHabitResult] = []
 

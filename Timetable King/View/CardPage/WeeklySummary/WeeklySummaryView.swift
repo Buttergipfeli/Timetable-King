@@ -3,24 +3,24 @@ import SwiftUI
 struct WeeklySummaryView: View {
     @State private var viewModel = WeeklySummaryViewModel()
 
-    let weekdayDigests: [WeekdayDigest]
-
     var body: some View {
+        @Bindable var vm = viewModel
+
         NavigationStack {
-            ScrollView {
-                VStack(spacing: .rowSpacing) {
-                    ForEach(viewModel.entries) { entry in
-                        NavigationLink(value: entry) {
-                            WeeklySummaryRowView(entry: entry)
-                        }
-                        .buttonStyle(.plain)
-                    }
+            TabView(selection: $vm.currentWeekIndex) {
+                ForEach(Array(viewModel.availableWeeks.enumerated()), id: \.offset) { index, week in
+                    WeekPageView(
+                        weekIndex: index,
+                        weekInterval: week,
+                        entries: viewModel.entries(for: week)
+                    )
+                    .tag(index)
+                    .onAppear { viewModel.loadDigests(for: week) }
                 }
-                .padding(.horizontal, .screenPadding)
-                .padding(.vertical, .screenVerticalPadding)
             }
+            .tabViewStyle(.page(indexDisplayMode: .automatic))
             .background(Color(.systemGroupedBackground))
-            .navigationTitle("timetable.weekly.summary.title")
+            .navigationTitle(String(localized: "timetable.weekly.summary.title"))
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: WeeklySummaryEntry.self) { entry in
                 TodayTasksView(
@@ -34,8 +34,45 @@ struct WeeklySummaryView: View {
             }
             .toolbar { DismissToolbarItem() }
         }
-        .onChange(of: weekdayDigests, initial: true) {
-            viewModel.map(weekdayDigests: weekdayDigests)
+        .onAppear { viewModel.loadAvailableWeeks() }
+    }
+}
+
+private struct WeekPageView: View {
+    let weekIndex: Int
+    let weekInterval: DateInterval
+    let entries: [WeeklySummaryEntry]
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: .rowSpacing) {
+                Text(weekLabel)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                ForEach(entries) { entry in
+                    NavigationLink(value: entry) {
+                        WeeklySummaryRowView(entry: entry)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding(.horizontal, .screenPadding)
+            .padding(.vertical, .screenVerticalPadding)
+        }
+        .background(Color(.systemGroupedBackground))
+    }
+
+    private var weekLabel: String {
+        switch weekIndex {
+        case 0: return String(localized: "weekly.summary.current.week")
+        case 1: return String(localized: "weekly.summary.last.week")
+        default:
+            let formatter = DateIntervalFormatter()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .none
+            return formatter.string(from: weekInterval.start, to: weekInterval.end - 1)
         }
     }
 }

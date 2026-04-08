@@ -5,11 +5,13 @@ import Foundation
 final class TodayTasksViewModel {
     private(set) var finishedEntries = [TodayTaskEntry]()
     private(set) var todoEntries = [TodayTaskEntry]()
+    private(set) var futureEntries = [TodayTaskEntry]()
 
     func map(todayDigest: WeekdayDigest?) {
         guard let todayDigest else {
             finishedEntries = []
             todoEntries = []
+            futureEntries = []
             return
         }
 
@@ -26,5 +28,12 @@ final class TodayTasksViewModel {
 
         finishedEntries = Array(entries[finishedUnfinishedIndex...])
         todoEntries = Array(entries[..<finishedUnfinishedIndex])
+        futureEntries = todayDigest.futureHabits.map { habit in
+            TodayTaskEntry(
+                habit: habit,
+                result: nil,
+                displayStatus: .future
+            )
+        }
     }
 }
