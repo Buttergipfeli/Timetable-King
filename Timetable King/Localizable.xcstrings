@@ -119,6 +119,132 @@
         }
       }
     },
+    "timetable.today.review.done" : {
+      "comment" : "Positive swipe label in the today review flow.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erledigt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "timetable.today.review.failed" : {
+      "comment" : "Negative swipe label in the today review flow.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht erledigt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not done"
+          }
+        }
+      }
+    },
+    "timetable.today.review.later" : {
+      "comment" : "Button title for deciding later in the today review flow.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Später entscheiden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Decide later"
+          }
+        }
+      }
+    },
+    "timetable.today.review.message" : {
+      "comment" : "Intro message for the today review flow.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offene Aufgaben von heute brauchen noch einen Status."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open tasks from today still need a status."
+          }
+        }
+      }
+    },
+    "timetable.today.review.progress" : {
+      "comment" : "Progress label in the today review flow. Arguments: current step, total count.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld von %2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "timetable.today.review.question" : {
+      "comment" : "Question shown on the review card.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hast du das gemacht?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Did you do this?"
+          }
+        }
+      }
+    },
+    "timetable.today.review.title" : {
+      "comment" : "Title of the full screen today review flow.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tagescheck"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today Check"
+          }
+        }
+      }
+    },
     "timetable.today.task.detail.description.done" : {
       "comment" : "Detail description for a finished today task. Argument: time string.",
       "extractionState" : "manual",

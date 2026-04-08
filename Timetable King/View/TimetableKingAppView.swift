@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct TimetableKingAppView: View {
+    @Environment(\.scenePhase) private var scenePhase
     @Environment(\.namespace) private var namespace
 
     @State private var viewModel = TimetableKingAppViewModel(modelContainerService: .shared)
@@ -95,6 +96,13 @@ struct TimetableKingAppView: View {
         .sheet(isPresented: $viewModel.isShowingSettings) {
             SettingsView(onDeleteHistory: viewModel.deleteHistory)
         }
+        .fullScreenCover(item: $viewModel.presentedReviewSession) { session in
+            TodayTaskReviewView(
+                session: session,
+                onResolve: viewModel.setTodayTaskStatus(for:status:),
+                onFinish: viewModel.dismissReviewSession
+            )
+        }
         .fullScreenCover(isPresented: $viewModel.isCardPresented) {
             if let presentedCard = viewModel.presentedCard {
                 switch presentedCard {
@@ -116,8 +124,12 @@ struct TimetableKingAppView: View {
                 }
             }
         }
-        .task {
-            viewModel.load()
+        .onChange(of: scenePhase, initial: true) { _, newPhase in
+            guard newPhase == .active else { return }
+            viewModel.refreshForActivation()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
+            viewModel.refreshForActivation()
         }
     }
 }

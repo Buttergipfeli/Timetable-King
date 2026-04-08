@@ -11,7 +11,7 @@ extension Timetable_KingApp {
         context.insert(sleep)
 
         let w1 = WeekdayHabit(hour: 7, minute: 30, weekdayRawValue: Weekday.wednesday.rawValue, habit: sport)
-        let w2 = WeekdayHabit(hour: 20, minute: 0, weekdayRawValue: Weekday.wednesday.rawValue, habit: trash)
+        let w2 = WeekdayHabit(hour: 9, minute: 0, weekdayRawValue: Weekday.wednesday.rawValue, habit: trash)
         let w3 = WeekdayHabit(hour: 21, minute: 15, weekdayRawValue: Weekday.wednesday.rawValue, habit: sport)
         let w4 = WeekdayHabit(hour: 21, minute: 15, weekdayRawValue: Weekday.thursday.rawValue, habit: sport)
         let w5 = WeekdayHabit(hour: 22, minute: 00, weekdayRawValue: Weekday.thursday.rawValue, habit: sleep)
@@ -23,7 +23,7 @@ extension Timetable_KingApp {
         
         let weekStart = Calendar.current.dateInterval(of: .weekOfYear, for: .now)?.start ?? .now
         let wednesday = Calendar.current.startOfDay(for: Calendar.current.date(byAdding: .day, value: 0, to: weekStart) ?? weekStart)
-        context.insert(WeekdayHabitResult(day: wednesday, weekdayHabit: w1, status: .failed))
+        context.insert(WeekdayHabitResult(day: wednesday, weekdayHabit: w1, status: .none))
         context.insert(WeekdayHabitResult(day: wednesday, weekdayHabit: w2, status: .done))
         context.insert(WeekdayHabitResult(day: wednesday, weekdayHabit: w3, status: .done))
 //        context.insert(WeekdayHabitResult(day: monday, weekdayHabit: w1, status: .failed))
