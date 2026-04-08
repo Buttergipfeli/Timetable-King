@@ -17,9 +17,13 @@ struct CardWeekdayHabitResultsView: View {
                 .background(.thinMaterial, in: Capsule())
             
             Divider()
-            
+
             Text("timetable.weekday.results.done".localized(completedResultsCount, weekdayDigest.habits.count))
                 .foregroundStyle(.primary)
+
+            Spacer()
+
+            Text(weekdayDigest.performanceEmoji)
         }
     }
 }

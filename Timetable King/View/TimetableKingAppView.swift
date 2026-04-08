@@ -33,7 +33,12 @@ struct TimetableKingAppView: View {
                     viewModel.open(card: .weeklySummary)
                 } content: {
                     ForEach(viewModel.activeWeekdayDigests) { weekdayDigest in
-                        CardWeekdayHabitResultsView(weekdayDigest: weekdayDigest)
+                        Button {
+                            viewModel.openSummary(weekdayDigest: weekdayDigest)
+                        } label: {
+                            CardWeekdayHabitResultsView(weekdayDigest: weekdayDigest)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 .matchedTransitionSource(id: .weeklySummaryID, in: namespace)
@@ -56,6 +61,9 @@ struct TimetableKingAppView: View {
                 .matchedTransitionSource(id: .weeklyTasksID, in: namespace)
             }
             .padding(.containerPadding)
+            .sheet(item: $viewModel.presentedSummaryDigest) { digest in
+                TodayTasksView(title: digest.weekday.label, todayDigest: digest)
+            }
         }
         .sheet(item: $viewModel.presentedEntry) { entry in
             NavigationStack {
@@ -80,7 +88,7 @@ struct TimetableKingAppView: View {
                     TodayTasksView(todayDigest: viewModel.todayDigest)
                         .navigationTransition(id: .todayTasksID, in: namespace)
                 case .weeklySummary:
-                    Text("summary")
+                    WeeklySummaryView(weekdayDigests: viewModel.weekdayDigests)
                         .navigationTransition(id: .weeklySummaryID, in: namespace)
                 case .weeklyTasks:
                     WeeklyTasksView(

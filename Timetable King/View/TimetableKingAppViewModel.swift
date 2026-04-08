@@ -1,7 +1,6 @@
 import Foundation
 import SwiftData
 
-@MainActor
 @Observable
 final class TimetableKingAppViewModel {
     private let weekdayDigestService: WeekdayDigestService
@@ -12,6 +11,7 @@ final class TimetableKingAppViewModel {
     var isCardPresented: Bool = false
     var presentedEntry: TodayTaskEntry?
     var presentedWeekdayDigest: WeekdayDigest?
+    var presentedSummaryDigest: WeekdayDigest?
     
     var activeWeekdayDigests: [WeekdayDigest] {
         weekdayDigests.filter(\.habits.isEmpty.not)
@@ -46,6 +46,10 @@ final class TimetableKingAppViewModel {
 
     func open(weekdayDigest: WeekdayDigest) {
         presentedWeekdayDigest = weekdayDigest
+    }
+
+    func openSummary(weekdayDigest: WeekdayDigest) {
+        presentedSummaryDigest = weekdayDigest
     }
 
     func addWeeklyTask(title: String, weekday: Weekday, hour: Int, minute: Int) {

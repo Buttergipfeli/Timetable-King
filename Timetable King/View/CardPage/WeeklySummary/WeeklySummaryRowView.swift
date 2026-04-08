@@ -1,25 +1,24 @@
 import SwiftUI
 
-struct TodayTaskRowView: View {
-    let entry: TodayTaskEntry
+struct WeeklySummaryRowView: View {
+    let entry: WeeklySummaryEntry
 
     var body: some View {
         HStack(spacing: .rowSpacing) {
             VStack(alignment: .leading, spacing: .contentSpacing) {
-                Text(entry.timeString)
-                    .font(.subheadline.weight(.bold))
-                    .monospacedDigit()
-                    .foregroundStyle(.secondary)
-
-                Text(entry.title)
+                Text(entry.digest.weekday.label)
                     .font(.headline)
                     .foregroundStyle(.primary)
-                    .lineLimit(.titleLineLimit)
+
+                Text("\(entry.completedCount) / \(entry.totalCount)")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
             }
 
             Spacer(minLength: .spacerMinLength)
 
-            TodayTaskStatusBadge(entry: entry)
+            Text(entry.digest.performanceEmoji)
+                .font(.title2)
 
             Image(systemName: "chevron.right")
                 .font(.caption.weight(.semibold))
@@ -38,12 +37,8 @@ struct TodayTaskRowView: View {
 private extension CGFloat {
     static let rowSpacing = 12.0
     static let rowHorizontalPadding = 14.0
-    static let rowVerticalPadding = 12.0
+    static let rowVerticalPadding = 14.0
     static let rowCornerRadius = 16.0
     static let spacerMinLength = 12.0
     static let contentSpacing = 4.0
-}
-
-private extension Int {
-    static let titleLineLimit = 2
 }

@@ -19,3 +19,21 @@ extension WeekdayDigest: Identifiable {
         weekday
     }
 }
+
+extension WeekdayDigest {
+    var performanceEmoji: String {
+        guard !weekday.isFuture else { return "⏳" }
+        let total = habits.count
+        guard total > 0 else { return "😶" }
+        let completed = results.filter(\.isDone).count
+        let percentage = Double(completed) / Double(total)
+        switch percentage {
+        case 0:          return "😭"
+        case 0..<0.25:   return "😢"
+        case 0.25..<0.5: return "😬"
+        case 0.5..<0.75: return "🙂"
+        case 0.75..<1.0: return "😄"
+        default:         return "🤩"
+        }
+    }
+}

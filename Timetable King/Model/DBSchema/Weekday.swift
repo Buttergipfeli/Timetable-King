@@ -21,6 +21,10 @@ enum Weekday: String, Codable, CaseIterable, Sendable {
     var isToday: Bool {
         self == .current
     }
+
+    var isFuture: Bool {
+        sortIndex > Weekday.current.sortIndex
+    }
     
     var sortIndex: Int {
         switch self {

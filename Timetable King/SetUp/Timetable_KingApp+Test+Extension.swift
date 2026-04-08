@@ -10,9 +10,9 @@ extension Timetable_KingApp {
         context.insert(trash)
         context.insert(sleep)
 
-        let w1 = WeekdayHabit(hour: 7, minute: 30, weekdayRawValue: Weekday.saturday.rawValue, habit: sport)
-        let w2 = WeekdayHabit(hour: 20, minute: 0, weekdayRawValue: Weekday.saturday.rawValue, habit: trash)
-        let w3 = WeekdayHabit(hour: 21, minute: 15, weekdayRawValue: Weekday.saturday.rawValue, habit: sport)
+        let w1 = WeekdayHabit(hour: 7, minute: 30, weekdayRawValue: Weekday.tuesday.rawValue, habit: sport)
+        let w2 = WeekdayHabit(hour: 20, minute: 0, weekdayRawValue: Weekday.tuesday.rawValue, habit: trash)
+        let w3 = WeekdayHabit(hour: 21, minute: 15, weekdayRawValue: Weekday.tuesday.rawValue, habit: sport)
         let w4 = WeekdayHabit(hour: 21, minute: 15, weekdayRawValue: Weekday.thursday.rawValue, habit: sport)
         let w5 = WeekdayHabit(hour: 22, minute: 00, weekdayRawValue: Weekday.thursday.rawValue, habit: sleep)
         context.insert(w1)
@@ -22,10 +22,10 @@ extension Timetable_KingApp {
         context.insert(w5)
         
         let weekStart = Calendar.current.dateInterval(of: .weekOfYear, for: .now)?.start ?? .now
-        let saturday = Calendar.current.startOfDay(for: Calendar.current.date(byAdding: .day, value: 5, to: weekStart) ?? weekStart)
-        context.insert(WeekdayHabitResult(day: saturday, weekdayHabit: w1, status: .failed))
-        context.insert(WeekdayHabitResult(day: saturday, weekdayHabit: w2, status: .done))
-        context.insert(WeekdayHabitResult(day: saturday, weekdayHabit: w3, status: .done))
+        let tuesday = Calendar.current.startOfDay(for: Calendar.current.date(byAdding: .day, value: 0, to: weekStart) ?? weekStart)
+        context.insert(WeekdayHabitResult(day: tuesday, weekdayHabit: w1, status: .failed))
+        context.insert(WeekdayHabitResult(day: tuesday, weekdayHabit: w2, status: .done))
+        context.insert(WeekdayHabitResult(day: tuesday, weekdayHabit: w3, status: .done))
 //        context.insert(WeekdayHabitResult(day: monday, weekdayHabit: w1, status: .failed))
     }
 }

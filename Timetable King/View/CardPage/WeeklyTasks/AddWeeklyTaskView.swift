@@ -9,16 +9,18 @@ struct AddWeeklyTaskView: View {
     let onSave: (String, Weekday, Int, Int) -> Void
 
     var body: some View {
+        @Bindable var vm = viewModel
+
         NavigationStack {
             Form {
                 Section {
-                    TextField("timetable.weekly.tasks.add.placeholder", text: $viewModel.title)
+                    TextField("timetable.weekly.tasks.add.placeholder", text: $vm.title)
                 } header: {
                     Text("timetable.weekly.tasks.add.task.title")
                 }
 
                 Section {
-                    Picker("timetable.weekly.tasks.add.weekday", selection: $viewModel.weekday) {
+                    Picker("timetable.weekly.tasks.add.weekday", selection: $vm.weekday) {
                         ForEach(Weekday.allCases, id: \.self) { day in
                             Text(day.label).tag(day)
                         }
@@ -26,7 +28,7 @@ struct AddWeeklyTaskView: View {
 
                     DatePicker(
                         "timetable.weekly.tasks.add.time",
-                        selection: $viewModel.time,
+                        selection: $vm.time,
                         displayedComponents: .hourAndMinute
                     )
                 } header: {
