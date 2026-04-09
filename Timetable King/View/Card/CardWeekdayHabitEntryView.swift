@@ -18,6 +18,7 @@ struct CardWeekdayHabitEntryView: View {
                         
             Text(entry.title)
                 .foregroundStyle(.primary)
+                .multilineTextAlignment(.leading)
 
             Spacer()
 

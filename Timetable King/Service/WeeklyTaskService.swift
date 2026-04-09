@@ -3,9 +3,11 @@ import SwiftData
 
 final class WeeklyTaskService {
     private let modelContainerService: ModelContainerService
+    private let historyStateService: HistoryStateService
 
     init(modelContainerService: ModelContainerService) {
         self.modelContainerService = modelContainerService
+        historyStateService = HistoryStateService(modelContainerService: modelContainerService)
     }
 
     func delete(habit: WeekdayHabit) throws {
@@ -20,13 +22,15 @@ final class WeeklyTaskService {
 
     func deleteHistory() throws {
         let context = modelContainerService.context
-        try context.delete(model: WeekdayHabitResult.self)
+        let results = try context.fetch(FetchDescriptor<WeekdayHabitResult>())
+        results.forEach { context.delete($0) }
         let descriptor = FetchDescriptor<WeekdayHabit>(
             predicate: #Predicate { $0.isDeleted == true }
         )
         let softDeleted = try context.fetch(descriptor)
         softDeleted.forEach { context.delete($0) }
         try context.save()
+        try historyStateService.markHistoryDeleted()
     }
 
     func update(habit: WeekdayHabit, title: String, weekday: Weekday, hour: Int, minute: Int) throws {

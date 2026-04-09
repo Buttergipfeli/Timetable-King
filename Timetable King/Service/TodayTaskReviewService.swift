@@ -3,9 +3,11 @@ import SwiftData
 
 final class TodayTaskReviewService {
     private let modelContainerService: ModelContainerService
+    private let historyStateService: HistoryStateService
 
     init(modelContainerService: ModelContainerService) {
         self.modelContainerService = modelContainerService
+        historyStateService = HistoryStateService(modelContainerService: modelContainerService)
     }
 
     @discardableResult
@@ -93,7 +95,9 @@ final class TodayTaskReviewService {
         var scheduledDates = [Date]()
 
         while scheduledDate < date {
-            scheduledDates.append(scheduledDate)
+            if isVisibleAfterHistoryReset(scheduledDate) {
+                scheduledDates.append(scheduledDate)
+            }
             scheduledDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: scheduledDate) ?? scheduledDate
         }
 
@@ -123,5 +127,10 @@ final class TodayTaskReviewService {
     private func scheduledDate(for habit: WeekdayHabit, on day: Date) -> Date {
         let startOfDay = Calendar.current.startOfDay(for: day)
         return Calendar.current.date(bySettingHour: habit.hour, minute: habit.minute, second: 0, of: startOfDay) ?? startOfDay
+    }
+
+    private func isVisibleAfterHistoryReset(_ date: Date) -> Bool {
+        guard let resetDayStart = historyStateService.historyDeletedDayStart else { return true }
+        return date >= resetDayStart
     }
 }

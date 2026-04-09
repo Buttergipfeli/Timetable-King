@@ -8,10 +8,12 @@ struct TodayTasksEmptyStateView: View {
         VStack(alignment: .leading, spacing: .contentSpacing) {
             Text(title)
                 .font(.headline.weight(.semibold))
+                .multilineTextAlignment(.leading)
 
             Text(message)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
+                .multilineTextAlignment(.leading)
         }
         .padding(.emptyStatePadding)
         .frame(maxWidth: .infinity, alignment: .leading)

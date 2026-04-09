@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Environment(\.dismiss) private var dismiss
-
     @State private var isShowingDeleteConfirmation = false
 
     let onDeleteHistory: () -> Void
@@ -11,8 +9,11 @@ struct SettingsView: View {
         NavigationStack {
             List {
                 Section {
-                    Button("settings.delete.history", role: .destructive) {
+                    Button(role: .destructive) {
                         isShowingDeleteConfirmation = true
+                    } label: {
+                        Text("settings.delete.history")
+                            .multilineTextAlignment(.leading)
                     }
                 }
             }
@@ -26,11 +27,11 @@ struct SettingsView: View {
             ) {
                 Button("settings.delete.history.confirm", role: .destructive) {
                     onDeleteHistory()
-                    dismiss()
                 }
                 Button("common.cancel", role: .cancel) {}
             } message: {
                 Text("settings.delete.history.confirmation.message")
+                    .multilineTextAlignment(.leading)
             }
         }
     }

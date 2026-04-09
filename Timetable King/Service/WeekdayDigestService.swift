@@ -3,9 +3,11 @@ import SwiftData
 
 final class WeekdayDigestService {
     private let modelContainerService: ModelContainerService
+    private let historyStateService: HistoryStateService
 
     init(modelContainerService: ModelContainerService) {
         self.modelContainerService = modelContainerService
+        historyStateService = HistoryStateService(modelContainerService: modelContainerService)
     }
 
     func fetchWeekdayDigests() -> [WeekdayDigest]? {
@@ -26,18 +28,25 @@ final class WeekdayDigestService {
         guard let allHabits = try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()),
               let fetchedResults = fetchResults(for: weekInterval) else { return nil }
 
-        let habitIDsWithResults = Set(fetchedResults.map { $0.weekdayHabit.persistentModelID })
+        let visibleResults = fetchedResults.filter { result in
+            isVisibleResultAfterHistoryReset(result)
+        }
+
+        let isVisibleWeek = isVisibleWeekAfterHistoryReset(weekInterval)
+
+        let habitIDsWithResults = Set(visibleResults.map { $0.weekdayHabit.persistentModelID })
 
         let filteredHabits = allHabits.filter { habit in
             if habitIDsWithResults.contains(habit.persistentModelID) { return true }
-            guard !habit.isDeleted else { return false }
+            guard !habit.isDeleted, isVisibleWeek else { return false }
             let scheduled = scheduledDate(for: habit, in: weekInterval)
             return habit.createdAt <= scheduled || isCreatedOnScheduledDay(for: habit, scheduledDate: scheduled)
         }
 
         let futureHabits = allHabits.filter { habit in
             guard !habitIDsWithResults.contains(habit.persistentModelID),
-                  !habit.isDeleted else { return false }
+                  !habit.isDeleted,
+                  isVisibleWeek else { return false }
 
             let scheduled = scheduledDate(for: habit, in: weekInterval)
             return habit.createdAt > scheduled &&
@@ -46,7 +55,7 @@ final class WeekdayDigestService {
         }
 
         let habitBuckets = groupByWeekday(items: filteredHabits)
-        let resultBuckets = groupResultsByDay(fetchedResults)
+        let resultBuckets = groupResultsByDay(visibleResults)
         let futureHabitBuckets = groupByWeekday(items: futureHabits)
 
         return WeekdayDigestBuilder(
@@ -58,7 +67,8 @@ final class WeekdayDigestService {
     }
 
     func fetchAvailableWeekIntervals() -> [DateInterval] {
-        let results = (try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabitResult>())) ?? []
+        let results = ((try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabitResult>())) ?? [])
+            .filter(isVisibleResultAfterHistoryReset)
         var seen = Set<Date>()
         var intervals: [DateInterval] = []
 
@@ -151,5 +161,15 @@ final class WeekdayDigestService {
         case 1: .sunday
         default: .monday
         }
+    }
+
+    private func isVisibleResultAfterHistoryReset(_ result: WeekdayHabitResult) -> Bool {
+        guard let historyDeletedAt = historyStateService.historyDeletedAt else { return true }
+        return result.day >= historyDeletedAt
+    }
+
+    private func isVisibleWeekAfterHistoryReset(_ weekInterval: DateInterval) -> Bool {
+        guard let historyDeletedWeekStart = historyStateService.historyDeletedWeekStart else { return true }
+        return weekInterval.start >= historyDeletedWeekStart
     }
 }

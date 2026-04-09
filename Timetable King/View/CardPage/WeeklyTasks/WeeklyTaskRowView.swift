@@ -15,6 +15,7 @@ struct WeeklyTaskRowView: View {
                     .font(.headline)
                     .foregroundStyle(.primary)
                     .lineLimit(.titleLineLimit)
+                    .multilineTextAlignment(.leading)
             }
 
             Spacer(minLength: .spacerMinLength)

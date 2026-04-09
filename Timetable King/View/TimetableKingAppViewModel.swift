@@ -84,6 +84,10 @@ final class TimetableKingAppViewModel {
 
     func deleteHistory() {
         try? weeklyTaskService.deleteHistory()
+        presentedEntry = nil
+        presentedWeekdayDigest = nil
+        presentedSummaryDigest = nil
+        presentedReviewSession = nil
         load()
     }
 

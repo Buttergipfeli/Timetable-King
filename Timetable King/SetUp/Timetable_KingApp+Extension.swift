@@ -2,7 +2,7 @@ import SwiftData
 
 extension Timetable_KingApp {
     static func setUpModelContainer(isStoredInMemoryOnly: Bool) -> ModelContainer {
-        let schema = Schema(versionedSchema: SchemaV1.self)
+        let schema = Schema(versionedSchema: SchemaV2.self)
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: isStoredInMemoryOnly)
 
         do {

@@ -69,10 +69,12 @@ struct TodayTaskReviewView: View {
             Text("timetable.today.review.title")
                 .font(.largeTitle.weight(.bold))
                 .foregroundStyle(.white)
+                .multilineTextAlignment(.leading)
 
             Text("timetable.today.review.message")
                 .font(.subheadline)
                 .foregroundStyle(.white.opacity(.headerSecondaryOpacity))
+                .multilineTextAlignment(.leading)
 
             if viewModel.totalCount > 0 {
                 Text("timetable.today.review.progress".localized(viewModel.currentStep, viewModel.totalCount))
@@ -128,10 +130,12 @@ struct TodayTaskReviewView: View {
                 .font(.system(size: .titleFontSize, weight: .bold, design: .rounded))
                 .foregroundStyle(.primary)
                 .lineLimit(.titleLineLimit)
+                .multilineTextAlignment(.leading)
 
             Text("timetable.today.review.question")
                 .font(.title3.weight(.semibold))
                 .foregroundStyle(.secondary)
+                .multilineTextAlignment(.leading)
         }
         .padding(.cardPadding)
         .frame(maxWidth: .infinity, minHeight: .cardMinHeight, alignment: .leading)
