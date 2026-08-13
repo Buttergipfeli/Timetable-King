@@ -4,12 +4,12 @@ import SwiftData
 @Model
 final class WeekdayHabitResult {
     #Unique<WeekdayHabitResult>([\.day, \.weekdayHabit])
-    
+
     var day: Date
     var weekdayHabit: WeekdayHabit
-    var status: Status
+    var status: HabitState
 
-    init(day: Date, weekdayHabit: WeekdayHabit, status: Status) {
+    init(day: Date, weekdayHabit: WeekdayHabit, status: HabitState) {
         self.day = Calendar.current.startOfDay(for: day)
         self.weekdayHabit = weekdayHabit
         self.status = status

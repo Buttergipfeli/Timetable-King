@@ -1,8 +1,15 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%lld tasks" : {
-
+    "%lld / %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld / %2$lld"
+          }
+        }
+      }
     },
     "seed.habit.sport" : {
       "comment" : "Debug seed habit title for sport.",
@@ -58,6 +65,24 @@
         }
       }
     },
+    "timetable.card.my.weekly.tasks" : {
+      "comment" : "Title for the card with my weekly tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meine wöchentlichen Aufgaben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My weekly tasks"
+          }
+        }
+      }
+    },
     "timetable.card.today.tasks" : {
       "comment" : "Title for the today tasks card.",
       "extractionState" : "manual",
@@ -94,38 +119,630 @@
         }
       }
     },
-    "timetable.card.my.weekly.tasks" : {
-      "comment" : "Title for the card with my weekly tasks.",
+    "timetable.today.review.done" : {
+      "comment" : "Positive swipe label in the today review flow.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Meine wöchentlichen Aufgaben"
+            "value" : "Erledigt"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "My weekly tasks"
+            "value" : "Done"
           }
         }
       }
     },
-    "timetable.transition.title" : {
-      "comment" : "Button title shown in the fullscreen transition destination.",
+    "timetable.today.review.failed" : {
+      "comment" : "Negative swipe label in the today review flow.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Übergangsansicht"
+            "value" : "Nicht erledigt"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Transition View"
+            "value" : "Not done"
+          }
+        }
+      }
+    },
+    "timetable.today.review.later" : {
+      "comment" : "Button title for deciding later in the today review flow.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Später entscheiden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Decide later"
+          }
+        }
+      }
+    },
+    "timetable.today.review.message" : {
+      "comment" : "Intro message for the today review flow.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offene Aufgaben von heute brauchen noch einen Status."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open tasks from today still need a status."
+          }
+        }
+      }
+    },
+    "timetable.today.review.progress" : {
+      "comment" : "Progress label in the today review flow. Arguments: current step, total count.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld von %2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "timetable.today.review.question" : {
+      "comment" : "Question shown on the review card.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hast du das gemacht?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Did you do this?"
+          }
+        }
+      }
+    },
+    "timetable.today.review.title" : {
+      "comment" : "Title of the full screen today review flow.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tagescheck"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today Check"
+          }
+        }
+      }
+    },
+    "timetable.today.task.detail.description.done" : {
+      "comment" : "Detail description for a finished today task. Argument: time string.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geplant um %@. Diese Aufgabe ist bereits erledigt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scheduled at %@. This task is already finished."
+          }
+        }
+      }
+    },
+    "timetable.today.task.detail.description.failed" : {
+      "comment" : "Detail description for a failed today task. Argument: time string.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geplant um %@. Diese Aufgabe hat ein definiertes Ergebnis und ist als nicht erledigt markiert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scheduled at %@. This task has a defined result and is marked as not done."
+          }
+        }
+      }
+    },
+    "timetable.today.task.detail.description.none" : {
+      "comment" : "Detail description for a task without a defined result yet. Argument: time string.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geplant um %@. Diese Aufgabe hat noch keinen Status."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scheduled at %@. This task does not have a status yet."
+          }
+        }
+      }
+    },
+    "timetable.today.task.detail.description.future" : {
+      "comment" : "Detail description for a task that starts next week. Argument: time string.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geplant um %@. Diese Aufgabe gilt erst ab nächster Woche."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scheduled at %@. This task only starts next week."
+          }
+        }
+      }
+    },
+    "timetable.today.task.detail.description.title" : {
+      "comment" : "Section title for the description field in today task detail.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beschreibung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Description"
+          }
+        }
+      }
+    },
+    "timetable.today.task.detail.status" : {
+      "comment" : "Section title for the status field in today task detail.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        }
+      }
+    },
+    "timetable.today.task.detail.time" : {
+      "comment" : "Section title for the time field in today task detail.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uhrzeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        }
+      }
+    },
+    "timetable.today.task.detail.title" : {
+      "comment" : "Section title for the title field in today task detail.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title"
+          }
+        }
+      }
+    },
+    "timetable.today.task.status.description.done" : {
+      "comment" : "Description for a finished today task.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Aufgabe wurde abgeschlossen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This task has been completed."
+          }
+        }
+      }
+    },
+    "timetable.today.task.status.description.failed" : {
+      "comment" : "Description for a failed today task.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Aufgabe wurde als nicht erledigt markiert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This task was marked as not completed."
+          }
+        }
+      }
+    },
+    "timetable.today.task.status.description.none" : {
+      "comment" : "Description for a today task without a defined result.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Aufgabe hat noch kein definiertes Ergebnis."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This task does not have a defined result yet."
+          }
+        }
+      }
+    },
+    "timetable.today.task.status.description.future" : {
+      "comment" : "Description for a today task that starts next week.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Aufgabe gilt erst ab nächster Woche."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This task only starts next week."
+          }
+        }
+      }
+    },
+    "timetable.today.task.status.done" : {
+      "comment" : "Badge title for a finished today task.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erledigt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finished"
+          }
+        }
+      }
+    },
+    "timetable.today.task.status.failed" : {
+      "comment" : "Badge title for a failed today task.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht erledigt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not done"
+          }
+        }
+      }
+    },
+    "timetable.today.task.status.none" : {
+      "comment" : "Badge title for a today task without a defined result.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht definiert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undefined"
+          }
+        }
+      }
+    },
+    "timetable.today.task.status.future" : {
+      "comment" : "Badge title for a task that starts next week.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nächste Woche"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next Week"
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.empty.finished.message" : {
+      "comment" : "Empty-state message for the finished section in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgaben mit definiertem Ergebnis erscheinen hier."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasks with a defined result appear here."
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.empty.finished.title" : {
+      "comment" : "Empty-state title for the finished section in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine erledigten Einträge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No finished entries"
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.empty.todo.message" : {
+      "comment" : "Empty-state message for the todo section in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgaben ohne definiertes Ergebnis erscheinen hier."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasks without a defined result appear here."
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.empty.todo.title" : {
+      "comment" : "Empty-state title for the todo section in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine offenen Einträge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No open entries"
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.empty.future.message" : {
+      "comment" : "Empty-state message for the future section in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgaben, die erst ab nächster Woche gelten, erscheinen hier."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasks that only start next week appear here."
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.empty.future.title" : {
+      "comment" : "Empty-state title for the future section in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine geplanten Einträge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No planned entries"
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.section.finished" : {
+      "comment" : "Section title for finished tasks in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erledigt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finished"
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.section.todo" : {
+      "comment" : "Section title for open tasks in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todo"
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.section.future" : {
+      "comment" : "Section title for tasks that start next week in today's tasks.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ab nächster Woche"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starting Next Week"
+          }
+        }
+      }
+    },
+    "timetable.today.tasks.title" : {
+      "comment" : "Navigation title for the today's tasks screen.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heutige Aufgaben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today's tasks"
+          }
+        }
+      }
+    },
+    "weekly.summary.current.week" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuelle Woche"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current Week"
+          }
+        }
+      }
+    },
+    "weekly.summary.last.week" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Letzte Woche"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last Week"
           }
         }
       }
@@ -148,6 +765,484 @@
         }
       }
     },
+    "timetable.weekly.summary.future.count" : {
+      "comment" : "Label showing how many tasks start next week. Argument: task count.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ab nächster Woche"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld starting next week"
+          }
+        }
+      }
+    },
+    "timetable.weekday.tasks.count" : {
+      "comment" : "Label showing the number of tasks for a weekday. Argument: task count.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld Aufgaben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld Tasks"
+          }
+        }
+      }
+    },
+    "common.cancel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "common.ok" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "common.operation.error.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Änderung konnte nicht gespeichert werden. Bitte versuche es erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The change could not be saved. Please try again."
+          }
+        }
+      }
+    },
+    "common.operation.error.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern fehlgeschlagen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Failed"
+          }
+        }
+      }
+    },
+    "settings.delete.history" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesamte Historie löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Entire History"
+          }
+        }
+      }
+    },
+    "settings.delete.history.confirm" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        }
+      }
+    },
+    "settings.delete.history.confirmation.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Ergebnisse werden dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All results will be permanently deleted. This action cannot be undone."
+          }
+        }
+      }
+    },
+    "settings.delete.history.confirmation.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historie löschen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete History?"
+          }
+        }
+      }
+    },
+    "settings.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "timetable.weekly.summary.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wochenübersicht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weekly Summary"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.cancel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe eingeben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter task name"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.schedule" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeitplan"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.task.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Task"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.time" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uhrzeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Task"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.weekday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.day.empty.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippe auf + um eine Aufgabe hinzuzufügen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap + to add a task for this day."
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.day.empty.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Aufgaben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Tasks"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.detail.day" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.detail.time" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uhrzeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.detail.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Task"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.edit.delete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgabe löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Task"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wöchentliche Aufgaben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weekly Tasks"
+          }
+        }
+      }
+    },
+    "weekday.friday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freitag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Friday"
+          }
+        }
+      }
+    },
     "weekday.friday.short" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -161,6 +1256,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fri."
+          }
+        }
+      }
+    },
+    "weekday.monday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Montag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monday"
           }
         }
       }
@@ -182,6 +1294,23 @@
         }
       }
     },
+    "weekday.saturday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Samstag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saturday"
+          }
+        }
+      }
+    },
     "weekday.saturday.short" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -195,6 +1324,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sat."
+          }
+        }
+      }
+    },
+    "weekday.sunday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonntag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunday"
           }
         }
       }
@@ -216,6 +1362,23 @@
         }
       }
     },
+    "weekday.thursday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Donnerstag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thursday"
+          }
+        }
+      }
+    },
     "weekday.thursday.short" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -233,6 +1396,23 @@
         }
       }
     },
+    "weekday.tuesday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dienstag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tuesday"
+          }
+        }
+      }
+    },
     "weekday.tuesday.short" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -246,6 +1426,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tue."
+          }
+        }
+      }
+    },
+    "weekday.wednesday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mittwoch"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wednesday"
           }
         }
       }

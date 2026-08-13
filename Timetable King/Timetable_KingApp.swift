@@ -11,6 +11,7 @@ struct Timetable_KingApp: App {
 #if DEBUG
         container = Timetable_KingApp.setUpModelContainer(isStoredInMemoryOnly: true)
         setUpTestData(into: container.mainContext)
+        try? container.mainContext.save()
 #else
         container = Timetable_KingApp.setUpModelContainer(isStoredInMemoryOnly: false)
 #endif

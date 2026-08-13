@@ -2,9 +2,13 @@ import Foundation
 
 enum Weekday: String, Codable, CaseIterable, Sendable {
     static var current: Weekday {
-        let weekdayNumber = Calendar.current.component(.weekday, from: Date())
+        Weekday(date: .now)
+    }
 
-        return switch weekdayNumber {
+    init(date: Date) {
+        let weekdayNumber = Calendar.current.component(.weekday, from: date)
+
+        self = switch weekdayNumber {
         case 2: .monday
         case 3: .tuesday
         case 4: .wednesday
@@ -21,6 +25,10 @@ enum Weekday: String, Codable, CaseIterable, Sendable {
     var isToday: Bool {
         self == .current
     }
+
+    var isFuture: Bool {
+        sortIndex > Weekday.current.sortIndex
+    }
     
     var sortIndex: Int {
         switch self {
@@ -33,7 +41,15 @@ enum Weekday: String, Codable, CaseIterable, Sendable {
         case .sunday: 7
         }
     }
+
+    func dayOffset(from startWeekday: Weekday) -> Int {
+        (sortIndex - startWeekday.sortIndex + Weekday.allCases.count) % Weekday.allCases.count
+    }
     
+    var label: String {
+        "weekday.\(rawValue)".localized
+    }
+
     var shortLabel: String {
         "weekday.\(rawValue).short".localized
     }
