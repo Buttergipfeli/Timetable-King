@@ -2,11 +2,12 @@ import SwiftUI
 
 struct TodayTasksView: View {
     @State private var viewModel = TodayTasksViewModel()
+    @State private var selectedEntry: TodayTaskEntry?
 
     var title: String? = nil
     var embedsNavigationStack: Bool = true
     var allowsStatusEditing: Bool = false
-    var onUpdateStatus: ((TodayTaskEntry, HabitState) -> Void)? = nil
+    var onUpdateStatus: ((TodayTaskEntry, HabitState) -> Bool)? = nil
     let todayDigest: WeekdayDigest?
 
     var body: some View {
@@ -34,7 +35,8 @@ struct TodayTasksView: View {
                     emptyTitle: "timetable.today.tasks.empty.finished.title",
                     emptyMessage: "timetable.today.tasks.empty.finished.message",
                     allowsStatusEditing: allowsStatusEditing,
-                    onSelectStatus: onUpdateStatus
+                    onSelectEntry: { selectedEntry = $0 },
+                    onSelectStatus: updateStatus
                 )
 
                 TodayTasksSectionView(
@@ -43,7 +45,8 @@ struct TodayTasksView: View {
                     emptyTitle: "timetable.today.tasks.empty.todo.title",
                     emptyMessage: "timetable.today.tasks.empty.todo.message",
                     allowsStatusEditing: allowsStatusEditing,
-                    onSelectStatus: onUpdateStatus
+                    onSelectEntry: { selectedEntry = $0 },
+                    onSelectStatus: updateStatus
                 )
 
                 if viewModel.futureEntries.isEmpty.not {
@@ -53,6 +56,7 @@ struct TodayTasksView: View {
                         emptyTitle: "timetable.today.tasks.empty.future.title",
                         emptyMessage: "timetable.today.tasks.empty.future.message",
                         allowsStatusEditing: false,
+                        onSelectEntry: { selectedEntry = $0 },
                         onSelectStatus: nil
                     )
                 }
@@ -63,14 +67,20 @@ struct TodayTasksView: View {
         .background(Color(.systemGroupedBackground))
         .navigationTitle(title ?? String(localized: "timetable.today.tasks.title"))
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: TodayTaskEntry.self) { entry in
+        .navigationDestination(item: $selectedEntry) { entry in
             TodayTaskDetailView(
                 showCloseButton: false,
                 allowsStatusEditing: allowsStatusEditing,
                 entry: entry,
-                onUpdateStatus: onUpdateStatus
+                onUpdateStatus: updateStatus
             )
         }
+    }
+
+    private func updateStatus(for entry: TodayTaskEntry, status: HabitState) -> Bool {
+        guard onUpdateStatus?(entry, status) == true else { return false }
+        viewModel.updateStatus(for: entry, status: status)
+        return true
     }
 }
 

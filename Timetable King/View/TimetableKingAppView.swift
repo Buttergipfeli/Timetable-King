@@ -8,6 +8,8 @@ struct TimetableKingAppView: View {
     @State private var viewModel = TimetableKingAppViewModel(modelContainerService: .shared)
 
     var body: some View {
+        @Bindable var vm = viewModel
+
         NavigationStack {
             ScrollView {
                 VStack {
@@ -18,16 +20,12 @@ struct TimetableKingAppView: View {
                         viewModel.open(card: .todayTasks)
                     } content: {
                         ForEach(viewModel.todayEntries) { entry in
-                            Button {
-                                viewModel.open(entry: entry)
-                            } label: {
-                                CardWeekdayHabitEntryView(
-                                    entry: entry,
-                                    allowsStatusEditing: true,
-                                    onSelectStatus: viewModel.updateTodayTaskStatus
-                                )
-                            }
-                            .buttonStyle(.plain)
+                            CardWeekdayHabitEntryView(
+                                entry: entry,
+                                allowsStatusEditing: true,
+                                onOpen: { viewModel.open(entry: entry) },
+                                onSelectStatus: viewModel.updateTodayTaskStatus
+                            )
                         }
                     }
                     .matchedTransitionSource(id: .todayTasksID, in: namespace)
@@ -148,6 +146,11 @@ struct TimetableKingAppView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
             viewModel.refreshForActivation()
+        }
+        .alert("common.operation.error.title", isPresented: $vm.isShowingOperationError) {
+            Button("common.ok", role: .cancel) {}
+        } message: {
+            Text("common.operation.error.message")
         }
     }
 }

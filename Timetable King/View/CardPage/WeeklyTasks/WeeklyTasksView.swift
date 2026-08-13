@@ -5,9 +5,9 @@ struct WeeklyTasksView: View {
 
     let weekdayDigests: [WeekdayDigest]
     let initialWeekday: Weekday?
-    let onAddTask: (String, Weekday, Int, Int) -> Void
-    let onDeleteTask: (WeekdayHabit) -> Void
-    let onUpdateTask: (WeekdayHabit, String, Weekday, Int, Int) -> Void
+    let onAddTask: (String, Weekday, Int, Int) -> Bool
+    let onDeleteTask: (WeekdayHabit) -> Bool
+    let onUpdateTask: (WeekdayHabit, String, Weekday, Int, Int) -> Bool
 
     var body: some View {
         NavigationStack(path: $viewModel.path) {

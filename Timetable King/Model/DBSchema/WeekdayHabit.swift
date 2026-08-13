@@ -3,13 +3,11 @@ import Foundation
 
 @Model
 final class WeekdayHabit {
-    #Unique<WeekdayHabit>([\.weekdayRawValue, \.habit, \.hour, \.minute])
-    
     var hour: Int
     var minute: Int
 
     var habit: Habit
-    
+
     private var weekdayRawValue: String
     var weekday: Weekday {
         get {
@@ -21,7 +19,12 @@ final class WeekdayHabit {
     }
 
     var createdAt: Date = Date.now
-    var isDeleted: Bool = false
+    var deletedAt: Date?
+
+    @Transient
+    var isDeleted: Bool {
+        deletedAt != nil
+    }
 
     @Relationship(deleteRule: .cascade, inverse: \WeekdayHabitResult.weekdayHabit)
     var results: [WeekdayHabitResult] = []

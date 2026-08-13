@@ -3,7 +3,7 @@ import SwiftUI
 struct SettingsView: View {
     @State private var isShowingDeleteConfirmation = false
 
-    let onDeleteHistory: () -> Void
+    let onDeleteHistory: () -> Bool
 
     var body: some View {
         NavigationStack {
@@ -26,7 +26,7 @@ struct SettingsView: View {
                 titleVisibility: .visible
             ) {
                 Button("settings.delete.history.confirm", role: .destructive) {
-                    onDeleteHistory()
+                    _ = onDeleteHistory()
                 }
                 Button("common.cancel", role: .cancel) {}
             } message: {

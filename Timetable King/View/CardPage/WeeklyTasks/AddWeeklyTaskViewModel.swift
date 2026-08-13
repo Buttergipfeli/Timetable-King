@@ -7,15 +7,20 @@ final class AddWeeklyTaskViewModel {
     var time = Date.now
 
     var isSaveable: Bool {
-        !title.trimmingCharacters(in: .whitespaces).isEmpty
+        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     func setup(preselectedWeekday: Weekday?) {
         weekday = preselectedWeekday ?? .current
     }
 
-    func save(onSave: (String, Weekday, Int, Int) -> Void) {
+    func save(onSave: (String, Weekday, Int, Int) -> Bool) -> Bool {
         let components = Calendar.current.dateComponents([.hour, .minute], from: time)
-        onSave(title, weekday, components.hour ?? 0, components.minute ?? 0)
+        return onSave(
+            title.trimmingCharacters(in: .whitespacesAndNewlines),
+            weekday,
+            components.hour ?? 0,
+            components.minute ?? 0
+        )
     }
 }

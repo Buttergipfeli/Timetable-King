@@ -12,10 +12,12 @@ final class TimetableKingAppViewModel {
     var presentedWeekdayDigest: WeekdayDigest?
     var presentedSummaryDigest: WeekdayDigest?
     var presentedReviewSession: TodayTaskReviewSession?
+    var isShowingOperationError = false
 
     private let weekdayDigestService: WeekdayDigestService
     private let weeklyTaskService: WeeklyTaskService
     private let todayTaskReviewService: TodayTaskReviewService
+    private let modelContainerService: ModelContainerService
     
     var activeWeekdayDigests: [WeekdayDigest] {
         weekdayDigests.filter(\.isEmpty.not)
@@ -41,6 +43,7 @@ final class TimetableKingAppViewModel {
     }
     
     init(modelContainerService: ModelContainerService) {
+        self.modelContainerService = modelContainerService
         weekdayDigestService = WeekdayDigestService(modelContainerService: modelContainerService)
         weeklyTaskService = WeeklyTaskService(modelContainerService: modelContainerService)
         todayTaskReviewService = TodayTaskReviewService(modelContainerService: modelContainerService)
@@ -56,7 +59,11 @@ final class TimetableKingAppViewModel {
     }
 
     func refreshForActivation() {
-        _ = try? todayTaskReviewService.resolvePastUndefinedTasks()
+        do {
+            try todayTaskReviewService.resolvePastUndefinedTasks()
+        } catch {
+            handleOperationError()
+        }
         load()
 
         guard canPresentReviewSession else { return }
@@ -82,26 +89,28 @@ final class TimetableKingAppViewModel {
         presentedSummaryDigest = weekdayDigest
     }
 
-    func deleteHistory() {
-        try? weeklyTaskService.deleteHistory()
-        presentedEntry = nil
-        presentedWeekdayDigest = nil
-        presentedSummaryDigest = nil
-        presentedReviewSession = nil
-        load()
+    @discardableResult
+    func deleteHistory() -> Bool {
+        perform {
+            try weeklyTaskService.deleteHistory()
+            presentedEntry = nil
+            presentedWeekdayDigest = nil
+            presentedSummaryDigest = nil
+            presentedReviewSession = nil
+        }
     }
 
-    func setTodayTaskStatus(for entry: TodayTaskReviewEntry, status: HabitState) {
-        try? todayTaskReviewService.setStatus(status, for: entry)
-        load()
+    @discardableResult
+    func setTodayTaskStatus(for entry: TodayTaskReviewEntry, status: HabitState) -> Bool {
+        perform {
+            try todayTaskReviewService.setStatus(status, for: entry)
+        }
     }
 
-    func updateTodayTaskStatus(for entry: TodayTaskEntry, status: HabitState) {
-        try? todayTaskReviewService.setStatus(status, for: entry.habit, on: .now)
-        load()
-
-        if presentedEntry?.habit == entry.habit {
-            presentedEntry = todayEntries.first { $0.habit == entry.habit }
+    @discardableResult
+    func updateTodayTaskStatus(for entry: TodayTaskEntry, status: HabitState) -> Bool {
+        perform {
+            try todayTaskReviewService.setStatus(status, for: entry.habit, on: .now)
         }
     }
 
@@ -110,19 +119,25 @@ final class TimetableKingAppViewModel {
         load()
     }
 
-    func addWeeklyTask(title: String, weekday: Weekday, hour: Int, minute: Int) {
-        try? weeklyTaskService.save(title: title, weekday: weekday, hour: hour, minute: minute)
-        load()
+    @discardableResult
+    func addWeeklyTask(title: String, weekday: Weekday, hour: Int, minute: Int) -> Bool {
+        perform {
+            try weeklyTaskService.save(title: title, weekday: weekday, hour: hour, minute: minute)
+        }
     }
 
-    func deleteWeeklyTask(habit: WeekdayHabit) {
-        try? weeklyTaskService.delete(habit: habit)
-        load()
+    @discardableResult
+    func deleteWeeklyTask(habit: WeekdayHabit) -> Bool {
+        perform {
+            try weeklyTaskService.delete(habit: habit)
+        }
     }
 
-    func updateWeeklyTask(habit: WeekdayHabit, title: String, weekday: Weekday, hour: Int, minute: Int) {
-        try? weeklyTaskService.update(habit: habit, title: title, weekday: weekday, hour: hour, minute: minute)
-        load()
+    @discardableResult
+    func updateWeeklyTask(habit: WeekdayHabit, title: String, weekday: Weekday, hour: Int, minute: Int) -> Bool {
+        perform {
+            try weeklyTaskService.update(habit: habit, title: title, weekday: weekday, hour: hour, minute: minute)
+        }
     }
 
     private var canPresentReviewSession: Bool {
@@ -146,5 +161,22 @@ final class TimetableKingAppViewModel {
         if let presentedSummaryDigest {
             self.presentedSummaryDigest = weekdayDigests.first { $0.weekday == presentedSummaryDigest.weekday }
         }
+    }
+
+    private func perform(_ operation: () throws -> Void) -> Bool {
+        do {
+            try operation()
+            load()
+            return true
+        } catch {
+            handleOperationError()
+            load()
+            return false
+        }
+    }
+
+    private func handleOperationError() {
+        modelContainerService.context.rollback()
+        isShowingOperationError = true
     }
 }

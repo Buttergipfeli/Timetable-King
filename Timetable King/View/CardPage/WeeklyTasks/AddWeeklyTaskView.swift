@@ -6,7 +6,7 @@ struct AddWeeklyTaskView: View {
     @State private var viewModel = AddWeeklyTaskViewModel()
 
     let preselectedWeekday: Weekday?
-    let onSave: (String, Weekday, Int, Int) -> Void
+    let onSave: (String, Weekday, Int, Int) -> Bool
 
     var body: some View {
         @Bindable var vm = viewModel
@@ -41,8 +41,9 @@ struct AddWeeklyTaskView: View {
                 DismissToolbarItem()
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        viewModel.save(onSave: onSave)
-                        dismiss()
+                        if viewModel.save(onSave: onSave) {
+                            dismiss()
+                        }
                     } label: {
                         Image(systemName: "checkmark")
                             .font(.headline.weight(.semibold))

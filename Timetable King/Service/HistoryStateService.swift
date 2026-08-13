@@ -11,11 +11,6 @@ final class HistoryStateService {
         return calendar.startOfDay(for: historyDeletedAt)
     }
 
-    var historyDeletedWeekStart: Date? {
-        guard let historyDeletedAt else { return nil }
-        return calendar.dateInterval(of: .weekOfYear, for: historyDeletedAt)?.start
-    }
-
     private let modelContainerService: ModelContainerService
     private let calendar: Calendar
 

@@ -7,7 +7,7 @@ final class WeeklyTaskEditViewModel {
     var time = Date.now
 
     var isSaveable: Bool {
-        !title.trimmingCharacters(in: .whitespaces).isEmpty
+        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     func setup(habit: WeekdayHabit) {
@@ -19,8 +19,14 @@ final class WeeklyTaskEditViewModel {
         time = Calendar.current.date(from: components) ?? .now
     }
 
-    func save(habit: WeekdayHabit, onSave: (WeekdayHabit, String, Weekday, Int, Int) -> Void) {
+    func save(habit: WeekdayHabit, onSave: (WeekdayHabit, String, Weekday, Int, Int) -> Bool) -> Bool {
         let components = Calendar.current.dateComponents([.hour, .minute], from: time)
-        onSave(habit, title, weekday, components.hour ?? 0, components.minute ?? 0)
+        return onSave(
+            habit,
+            title.trimmingCharacters(in: .whitespacesAndNewlines),
+            weekday,
+            components.hour ?? 0,
+            components.minute ?? 0
+        )
     }
 }

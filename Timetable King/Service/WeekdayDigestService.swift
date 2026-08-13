@@ -32,30 +32,29 @@ final class WeekdayDigestService {
             isVisibleResultAfterHistoryReset(result)
         }
 
-        let isVisibleWeek = isVisibleWeekAfterHistoryReset(weekInterval)
-
         let habitIDsWithResults = Set(visibleResults.map { $0.weekdayHabit.persistentModelID })
 
-        let filteredHabits = allHabits.filter { habit in
-            if habitIDsWithResults.contains(habit.persistentModelID) { return true }
-            guard !habit.isDeleted, isVisibleWeek else { return false }
+        let scheduledHabits = allHabits.filter { habit in
+            guard !habitIDsWithResults.contains(habit.persistentModelID) else { return false }
             let scheduled = scheduledDate(for: habit, in: weekInterval)
+            guard isVisibleAfterHistoryReset(scheduled) else { return false }
+            guard isBeforeDeletion(scheduled, for: habit) else { return false }
             return habit.createdAt <= scheduled || isCreatedOnScheduledDay(for: habit, scheduledDate: scheduled)
         }
 
         let futureHabits = allHabits.filter { habit in
             guard !habitIDsWithResults.contains(habit.persistentModelID),
-                  !habit.isDeleted,
-                  isVisibleWeek else { return false }
+                  !habit.isDeleted else { return false }
 
             let scheduled = scheduledDate(for: habit, in: weekInterval)
+            guard isVisibleAfterHistoryReset(scheduled) else { return false }
             return habit.createdAt > scheduled &&
                    habit.createdAt < weekInterval.end &&
                    !isCreatedOnScheduledDay(for: habit, scheduledDate: scheduled)
         }
 
-        let habitBuckets = groupByWeekday(items: filteredHabits)
         let resultBuckets = groupResultsByDay(visibleResults)
+        let habitBuckets = buildHabitBuckets(scheduledHabits: scheduledHabits, resultBuckets: resultBuckets)
         let futureHabitBuckets = groupByWeekday(items: futureHabits)
 
         return WeekdayDigestBuilder(
@@ -79,8 +78,8 @@ final class WeekdayDigestService {
             }
         }
 
-        let currentInterval = Calendar.current.dateInterval(of: .weekOfYear, for: Date())!
-        if !seen.contains(currentInterval.start) {
+        if let currentInterval = Calendar.current.dateInterval(of: .weekOfYear, for: Date()),
+           !seen.contains(currentInterval.start) {
             intervals.append(currentInterval)
         }
 
@@ -88,13 +87,18 @@ final class WeekdayDigestService {
     }
 
     private func scheduledDate(for habit: WeekdayHabit, in weekInterval: DateInterval) -> Date {
-        let dayOffset = habit.weekday.sortIndex - 1
+        let dayOffset = habit.weekday.dayOffset(from: Weekday(date: weekInterval.start))
         let weekdayDate = Calendar.current.date(byAdding: .day, value: dayOffset, to: weekInterval.start) ?? weekInterval.start
         return Calendar.current.date(bySettingHour: habit.hour, minute: habit.minute, second: 0, of: weekdayDate) ?? weekdayDate
     }
 
     private func isCreatedOnScheduledDay(for habit: WeekdayHabit, scheduledDate: Date) -> Bool {
         Calendar.current.isDate(habit.createdAt, inSameDayAs: scheduledDate)
+    }
+
+    private func isBeforeDeletion(_ scheduledDate: Date, for habit: WeekdayHabit) -> Bool {
+        guard let deletedAt = habit.deletedAt else { return true }
+        return scheduledDate < Calendar.current.startOfDay(for: deletedAt)
     }
 
     private func fetchResults(for weekInterval: DateInterval) -> [WeekdayHabitResult]? {
@@ -134,7 +138,7 @@ final class WeekdayDigestService {
             }
             .reduce([WeekdayBucket<WeekdayHabitResult>]()) { buckets, item in
                 var nextBuckets = buckets
-                let weekday = weekday(for: item.day)
+                let weekday = Weekday(date: item.day)
                 let lastBucket = buckets.last
 
                 if lastBucket?.weekday == weekday {
@@ -148,28 +152,32 @@ final class WeekdayDigestService {
             }
     }
 
-    private func weekday(for date: Date) -> Weekday {
-        let weekdayNumber = Calendar.current.component(.weekday, from: date)
+    private func buildHabitBuckets(
+        scheduledHabits: [WeekdayHabit],
+        resultBuckets: [WeekdayBucket<WeekdayHabitResult>]
+    ) -> [WeekdayBucket<WeekdayHabit>] {
+        let scheduledBuckets = groupByWeekday(items: scheduledHabits)
 
-        return switch weekdayNumber {
-        case 2: .monday
-        case 3: .tuesday
-        case 4: .wednesday
-        case 5: .thursday
-        case 6: .friday
-        case 7: .saturday
-        case 1: .sunday
-        default: .monday
+        return Weekday.allCases.compactMap { weekday in
+            let scheduled = scheduledBuckets.first { $0.weekday == weekday }?.items ?? []
+            let historical = resultBuckets.first { $0.weekday == weekday }?.items.map(\.weekdayHabit) ?? []
+            let habits = (historical + scheduled).sorted { lhs, rhs in
+                if lhs.hour != rhs.hour { return lhs.hour < rhs.hour }
+                if lhs.minute != rhs.minute { return lhs.minute < rhs.minute }
+                return lhs.habit.title < rhs.habit.title
+            }
+
+            return habits.isEmpty ? nil : WeekdayBucket(weekday: weekday, items: habits)
         }
     }
 
     private func isVisibleResultAfterHistoryReset(_ result: WeekdayHabitResult) -> Bool {
-        guard let historyDeletedAt = historyStateService.historyDeletedAt else { return true }
-        return result.day >= historyDeletedAt
+        guard let historyDeletedDayStart = historyStateService.historyDeletedDayStart else { return true }
+        return result.day >= historyDeletedDayStart
     }
 
-    private func isVisibleWeekAfterHistoryReset(_ weekInterval: DateInterval) -> Bool {
-        guard let historyDeletedWeekStart = historyStateService.historyDeletedWeekStart else { return true }
-        return weekInterval.start >= historyDeletedWeekStart
+    private func isVisibleAfterHistoryReset(_ date: Date) -> Bool {
+        guard let historyDeletedDayStart = historyStateService.historyDeletedDayStart else { return true }
+        return date >= historyDeletedDayStart
     }
 }

@@ -14,7 +14,6 @@ final class TodayTaskReviewService {
     func resolvePastUndefinedTasks(referenceDate: Date = .now) throws -> Int {
         let context = modelContainerService.context
         let habits = try context.fetch(FetchDescriptor<WeekdayHabit>())
-            .filter { !$0.isDeleted }
 
         let startOfToday = Calendar.current.startOfDay(for: referenceDate)
         var createdResultsCount = 0
@@ -23,8 +22,12 @@ final class TodayTaskReviewService {
             let scheduledDates = unresolvedPastScheduledDates(for: habit, before: startOfToday)
 
             for scheduledDate in scheduledDates {
-                guard effectiveResult(for: habit, on: scheduledDate) == nil else { continue }
-                context.insert(WeekdayHabitResult(day: scheduledDate, weekdayHabit: habit, status: .failed))
+                if let result = storedResult(for: habit, on: scheduledDate) {
+                    guard result.status == .none else { continue }
+                    result.status = .failed
+                } else {
+                    context.insert(WeekdayHabitResult(day: scheduledDate, weekdayHabit: habit, status: .failed))
+                }
                 createdResultsCount += 1
             }
         }
@@ -39,7 +42,7 @@ final class TodayTaskReviewService {
     func fetchPendingReviewEntries(referenceDate: Date = .now) -> [TodayTaskReviewEntry] {
         let startOfToday = Calendar.current.startOfDay(for: referenceDate)
         let habits = ((try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>())) ?? [])
-            .filter { !$0.isDeleted && $0.weekday.isToday }
+            .filter { !$0.isDeleted && $0.weekday == Weekday(date: referenceDate) }
 
         return habits
             .compactMap { habit in
@@ -94,7 +97,9 @@ final class TodayTaskReviewService {
 
         var scheduledDates = [Date]()
 
-        while scheduledDate < date {
+        let endDate = habit.deletedAt.map(Calendar.current.startOfDay(for:)) ?? date
+
+        while scheduledDate < min(date, endDate) {
             if isVisibleAfterHistoryReset(scheduledDate) {
                 scheduledDates.append(scheduledDate)
             }
@@ -119,7 +124,7 @@ final class TodayTaskReviewService {
     }
 
     private func scheduledDate(for habit: WeekdayHabit, inWeekStartingAt weekStart: Date) -> Date {
-        let dayOffset = habit.weekday.sortIndex - 1
+        let dayOffset = habit.weekday.dayOffset(from: Weekday(date: weekStart))
         let weekdayDate = Calendar.current.date(byAdding: .day, value: dayOffset, to: weekStart) ?? weekStart
         return scheduledDate(for: habit, on: weekdayDate)
     }

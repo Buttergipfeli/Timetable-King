@@ -6,8 +6,8 @@ struct WeeklyTaskEditView: View {
     @State private var viewModel = WeeklyTaskEditViewModel()
 
     let habit: WeekdayHabit
-    let onSave: (WeekdayHabit, String, Weekday, Int, Int) -> Void
-    let onDelete: (WeekdayHabit) -> Void
+    let onSave: (WeekdayHabit, String, Weekday, Int, Int) -> Bool
+    let onDelete: (WeekdayHabit) -> Bool
 
     var body: some View {
         @Bindable var vm = viewModel
@@ -37,8 +37,9 @@ struct WeeklyTaskEditView: View {
 
             Section {
                 Button("timetable.weekly.tasks.edit.delete", role: .destructive) {
-                    onDelete(habit)
-                    dismiss()
+                    if onDelete(habit) {
+                        dismiss()
+                    }
                 }
             }
         }
@@ -47,8 +48,9 @@ struct WeeklyTaskEditView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    viewModel.save(habit: habit, onSave: onSave)
-                    dismiss()
+                    if viewModel.save(habit: habit, onSave: onSave) {
+                        dismiss()
+                    }
                 } label: {
                     Image(systemName: "checkmark")
                         .font(.headline.weight(.semibold))

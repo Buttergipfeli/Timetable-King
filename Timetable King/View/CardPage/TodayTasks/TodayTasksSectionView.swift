@@ -6,7 +6,8 @@ struct TodayTasksSectionView: View {
     let emptyTitle: LocalizedStringKey
     let emptyMessage: LocalizedStringKey
     var allowsStatusEditing: Bool = false
-    var onSelectStatus: ((TodayTaskEntry, HabitState) -> Void)? = nil
+    let onSelectEntry: (TodayTaskEntry) -> Void
+    var onSelectStatus: ((TodayTaskEntry, HabitState) -> Bool)? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: .sectionInnerSpacing) {
@@ -18,14 +19,12 @@ struct TodayTasksSectionView: View {
             } else {
                 VStack(spacing: .rowSpacing) {
                     ForEach(entries) { entry in
-                        NavigationLink(value: entry) {
-                            TodayTaskRowView(
-                                entry: entry,
-                                allowsStatusEditing: allowsStatusEditing,
-                                onSelectStatus: onSelectStatus
-                            )
-                        }
-                        .buttonStyle(.plain)
+                        TodayTaskRowView(
+                            entry: entry,
+                            allowsStatusEditing: allowsStatusEditing,
+                            onOpen: { onSelectEntry(entry) },
+                            onSelectStatus: onSelectStatus
+                        )
                     }
                 }
             }

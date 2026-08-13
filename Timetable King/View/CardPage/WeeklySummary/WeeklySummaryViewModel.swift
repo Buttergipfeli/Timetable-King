@@ -12,6 +12,10 @@ final class WeeklySummaryViewModel {
         digestService = WeekdayDigestService(modelContainerService: .shared)
     }
 
+    init(modelContainerService: ModelContainerService) {
+        digestService = WeekdayDigestService(modelContainerService: modelContainerService)
+    }
+
     func loadAvailableWeeks() {
         let currentWeekStart = Calendar.current.dateInterval(of: .weekOfYear, for: .now)?.start
         availableWeeks = digestService.fetchAvailableWeekIntervals()
@@ -31,6 +35,14 @@ final class WeeklySummaryViewModel {
 
     func loadDigests(for weekInterval: DateInterval) {
         guard digestsByWeek[weekInterval.start] == nil else { return }
+        digestsByWeek[weekInterval.start] = digestService.fetchWeekdayDigests(for: weekInterval)
+    }
+
+    func reloadDigests(forWeekStartingAt weekStart: Date) {
+        guard let weekInterval = availableWeeks.first(where: {
+            Calendar.current.isDate($0.start, inSameDayAs: weekStart)
+        }) else { return }
+
         digestsByWeek[weekInterval.start] = digestService.fetchWeekdayDigests(for: weekInterval)
     }
 

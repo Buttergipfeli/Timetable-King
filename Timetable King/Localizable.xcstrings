@@ -818,6 +818,57 @@
         }
       }
     },
+    "common.ok" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "common.operation.error.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Änderung konnte nicht gespeichert werden. Bitte versuche es erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The change could not be saved. Please try again."
+          }
+        }
+      }
+    },
+    "common.operation.error.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichern fehlgeschlagen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Failed"
+          }
+        }
+      }
+    },
     "settings.delete.history" : {
       "extractionState" : "manual",
       "localizations" : {

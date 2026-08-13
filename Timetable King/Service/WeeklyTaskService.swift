@@ -15,7 +15,7 @@ final class WeeklyTaskService {
         if habit.results.isEmpty {
             context.delete(habit)
         } else {
-            habit.isDeleted = true
+            habit.deletedAt = .now
         }
         try context.save()
     }
@@ -25,11 +25,10 @@ final class WeeklyTaskService {
         let results = try context.fetch(FetchDescriptor<WeekdayHabitResult>())
         results.forEach { context.delete($0) }
         let descriptor = FetchDescriptor<WeekdayHabit>(
-            predicate: #Predicate { $0.isDeleted == true }
+            predicate: #Predicate { $0.deletedAt != nil }
         )
         let softDeleted = try context.fetch(descriptor)
         softDeleted.forEach { context.delete($0) }
-        try context.save()
         try historyStateService.markHistoryDeleted()
     }
 
@@ -43,6 +42,17 @@ final class WeeklyTaskService {
             updatedHabit = Habit(title: title)
             context.insert(updatedHabit)
         }
+
+        guard try hasDuplicate(
+            habit: updatedHabit,
+            weekday: weekday,
+            hour: hour,
+            minute: minute,
+            excluding: habit
+        ).not else {
+            throw WeeklyTaskServiceError.duplicateTask
+        }
+
         habit.habit = updatedHabit
         habit.weekday = weekday
         habit.hour = hour
@@ -60,7 +70,38 @@ final class WeeklyTaskService {
             habit = Habit(title: title)
             context.insert(habit)
         }
+
+        guard try hasDuplicate(
+            habit: habit,
+            weekday: weekday,
+            hour: hour,
+            minute: minute
+        ).not else {
+            throw WeeklyTaskServiceError.duplicateTask
+        }
+
         context.insert(WeekdayHabit(hour: hour, minute: minute, weekdayRawValue: weekday.rawValue, habit: habit))
         try context.save()
     }
+
+    private func hasDuplicate(
+        habit: Habit,
+        weekday: Weekday,
+        hour: Int,
+        minute: Int,
+        excluding excludedSchedule: WeekdayHabit? = nil
+    ) throws -> Bool {
+        try modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()).contains {
+            !$0.isDeleted &&
+            $0 != excludedSchedule &&
+            $0.habit == habit &&
+            $0.weekday == weekday &&
+            $0.hour == hour &&
+            $0.minute == minute
+        }
+    }
+}
+
+private enum WeeklyTaskServiceError: Error {
+    case duplicateTask
 }

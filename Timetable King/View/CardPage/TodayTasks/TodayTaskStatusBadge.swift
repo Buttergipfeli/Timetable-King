@@ -3,13 +3,13 @@ import SwiftUI
 struct TodayTaskStatusBadge: View {
     let entry: TodayTaskEntry
     var allowsEditing: Bool = false
-    var onSelectStatus: ((HabitState) -> Void)? = nil
+    var onSelectStatus: ((HabitState) -> Bool)? = nil
 
     var body: some View {
         if allowsEditing, entry.displayStatus != .future, let onSelectStatus {
             Menu {
                 Button {
-                    onSelectStatus(.done)
+                    _ = onSelectStatus(.done)
                 } label: {
                     menuOption(
                         title: "timetable.today.task.status.done".localized,
@@ -18,7 +18,7 @@ struct TodayTaskStatusBadge: View {
                 }
 
                 Button {
-                    onSelectStatus(.failed)
+                    _ = onSelectStatus(.failed)
                 } label: {
                     menuOption(
                         title: "timetable.today.task.status.failed".localized,
@@ -27,7 +27,7 @@ struct TodayTaskStatusBadge: View {
                 }
 
                 Button {
-                    onSelectStatus(.none)
+                    _ = onSelectStatus(.none)
                 } label: {
                     menuOption(
                         title: "timetable.today.task.status.none".localized,

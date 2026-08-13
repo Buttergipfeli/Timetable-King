@@ -7,11 +7,10 @@ final class ModelContainerService {
     private let container: ModelContainer
     
     var context: ModelContext {
-        guard ModelContainerService.shared != nil else { fatalError("\(#file) was not initialized") }
-        return container.mainContext
+        container.mainContext
     }
     
-    private init(container: ModelContainer) {
+    init(container: ModelContainer) {
         self.container = container
     }
     

@@ -6,9 +6,9 @@ struct WeeklyTasksDayView: View {
     var showCloseButton: Bool = false
 
     let digest: WeekdayDigest
-    let onAddTask: (String, Weekday, Int, Int) -> Void
-    let onDeleteTask: (WeekdayHabit) -> Void
-    let onUpdateTask: (WeekdayHabit, String, Weekday, Int, Int) -> Void
+    let onAddTask: (String, Weekday, Int, Int) -> Bool
+    let onDeleteTask: (WeekdayHabit) -> Bool
+    let onUpdateTask: (WeekdayHabit, String, Weekday, Int, Int) -> Bool
 
     var body: some View {
         List {
@@ -24,7 +24,7 @@ struct WeeklyTasksDayView: View {
                 .listRowInsets(EdgeInsets(top: .rowSpacing / 2, leading: .screenPadding, bottom: .rowSpacing / 2, trailing: .screenPadding))
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     Button(role: .destructive) {
-                        onDeleteTask(habit)
+                        _ = onDeleteTask(habit)
                     } label: {
                         Label("timetable.weekly.tasks.edit.delete", systemImage: "trash")
                     }

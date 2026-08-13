@@ -4,7 +4,7 @@ import SwiftData
 @Model
 final class WeekdayHabitResult {
     #Unique<WeekdayHabitResult>([\.day, \.weekdayHabit])
-    
+
     var day: Date
     var weekdayHabit: WeekdayHabit
     var status: HabitState

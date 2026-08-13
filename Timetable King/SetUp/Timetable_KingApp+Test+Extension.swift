@@ -13,7 +13,7 @@ extension Timetable_KingApp {
         let w1 = WeekdayHabit(hour: 7, minute: 30, weekdayRawValue: Weekday.thursday.rawValue, habit: sport)
         let w2 = WeekdayHabit(hour: 8, minute: 0, weekdayRawValue: Weekday.thursday.rawValue, habit: trash)
         let w3 = WeekdayHabit(hour: 21, minute: 15, weekdayRawValue: Weekday.thursday.rawValue, habit: sport)
-        let w4 = WeekdayHabit(hour: 21, minute: 15, weekdayRawValue: Weekday.thursday.rawValue, habit: sport)
+        let w4 = WeekdayHabit(hour: 21, minute: 45, weekdayRawValue: Weekday.thursday.rawValue, habit: sport)
         let w5 = WeekdayHabit(hour: 22, minute: 00, weekdayRawValue: Weekday.thursday.rawValue, habit: sleep)
         let createdAt = Calendar.current.date(byAdding: .weekOfYear, value: -2, to: .now) ?? .now
         w1.createdAt = createdAt

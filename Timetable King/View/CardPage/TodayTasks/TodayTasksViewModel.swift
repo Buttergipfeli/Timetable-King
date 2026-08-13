@@ -15,19 +15,14 @@ final class TodayTasksViewModel {
             return
         }
 
-        var entries = todayDigest.habits.map { habit in
+        let entries = todayDigest.habits.map { habit in
             TodayTaskEntry(
                 habit: habit,
                 result: todayDigest.results.first { $0.weekdayHabit == habit }
             )
         }
 
-        let finishedUnfinishedIndex = entries.partition { entry in
-            entry.result?.isDone == true
-        }
-
-        finishedEntries = Array(entries[finishedUnfinishedIndex...])
-        todoEntries = Array(entries[..<finishedUnfinishedIndex])
+        mapCurrentEntries(entries)
         futureEntries = todayDigest.futureHabits.map { habit in
             TodayTaskEntry(
                 habit: habit,
@@ -35,5 +30,24 @@ final class TodayTasksViewModel {
                 displayStatus: .future
             )
         }
+    }
+
+    func updateStatus(for entry: TodayTaskEntry, status: HabitState) {
+        let updatedEntry = TodayTaskEntry(
+            habit: entry.habit,
+            result: entry.result,
+            displayStatus: TodayTaskDisplayStatus(resultStatus: status)
+        )
+        let entries = (finishedEntries + todoEntries).map {
+            $0.id == entry.id ? updatedEntry : $0
+        }
+        mapCurrentEntries(entries)
+    }
+
+    private func mapCurrentEntries(_ entries: [TodayTaskEntry]) {
+        finishedEntries = entries.filter {
+            $0.displayStatus == .done || $0.displayStatus == .failed
+        }
+        todoEntries = entries.filter { $0.displayStatus == .todo }
     }
 }

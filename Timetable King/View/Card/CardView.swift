@@ -7,29 +7,32 @@ struct CardView<Content: View>: View {
     let content: () -> Content
     
     var body: some View {
-        Button {
-            action()
-        } label: {
-            VStack(alignment: .leading) {
+        VStack(alignment: .leading) {
+            Button(action: action) {
                 CardTitleView(title: title)
-                    .padding([.horizontal, .top], .cardPadding)
-                
-                ScrollView {
-                    VStack(spacing: .entryListSpacing) {
-                        if isEmpty {
-                            CardEmptyView(errorMessage: "timetable.card.empty")
-                        } else {
-                            content()
-                        }
-                    }
-                    .padding([.horizontal], .cardPadding)
-                }
-                .contentMargins(.bottom, .cardPadding)
-                .frame(height: .entriesScrollHeight)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .glassEffect(.clear, in: .rect(cornerRadius: .cardCornerRadius))
-            .background(RoundedRectangle(cornerRadius: .cardCornerRadius).fill(.orange))
+            .buttonStyle(.plain)
+            .padding([.horizontal, .top], .cardPadding)
+
+            ScrollView {
+                VStack(spacing: .entryListSpacing) {
+                    if isEmpty {
+                        Button(action: action) {
+                            CardEmptyView(errorMessage: "timetable.card.empty")
+                        }
+                        .buttonStyle(.plain)
+                    } else {
+                        content()
+                    }
+                }
+                .padding([.horizontal], .cardPadding)
+            }
+            .contentMargins(.bottom, .cardPadding)
+            .frame(height: .entriesScrollHeight)
         }
+        .glassEffect(.clear, in: .rect(cornerRadius: .cardCornerRadius))
+        .background(RoundedRectangle(cornerRadius: .cardCornerRadius).fill(.orange))
     }
 }
 

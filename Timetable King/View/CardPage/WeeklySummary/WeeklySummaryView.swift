@@ -3,7 +3,7 @@ import SwiftUI
 struct WeeklySummaryView: View {
     @State private var viewModel = WeeklySummaryViewModel()
 
-    var onUpdateStatus: ((TodayTaskEntry, HabitState) -> Void)? = nil
+    var onUpdateStatus: ((TodayTaskEntry, HabitState) -> Bool)? = nil
 
     var body: some View {
         @Bindable var vm = viewModel
@@ -28,7 +28,11 @@ struct WeeklySummaryView: View {
                     title: entry.digest.weekday.label,
                     embedsNavigationStack: false,
                     allowsStatusEditing: entry.isCurrentDay,
-                    onUpdateStatus: entry.isCurrentDay ? onUpdateStatus : nil,
+                    onUpdateStatus: entry.isCurrentDay ? { task, status in
+                        guard onUpdateStatus?(task, status) == true else { return false }
+                        viewModel.reloadDigests(forWeekStartingAt: entry.weekStart)
+                        return true
+                    } : nil,
                     todayDigest: entry.digest
                 )
             }

@@ -9,7 +9,7 @@ struct TodayTaskReviewView: View {
     @State private var isProcessingAction = false
 
     let session: TodayTaskReviewSession
-    let onResolve: (TodayTaskReviewEntry, HabitState) -> Void
+    let onResolve: (TodayTaskReviewEntry, HabitState) -> Bool
     let onFinish: () -> Void
 
     var body: some View {
@@ -244,7 +244,10 @@ struct TodayTaskReviewView: View {
         isProcessingAction = true
 
         if let status = action.status {
-            onResolve(entry, status)
+            guard onResolve(entry, status) else {
+                isProcessingAction = false
+                return
+            }
         }
 
         if action.swipeDirection != 0 {

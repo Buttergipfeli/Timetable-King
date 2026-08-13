@@ -3,36 +3,43 @@ import SwiftUI
 struct TodayTaskRowView: View {
     let entry: TodayTaskEntry
     var allowsStatusEditing: Bool = false
-    var onSelectStatus: ((TodayTaskEntry, HabitState) -> Void)? = nil
+    let onOpen: () -> Void
+    var onSelectStatus: ((TodayTaskEntry, HabitState) -> Bool)? = nil
 
     var body: some View {
         HStack(spacing: .rowSpacing) {
-            VStack(alignment: .leading, spacing: .contentSpacing) {
-                Text(entry.timeString)
-                    .font(.subheadline.weight(.bold))
-                    .monospacedDigit()
-                    .foregroundStyle(.secondary)
+            Button(action: onOpen) {
+                HStack(spacing: .rowSpacing) {
+                    VStack(alignment: .leading, spacing: .contentSpacing) {
+                        Text(entry.timeString)
+                            .font(.subheadline.weight(.bold))
+                            .monospacedDigit()
+                            .foregroundStyle(.secondary)
 
-                Text(entry.title)
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-                    .lineLimit(.titleLineLimit)
-                    .multilineTextAlignment(.leading)
+                        Text(entry.title)
+                            .font(.headline)
+                            .foregroundStyle(.primary)
+                            .lineLimit(.titleLineLimit)
+                            .multilineTextAlignment(.leading)
+                    }
+
+                    Spacer(minLength: .spacerMinLength)
+
+                    Image(systemName: "chevron.right")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.tertiary)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-
-            Spacer(minLength: .spacerMinLength)
+            .buttonStyle(.plain)
 
             TodayTaskStatusBadge(
                 entry: entry,
                 allowsEditing: allowsStatusEditing,
                 onSelectStatus: { status in
-                    onSelectStatus?(entry, status)
+                    onSelectStatus?(entry, status) ?? false
                 }
             )
-
-            Image(systemName: "chevron.right")
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(.tertiary)
         }
         .padding(.horizontal, .rowHorizontalPadding)
         .padding(.vertical, .rowVerticalPadding)

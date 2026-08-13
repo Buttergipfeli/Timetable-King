@@ -6,7 +6,7 @@ struct TodayTaskDetailView: View {
     var showCloseButton: Bool
     var allowsStatusEditing: Bool = false
     let entry: TodayTaskEntry
-    let onUpdateStatus: ((TodayTaskEntry, HabitState) -> Void)?
+    let onUpdateStatus: ((TodayTaskEntry, HabitState) -> Bool)?
 
     var body: some View {
         ScrollView {
@@ -62,8 +62,9 @@ struct TodayTaskDetailView: View {
             if allowsStatusEditing, let onUpdateStatus {
                 Menu {
                     Button {
-                        viewModel.setStatus(.done)
-                        onUpdateStatus(entry, .done)
+                        if onUpdateStatus(entry, .done) {
+                            viewModel.setStatus(.done)
+                        }
                     } label: {
                         statusOptionLabel(
                             title: "timetable.today.task.status.done".localized,
@@ -72,8 +73,9 @@ struct TodayTaskDetailView: View {
                     }
 
                     Button {
-                        viewModel.setStatus(.failed)
-                        onUpdateStatus(entry, .failed)
+                        if onUpdateStatus(entry, .failed) {
+                            viewModel.setStatus(.failed)
+                        }
                     } label: {
                         statusOptionLabel(
                             title: "timetable.today.task.status.failed".localized,
@@ -82,8 +84,9 @@ struct TodayTaskDetailView: View {
                     }
 
                     Button {
-                        viewModel.setStatus(.none)
-                        onUpdateStatus(entry, .none)
+                        if onUpdateStatus(entry, .none) {
+                            viewModel.setStatus(.none)
+                        }
                     } label: {
                         statusOptionLabel(
                             title: "timetable.today.task.status.none".localized,
