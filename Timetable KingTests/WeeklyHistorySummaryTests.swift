@@ -6,6 +6,19 @@ import Testing
 @MainActor
 struct WeeklyHistorySummaryTests {
     @Test
+    func opensSelectedWeekdayFromDashboardSummary() throws {
+        let service = try makeModelContainerService()
+        let viewModel = TimetableKingAppViewModel(modelContainerService: service)
+        viewModel.load()
+
+        viewModel.openWeeklySummary(weekday: .saturday)
+
+        #expect(viewModel.presentedWeeklySummaryEntry?.digest.weekday == .saturday)
+        #expect(viewModel.presentedCard == nil)
+        #expect(!viewModel.isCardPresented)
+    }
+
+    @Test
     func mapsCompletionPercentagesToSharedPerformanceEmojis() {
         let scores = [
             (CompletionScore(completedCount: 0, totalCount: 0), "😶"),

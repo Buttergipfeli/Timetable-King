@@ -10,6 +10,7 @@ final class TimetableKingAppViewModel {
     var isShowingSettings: Bool = false
     var isAddingWeeklyTask: Bool = false
     var presentedEntry: TodayTaskEntry?
+    var presentedWeeklySummaryEntry: WeeklySummaryEntry?
     var presentedReviewSession: TodayTaskReviewSession?
     var isShowingOperationError = false
 
@@ -97,12 +98,29 @@ final class TimetableKingAppViewModel {
     }
     
     func open(card: CardPage) {
+        presentedWeeklySummaryEntry = nil
         presentedCard = card
         isCardPresented = true
     }
 
     func open(entry: TodayTaskEntry) {
         presentedEntry = entry
+    }
+
+    func openWeeklySummary() {
+        open(card: .weeklySummary)
+    }
+
+    func openWeeklySummary(weekday: Weekday) {
+        guard let digest = weekdayDigests.first(where: { $0.weekday == weekday }),
+              let weekStart = Calendar.current.dateInterval(of: .weekOfYear, for: .now)?.start else {
+            return
+        }
+
+        presentedWeeklySummaryEntry = WeeklySummaryEntry(
+            digest: digest,
+            weekStart: weekStart
+        )
     }
 
     func open(url: URL) {
@@ -115,7 +133,7 @@ final class TimetableKingAppViewModel {
         case .todayTasks:
             open(card: .todayTasks)
         case .weeklySummary:
-            open(card: .weeklySummary)
+            openWeeklySummary()
         case .task(let taskID):
             if let entry = todayEntries.first(where: { $0.widgetIdentifier == taskID }) {
                 open(entry: entry)
@@ -177,6 +195,7 @@ final class TimetableKingAppViewModel {
     private var canPresentReviewSession: Bool {
         presentedReviewSession == nil &&
         presentedEntry == nil &&
+        presentedWeeklySummaryEntry == nil &&
         isCardPresented.not &&
         isShowingSettings.not &&
         isAddingWeeklyTask.not
@@ -186,11 +205,23 @@ final class TimetableKingAppViewModel {
         if let presentedEntry {
             self.presentedEntry = todayEntries.first { $0.habit == presentedEntry.habit }
         }
+
+        if let presentedWeeklySummaryEntry,
+           let digest = weekdayDigests.first(where: {
+               $0.weekday == presentedWeeklySummaryEntry.digest.weekday
+           }),
+           let weekStart = Calendar.current.dateInterval(of: .weekOfYear, for: .now)?.start {
+            self.presentedWeeklySummaryEntry = WeeklySummaryEntry(
+                digest: digest,
+                weekStart: weekStart
+            )
+        }
     }
 
     private func resetPresentation() {
         presentedCard = nil
         presentedEntry = nil
+        presentedWeeklySummaryEntry = nil
         presentedReviewSession = nil
         isCardPresented = false
         isShowingSettings = false

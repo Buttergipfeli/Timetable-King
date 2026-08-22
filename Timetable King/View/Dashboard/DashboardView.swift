@@ -7,6 +7,7 @@ struct DashboardView: View {
     let namespace: Namespace.ID?
     let onOpenToday: () -> Void
     let onOpenWeeklySummary: () -> Void
+    let onOpenWeeklySummaryWeekday: (Weekday) -> Void
     let onOpenWeeklyTasks: () -> Void
     let onOpenSettings: () -> Void
     let onAddTask: () -> Void
@@ -85,7 +86,11 @@ struct DashboardView: View {
     }
 
     private var weeklySummary: some View {
-        DashboardWeeklySummaryView(snapshot: snapshot, onOpen: onOpenWeeklySummary)
+        DashboardWeeklySummaryView(
+            snapshot: snapshot,
+            onOpenSummary: onOpenWeeklySummary,
+            onOpenWeekday: onOpenWeeklySummaryWeekday
+        )
             .matchedTransitionSource(id: CardPage.weeklySummary.transitionID, in: namespace)
     }
 

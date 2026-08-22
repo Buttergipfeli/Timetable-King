@@ -36,7 +36,8 @@ struct TimetableKingAppView: View {
                 snapshot: viewModel.dashboardSnapshot,
                 namespace: namespace,
                 onOpenToday: { viewModel.open(card: .todayTasks) },
-                onOpenWeeklySummary: { viewModel.open(card: .weeklySummary) },
+                onOpenWeeklySummary: { viewModel.openWeeklySummary() },
+                onOpenWeeklySummaryWeekday: { viewModel.openWeeklySummary(weekday: $0) },
                 onOpenWeeklyTasks: { viewModel.open(card: .weeklyTasks) },
                 onOpenSettings: { viewModel.isShowingSettings = true },
                 onAddTask: { viewModel.isAddingWeeklyTask = true },
@@ -53,6 +54,18 @@ struct TimetableKingAppView: View {
                     onUpdateStatus: viewModel.updateTodayTaskStatus
                 )
             }
+        }
+        .sheet(item: $viewModel.presentedWeeklySummaryEntry) { entry in
+            TodayTasksView(
+                title: entry.digest.weekday.label,
+                allowsStatusEditing: entry.isCurrentDay,
+                onUpdateStatus: { task, status in
+                    guard entry.isCurrentDay else { return false }
+                    return viewModel.updateTodayTaskStatus(for: task, status: status)
+                },
+                todayDigest: entry.digest
+            )
+            .accessibilityIdentifier("weeklySummary.weekday.sheet")
         }
         .sheet(isPresented: $viewModel.isShowingSettings) {
             SettingsView(onDeleteHistory: viewModel.deleteHistory)
@@ -87,7 +100,9 @@ struct TimetableKingAppView: View {
                 )
                 .navigationTransition(id: presentedCard.transitionID, in: namespace)
             case .weeklySummary:
-                WeeklySummaryView(onUpdateStatus: viewModel.updateTodayTaskStatus)
+                WeeklySummaryView(
+                    onUpdateStatus: viewModel.updateTodayTaskStatus
+                )
                     .navigationTransition(id: presentedCard.transitionID, in: namespace)
             case .weeklyTasks:
                 WeeklyTasksView(
