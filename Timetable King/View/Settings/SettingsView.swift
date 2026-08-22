@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @Environment(\.appTheme) private var theme
+    @Environment(AppPaletteStore.self) private var paletteStore
+
     @State private var isShowingDeleteConfirmation = false
 
     let onDeleteHistory: () -> Bool
@@ -8,6 +11,33 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
+                Section("settings.appearance") {
+                    HStack(spacing: .paletteSpacing) {
+                        palettePreview
+
+                        VStack(alignment: .leading, spacing: .paletteTextSpacing) {
+                            Text("settings.palette.title")
+                                .font(.headline)
+
+                            Text("settings.palette.id".localized(paletteStore.palette.id))
+                                .font(.caption.monospaced())
+                                .foregroundStyle(.secondary)
+                                .accessibilityIdentifier("settings.palette.identifier")
+                        }
+                    }
+
+                    Text("settings.palette.description")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+
+                    Button {
+                        paletteStore.generatePalette()
+                    } label: {
+                        Label("settings.palette.generate", systemImage: "wand.and.sparkles")
+                    }
+                    .accessibilityIdentifier("settings.palette.generate.button")
+                }
+
                 Section {
                     Button(role: .destructive) {
                         isShowingDeleteConfirmation = true
@@ -35,4 +65,30 @@ struct SettingsView: View {
             }
         }
     }
+
+    private var palettePreview: some View {
+        HStack(spacing: .swatchOverlap) {
+            Circle()
+                .fill(theme.accent)
+            Circle()
+                .fill(theme.secondaryAccent)
+            Circle()
+                .fill(
+                    LinearGradient(
+                        colors: [theme.logoPrimary, theme.logoSecondary],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+        }
+        .frame(width: .previewWidth, height: .swatchSize)
+    }
+}
+
+private extension CGFloat {
+    static let paletteSpacing = 14.0
+    static let paletteTextSpacing = 2.0
+    static let swatchOverlap = -6.0
+    static let previewWidth = 80.0
+    static let swatchSize = 32.0
 }

@@ -2,30 +2,56 @@ import Foundation
 import SwiftData
 
 extension Timetable_KingApp {
-    func setUpTestData(into context: ModelContext) {
+    static func setUpTestData(into context: ModelContext) {
         let sport = Habit(title: "Training")
         let trash = Habit(title: "Bring trash out")
         let sleep = Habit(title: "Go to sleep directly")
+        let morningRoutine = Habit(title: "Morning routine")
         context.insert(sport)
         context.insert(trash)
         context.insert(sleep)
+        context.insert(morningRoutine)
 
         let w1 = WeekdayHabit(hour: 7, minute: 30, weekdayRawValue: Weekday.thursday.rawValue, habit: sport)
         let w2 = WeekdayHabit(hour: 8, minute: 0, weekdayRawValue: Weekday.thursday.rawValue, habit: trash)
         let w3 = WeekdayHabit(hour: 21, minute: 15, weekdayRawValue: Weekday.thursday.rawValue, habit: sport)
         let w4 = WeekdayHabit(hour: 21, minute: 45, weekdayRawValue: Weekday.thursday.rawValue, habit: sport)
         let w5 = WeekdayHabit(hour: 22, minute: 00, weekdayRawValue: Weekday.thursday.rawValue, habit: sleep)
+        let morningTasks = Weekday.allCases
+            .filter { $0 != .tuesday }
+            .map { weekday in
+                WeekdayHabit(
+                    hour: 8,
+                    minute: 0,
+                    weekdayRawValue: weekday.rawValue,
+                    habit: morningRoutine
+                )
+            }
+        let saturdayTaskData: [(title: String, hour: Int, minute: Int)] = [
+            ("Grocery shopping", 9, 30),
+            ("Clean apartment", 13, 0),
+            ("Weekly planning", 17, 30),
+            ("Read a book", 22, 15),
+            ("Evening stretch", 23, 0),
+            ("Prepare for sleep", 23, 30)
+        ]
+        let saturdayTasks = saturdayTaskData.map { taskData in
+            let habit = Habit(title: taskData.title)
+            context.insert(habit)
+            return WeekdayHabit(
+                hour: taskData.hour,
+                minute: taskData.minute,
+                weekdayRawValue: Weekday.saturday.rawValue,
+                habit: habit
+            )
+        }
         let createdAt = Calendar.current.date(byAdding: .weekOfYear, value: -2, to: .now) ?? .now
-        w1.createdAt = createdAt
-        w2.createdAt = createdAt
-        w3.createdAt = createdAt
-        w4.createdAt = createdAt
-        w5.createdAt = createdAt
-        context.insert(w1)
-        context.insert(w2)
-        context.insert(w3)
-        context.insert(w4)
-        context.insert(w5)
+        let thursdayTasks = [w1, w2, w3, w4, w5]
+
+        for task in thursdayTasks + morningTasks + saturdayTasks {
+            task.createdAt = createdAt
+            context.insert(task)
+        }
         
         let weekStart = Calendar.current.dateInterval(of: .weekOfYear, for: .now)?.start ?? .now
         let thursday = Calendar.current.startOfDay(for: Calendar.current.date(byAdding: .day, value: 3, to: weekStart) ?? weekStart)
@@ -35,38 +61,33 @@ extension Timetable_KingApp {
 
         insertHistoryTestData(
             into: context,
-            habits: [w1, w2, w3, w4, w5],
+            habits: thursdayTasks,
             currentWeekStart: weekStart
         )
     }
 }
 
 extension Timetable_KingApp {
-    func insertHistoryTestData(into context: ModelContext, habits: [WeekdayHabit], currentWeekStart: Date) {
+    static func insertHistoryTestData(into context: ModelContext, habits: [WeekdayHabit], currentWeekStart: Date) {
         guard habits.count == 5 else { return }
 
-        let previousWeekStart = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentWeekStart) ?? currentWeekStart
-        let twoWeeksAgoStart = Calendar.current.date(byAdding: .weekOfYear, value: -2, to: currentWeekStart) ?? currentWeekStart
+        for weekOffset in 1...200 {
+            let weekStart = Calendar.current.date(
+                byAdding: .weekOfYear,
+                value: -weekOffset,
+                to: currentWeekStart
+            ) ?? currentWeekStart
+            let thursday = historyDay(from: weekStart, dayOffset: 3)
+            let completedCount = weekOffset % (habits.count + 1)
 
-        let previousWeekWednesday = historyDay(from: previousWeekStart, dayOffset: 2)
-        let previousWeekThursday = historyDay(from: previousWeekStart, dayOffset: 3)
-        let twoWeeksAgoWednesday = historyDay(from: twoWeeksAgoStart, dayOffset: 2)
-        let twoWeeksAgoThursday = historyDay(from: twoWeeksAgoStart, dayOffset: 3)
-
-        context.insert(WeekdayHabitResult(day: previousWeekWednesday, weekdayHabit: habits[0], status: .done))
-        context.insert(WeekdayHabitResult(day: previousWeekWednesday, weekdayHabit: habits[1], status: .failed))
-        context.insert(WeekdayHabitResult(day: previousWeekWednesday, weekdayHabit: habits[2], status: .done))
-        context.insert(WeekdayHabitResult(day: previousWeekThursday, weekdayHabit: habits[3], status: .failed))
-        context.insert(WeekdayHabitResult(day: previousWeekThursday, weekdayHabit: habits[4], status: .done))
-
-        context.insert(WeekdayHabitResult(day: twoWeeksAgoWednesday, weekdayHabit: habits[0], status: .failed))
-        context.insert(WeekdayHabitResult(day: twoWeeksAgoWednesday, weekdayHabit: habits[1], status: .done))
-        context.insert(WeekdayHabitResult(day: twoWeeksAgoWednesday, weekdayHabit: habits[2], status: .failed))
-        context.insert(WeekdayHabitResult(day: twoWeeksAgoThursday, weekdayHabit: habits[3], status: .done))
-        context.insert(WeekdayHabitResult(day: twoWeeksAgoThursday, weekdayHabit: habits[4], status: .failed))
+            for (habitIndex, habit) in habits.enumerated() {
+                let status: HabitState = habitIndex < completedCount ? .done : .failed
+                context.insert(WeekdayHabitResult(day: thursday, weekdayHabit: habit, status: status))
+            }
+        }
     }
 
-    private func historyDay(from weekStart: Date, dayOffset: Int) -> Date {
+    private static func historyDay(from weekStart: Date, dayOffset: Int) -> Date {
         let date = Calendar.current.date(byAdding: .day, value: dayOffset, to: weekStart) ?? weekStart
         return Calendar.current.startOfDay(for: date)
     }

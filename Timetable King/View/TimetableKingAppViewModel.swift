@@ -8,9 +8,8 @@ final class TimetableKingAppViewModel {
     private(set) var presentedCard: CardPage?
     var isCardPresented: Bool = false
     var isShowingSettings: Bool = false
+    var isAddingWeeklyTask: Bool = false
     var presentedEntry: TodayTaskEntry?
-    var presentedWeekdayDigest: WeekdayDigest?
-    var presentedSummaryDigest: WeekdayDigest?
     var presentedReviewSession: TodayTaskReviewSession?
     var isShowingOperationError = false
 
@@ -19,14 +18,6 @@ final class TimetableKingAppViewModel {
     private let todayTaskReviewService: TodayTaskReviewService
     private let modelContainerService: ModelContainerService
     
-    var activeWeekdayDigests: [WeekdayDigest] {
-        weekdayDigests.filter(\.isEmpty.not)
-    }
-
-    var activeWeeklyTaskDigests: [WeekdayDigest] {
-        weeklyTaskDigests.filter(\.habits.isEmpty.not)
-    }
-
     var todayEntries: [TodayTaskEntry] {
         guard let todayDigest else { return [] }
 
@@ -40,6 +31,29 @@ final class TimetableKingAppViewModel {
     
     var todayDigest: WeekdayDigest? {
         weekdayDigests.first(where: \.weekday.isToday)
+    }
+
+    var dashboardSnapshot: DashboardSnapshot {
+        let completedTodayCount = todayEntries.filter { $0.displayStatus == .done }.count
+        let weeklyCompletedCount = weekdayDigests
+            .flatMap(\.results)
+            .filter(\.isDone)
+            .count
+        let weeklyTotalCount = weekdayDigests.reduce(0) { $0 + $1.habits.count }
+        let activeWeeklyDigests = weeklyTaskDigests.filter { $0.habits.isEmpty.not }
+
+        return DashboardSnapshot(
+            todayEntries: todayEntries,
+            completedTodayCount: completedTodayCount,
+            totalTodayCount: todayEntries.count,
+            nextTask: todayEntries.first { $0.displayStatus == .todo },
+            weekdayDigests: weekdayDigests,
+            weeklyCompletedCount: weeklyCompletedCount,
+            weeklyTotalCount: weeklyTotalCount,
+            weeklyTaskCount: activeWeeklyDigests.reduce(0) { $0 + $1.habits.count },
+            activeWeekdayCount: activeWeeklyDigests.count,
+            weeklyTaskWeekdays: Set(activeWeeklyDigests.map(\.weekday))
+        )
     }
     
     init(modelContainerService: ModelContainerService) {
@@ -81,21 +95,11 @@ final class TimetableKingAppViewModel {
         presentedEntry = entry
     }
 
-    func open(weekdayDigest: WeekdayDigest) {
-        presentedWeekdayDigest = weekdayDigest
-    }
-
-    func openSummary(weekdayDigest: WeekdayDigest) {
-        presentedSummaryDigest = weekdayDigest
-    }
-
     @discardableResult
     func deleteHistory() -> Bool {
         perform {
             try weeklyTaskService.deleteHistory()
             presentedEntry = nil
-            presentedWeekdayDigest = nil
-            presentedSummaryDigest = nil
             presentedReviewSession = nil
         }
     }
@@ -143,23 +147,14 @@ final class TimetableKingAppViewModel {
     private var canPresentReviewSession: Bool {
         presentedReviewSession == nil &&
         presentedEntry == nil &&
-        presentedWeekdayDigest == nil &&
-        presentedSummaryDigest == nil &&
         isCardPresented.not &&
-        isShowingSettings.not
+        isShowingSettings.not &&
+        isAddingWeeklyTask.not
     }
 
     private func syncPresentedData() {
         if let presentedEntry {
             self.presentedEntry = todayEntries.first { $0.habit == presentedEntry.habit }
-        }
-
-        if let presentedWeekdayDigest {
-            self.presentedWeekdayDigest = weeklyTaskDigests.first { $0.weekday == presentedWeekdayDigest.weekday }
-        }
-
-        if let presentedSummaryDigest {
-            self.presentedSummaryDigest = weekdayDigests.first { $0.weekday == presentedSummaryDigest.weekday }
         }
     }
 
