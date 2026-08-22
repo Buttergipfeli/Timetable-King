@@ -22,6 +22,7 @@ struct TimetableKingAppView: View {
             .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
                 viewModel.refreshForActivation()
             }
+            .onOpenURL(perform: viewModel.open)
             .alert("common.operation.error.title", isPresented: $vm.isShowingOperationError) {
                 Button("common.ok", role: .cancel) {}
             } message: {

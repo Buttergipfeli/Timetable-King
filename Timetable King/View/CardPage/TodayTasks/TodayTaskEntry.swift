@@ -27,6 +27,15 @@ struct TodayTaskEntry: Identifiable, Hashable {
         habit.timeString
     }
 
+    var widgetIdentifier: String {
+        TimetableWidgetTask.identifier(
+            weekday: habit.weekday.rawValue,
+            hour: habit.hour,
+            minute: habit.minute,
+            title: title
+        )
+    }
+
     var statusTitle: String {
         displayStatus.title
     }

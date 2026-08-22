@@ -1,4 +1,5 @@
 import Observation
+import WidgetKit
 
 @MainActor
 @Observable
@@ -34,5 +35,6 @@ final class AppPaletteStore {
         }
         palette = generatedPalette
         repository.save(generatedPalette)
+        WidgetCenter.shared.reloadTimelines(ofKind: TimetableWidgetConstants.kind)
     }
 }
