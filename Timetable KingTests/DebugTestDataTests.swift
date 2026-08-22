@@ -76,6 +76,19 @@ struct DebugTestDataTests {
         #expect(pastWeeks.map(\.start).min() == expectedOldestWeek)
     }
 
+    @Test
+    func aggregatesTwoHundredWeeksWithinPerformanceBudget() async throws {
+        let container = try makeSeededContainer()
+        let service = WeeklyHistoryOverviewService(modelContainer: container)
+        let clock = ContinuousClock()
+        let start = clock.now
+
+        let overview = try await service.fetch()
+
+        #expect(overview.availableWeeks.count == 201)
+        #expect(start.duration(to: clock.now) < .seconds(2))
+    }
+
     private func makeSeededContainer() throws -> ModelContainer {
         let schema = Schema([
             Habit.self,

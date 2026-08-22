@@ -20,11 +20,16 @@ final class TodayTaskReviewService {
 
         for habit in habits {
             let scheduledDates = unresolvedPastScheduledDates(for: habit, before: startOfToday)
+            let resultsByDay = Dictionary(grouping: habit.results) { result in
+                Calendar.current.startOfDay(for: result.day)
+            }
 
             for scheduledDate in scheduledDates {
-                if let result = storedResult(for: habit, on: scheduledDate) {
-                    guard result.status == .none else { continue }
-                    result.status = .failed
+                let scheduledDay = Calendar.current.startOfDay(for: scheduledDate)
+                if let results = resultsByDay[scheduledDay] {
+                    let unresolvedResults = results.filter { $0.status == .none }
+                    guard unresolvedResults.isEmpty.not else { continue }
+                    unresolvedResults.forEach { $0.status = .failed }
                 } else {
                     context.insert(WeekdayHabitResult(day: scheduledDate, weekdayHabit: habit, status: .failed))
                 }

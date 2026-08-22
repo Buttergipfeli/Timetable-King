@@ -5,35 +5,58 @@ final class WeeklySummaryViewModel {
     private(set) var availableWeeks: [DateInterval] = []
     private(set) var digestsByWeek: [Date: [WeekdayDigest]] = [:]
     private(set) var overallScore = CompletionScore(completedCount: 0, totalCount: 0)
+    private(set) var isLoadingHistory = false
     var currentWeekIndex: Int = 0
 
     private let digestService: WeekdayDigestService
+    private let historyOverviewService: WeeklyHistoryOverviewService
+    private var hasLoadedCurrentWeek = false
+    private var hasLoadedHistory = false
 
-    init() {
-        digestService = WeekdayDigestService(modelContainerService: .shared)
+    convenience init() {
+        self.init(modelContainerService: .shared)
     }
 
     init(modelContainerService: ModelContainerService) {
         digestService = WeekdayDigestService(modelContainerService: modelContainerService)
+        historyOverviewService = WeeklyHistoryOverviewService(
+            modelContainer: modelContainerService.modelContainer
+        )
     }
 
-    func loadAvailableWeeks() {
-        let currentWeekStart = Calendar.current.dateInterval(of: .weekOfYear, for: .now)?.start
-        availableWeeks = digestService.fetchAvailableWeekIntervals()
-            .sorted { $0.start < $1.start }
-        overallScore = digestService.fetchOverallCompletionScore(for: availableWeeks)
-            ?? CompletionScore(completedCount: 0, totalCount: 0)
-
-        if let currentWeekStart,
-           let currentIndex = availableWeeks.firstIndex(where: {
-               Calendar.current.isDate($0.start, inSameDayAs: currentWeekStart)
-           }) {
-            currentWeekIndex = currentIndex
-            loadDigests(for: availableWeeks[currentIndex])
-        } else if let current = availableWeeks.last {
-            currentWeekIndex = max(availableWeeks.count - 1, 0)
-            loadDigests(for: current)
+    func loadCurrentWeek(referenceDate: Date = .now) {
+        guard !hasLoadedCurrentWeek,
+              let currentWeek = Calendar.current.dateInterval(
+                of: .weekOfYear,
+                for: referenceDate
+              ) else {
+            return
         }
+
+        availableWeeks = [currentWeek]
+        currentWeekIndex = 0
+        loadDigests(for: currentWeek)
+        overallScore = score(for: currentWeek)
+        hasLoadedCurrentWeek = true
+    }
+
+    func loadAvailableWeeks(referenceDate: Date = .now) async {
+        loadCurrentWeek(referenceDate: referenceDate)
+        await loadHistoryOverview(referenceDate: referenceDate)
+    }
+
+    func loadHistoryOverview(referenceDate: Date = .now) async {
+        guard !isLoadingHistory, !hasLoadedHistory else { return }
+
+        isLoadingHistory = true
+        defer { isLoadingHistory = false }
+
+        guard let overview = try? await historyOverviewService.fetch(referenceDate: referenceDate) else {
+            return
+        }
+
+        apply(overview, referenceDate: referenceDate)
+        hasLoadedHistory = true
     }
 
     func loadDigests(for weekInterval: DateInterval) {
@@ -47,8 +70,15 @@ final class WeeklySummaryViewModel {
         }) else { return }
 
         digestsByWeek[weekInterval.start] = digestService.fetchWeekdayDigests(for: weekInterval)
-        overallScore = digestService.fetchOverallCompletionScore(for: availableWeeks)
-            ?? CompletionScore(completedCount: 0, totalCount: 0)
+    }
+
+    func reloadHistoryOverview(referenceDate: Date = .now) async {
+        guard let overview = try? await historyOverviewService.fetch(referenceDate: referenceDate) else {
+            return
+        }
+
+        apply(overview, referenceDate: referenceDate)
+        hasLoadedHistory = true
     }
 
     func entries(for weekInterval: DateInterval) -> [WeeklySummaryEntry] {
@@ -66,5 +96,33 @@ final class WeeklySummaryViewModel {
             completedCount: digests.flatMap(\.results).filter(\.isDone).count,
             totalCount: digests.reduce(0) { $0 + $1.habits.count }
         )
+    }
+
+    private func apply(_ overview: WeeklyHistoryOverview, referenceDate: Date) {
+        let selectedWeekStart = availableWeeks.indices.contains(currentWeekIndex)
+            ? availableWeeks[currentWeekIndex].start
+            : nil
+        availableWeeks = overview.availableWeeks
+        overallScore = overview.overallScore
+
+        if let selectedWeekStart,
+           let selectedIndex = availableWeeks.firstIndex(where: {
+               Calendar.current.isDate($0.start, inSameDayAs: selectedWeekStart)
+           }) {
+            currentWeekIndex = selectedIndex
+            return
+        }
+
+        guard let currentWeekStart = Calendar.current.dateInterval(
+            of: .weekOfYear,
+            for: referenceDate
+        )?.start else {
+            currentWeekIndex = max(availableWeeks.count - 1, 0)
+            return
+        }
+
+        currentWeekIndex = availableWeeks.firstIndex(where: {
+            Calendar.current.isDate($0.start, inSameDayAs: currentWeekStart)
+        }) ?? max(availableWeeks.count - 1, 0)
     }
 }

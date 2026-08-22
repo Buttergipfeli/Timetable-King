@@ -13,6 +13,7 @@ struct WeeklySummaryView: View {
         NavigationStack {
             VStack(spacing: 0) {
                 OverallHistorySummaryView(score: viewModel.overallScore)
+                    .redacted(reason: viewModel.isLoadingHistory ? .placeholder : [])
                     .padding(.horizontal, .overallHorizontalPadding)
                     .padding(.top, .overallTopPadding)
 
@@ -50,6 +51,7 @@ struct WeeklySummaryView: View {
                     onUpdateStatus: entry.isCurrentDay ? { task, status in
                         guard onUpdateStatus?(task, status) == true else { return false }
                         viewModel.reloadDigests(forWeekStartingAt: entry.weekStart)
+                        Task { await viewModel.reloadHistoryOverview() }
                         return true
                     } : nil,
                     todayDigest: entry.digest
@@ -57,7 +59,10 @@ struct WeeklySummaryView: View {
             }
             .toolbar { DismissToolbarItem() }
         }
-        .onAppear { viewModel.loadAvailableWeeks() }
+        .task {
+            viewModel.loadCurrentWeek()
+            await viewModel.loadHistoryOverview()
+        }
         .sheet(isPresented: $isWeekPickerPresented) {
             WeeklySummaryWeekPickerView(
                 weeks: viewModel.availableWeeks,
@@ -97,6 +102,7 @@ private struct WeekPageView: View {
                         WeeklySummaryRowView(entry: entry)
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier("weeklySummary.\(entry.digest.weekday.rawValue).button")
                 }
             }
             .padding(.horizontal, .screenPadding)
