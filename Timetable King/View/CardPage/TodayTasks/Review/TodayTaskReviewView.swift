@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct TodayTaskReviewView: View {
+    @Environment(\.appTheme) private var theme
+
     @State private var viewModel = TodayTaskReviewViewModel()
     @State private var cardOffset: CGFloat = 0
     @State private var feedbackEmoji: String?
@@ -50,8 +52,8 @@ struct TodayTaskReviewView: View {
     private var background: some View {
         LinearGradient(
             colors: [
-                Color.orange.opacity(0.95),
-                Color.yellow.opacity(0.55)
+                theme.logoPrimary,
+                theme.logoSecondary
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -113,6 +115,7 @@ struct TodayTaskReviewView: View {
             .padding(.vertical, .laterVerticalPadding)
             .background(.white.opacity(.laterBackgroundOpacity), in: Capsule())
             .disabled(isProcessingAction)
+            .accessibilityIdentifier("todayReview.later.button")
         }
     }
 
@@ -121,10 +124,10 @@ struct TodayTaskReviewView: View {
             Text(entry.timeString)
                 .font(.subheadline.weight(.bold))
                 .monospacedDigit()
-                .foregroundStyle(.secondary)
                 .padding(.horizontal, .timeHorizontalPadding)
                 .padding(.vertical, .timeVerticalPadding)
-                .background(Color.orange.opacity(.timeBackgroundOpacity), in: Capsule())
+                .foregroundStyle(theme.accent)
+                .background(theme.accentSurface, in: Capsule())
 
             Text(entry.title)
                 .font(.system(size: .titleFontSize, weight: .bold, design: .rounded))

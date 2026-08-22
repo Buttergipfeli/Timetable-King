@@ -4,13 +4,14 @@ import SwiftData
 @main
 struct Timetable_KingApp: App {
     @Namespace private var namespace
+    @State private var paletteStore = AppPaletteStore()
     
     let container: ModelContainer
     
     init() {
 #if DEBUG
         container = Timetable_KingApp.setUpModelContainer(isStoredInMemoryOnly: true)
-        setUpTestData(into: container.mainContext)
+        Timetable_KingApp.setUpTestData(into: container.mainContext)
         try? container.mainContext.save()
 #else
         container = Timetable_KingApp.setUpModelContainer(isStoredInMemoryOnly: false)
@@ -24,6 +25,7 @@ struct Timetable_KingApp: App {
             TimetableKingAppView()
         }
         .environment(\.namespace, namespace)
+        .environment(paletteStore)
         .modelContainer(container)
     }
 }
