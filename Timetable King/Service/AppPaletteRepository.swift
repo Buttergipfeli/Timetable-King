@@ -8,21 +8,30 @@ protocol AppPaletteRepository {
 
 @MainActor
 struct UserDefaultsAppPaletteRepository: AppPaletteRepository {
-    private let userDefaults: UserDefaults
-    private let key: String
+    private let storage: AppPaletteStorage
+    private let legacyStorage: AppPaletteStorage?
 
-    init(userDefaults: UserDefaults = .standard, key: String = "app.palette") {
-        self.userDefaults = userDefaults
-        self.key = key
+    init() {
+        storage = AppPaletteStorage()
+        legacyStorage = AppPaletteStorage(userDefaults: .standard)
+    }
+
+    init(userDefaults: UserDefaults, key: String = "app.palette") {
+        storage = AppPaletteStorage(userDefaults: userDefaults, key: key)
+        legacyStorage = nil
     }
 
     func load() -> AppPalette? {
-        guard let data = userDefaults.data(forKey: key) else { return nil }
-        return try? JSONDecoder().decode(AppPalette.self, from: data)
+        if let palette = storage.load() {
+            return palette
+        }
+
+        guard let palette = legacyStorage?.load() else { return nil }
+        storage.save(palette)
+        return palette
     }
 
     func save(_ palette: AppPalette) {
-        guard let data = try? JSONEncoder().encode(palette) else { return }
-        userDefaults.set(data, forKey: key)
+        storage.save(palette)
     }
 }

@@ -16,6 +16,7 @@ final class TimetableKingAppViewModel {
     private let weekdayDigestService: WeekdayDigestService
     private let weeklyTaskService: WeeklyTaskService
     private let todayTaskReviewService: TodayTaskReviewService
+    private let widgetSnapshotService: any WidgetSnapshotSyncing
     private let modelContainerService: ModelContainerService
     
     var todayEntries: [TodayTaskEntry] {
@@ -56,11 +57,15 @@ final class TimetableKingAppViewModel {
         )
     }
     
-    init(modelContainerService: ModelContainerService) {
+    init(
+        modelContainerService: ModelContainerService,
+        widgetSnapshotService: (any WidgetSnapshotSyncing)? = nil
+    ) {
         self.modelContainerService = modelContainerService
         weekdayDigestService = WeekdayDigestService(modelContainerService: modelContainerService)
         weeklyTaskService = WeeklyTaskService(modelContainerService: modelContainerService)
         todayTaskReviewService = TodayTaskReviewService(modelContainerService: modelContainerService)
+        self.widgetSnapshotService = widgetSnapshotService ?? WidgetSnapshotService()
     }
 
     func load() {
@@ -69,6 +74,11 @@ final class TimetableKingAppViewModel {
 
         weekdayDigests = fetchedDigests
         weeklyTaskDigests = fetchedWeeklyTaskDigests
+        widgetSnapshotService.sync(
+            dashboardSnapshot,
+            recurringDigests: weeklyTaskDigests,
+            referenceDate: .now
+        )
         syncPresentedData()
     }
 
@@ -93,6 +103,26 @@ final class TimetableKingAppViewModel {
 
     func open(entry: TodayTaskEntry) {
         presentedEntry = entry
+    }
+
+    func open(url: URL) {
+        guard let destination = TimetableDeepLink.destination(for: url) else { return }
+
+        resetPresentation()
+        load()
+
+        switch destination {
+        case .todayTasks:
+            open(card: .todayTasks)
+        case .weeklySummary:
+            open(card: .weeklySummary)
+        case .task(let taskID):
+            if let entry = todayEntries.first(where: { $0.widgetIdentifier == taskID }) {
+                open(entry: entry)
+            } else {
+                open(card: .todayTasks)
+            }
+        }
     }
 
     @discardableResult
@@ -156,6 +186,15 @@ final class TimetableKingAppViewModel {
         if let presentedEntry {
             self.presentedEntry = todayEntries.first { $0.habit == presentedEntry.habit }
         }
+    }
+
+    private func resetPresentation() {
+        presentedCard = nil
+        presentedEntry = nil
+        presentedReviewSession = nil
+        isCardPresented = false
+        isShowingSettings = false
+        isAddingWeeklyTask = false
     }
 
     private func perform(_ operation: () throws -> Void) -> Bool {

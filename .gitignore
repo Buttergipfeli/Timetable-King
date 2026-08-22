@@ -365,6 +365,9 @@ iOSInjectionProject/
 Packages
 xcuserdata
 *.xcodeproj
+!Timetable King.xcodeproj/
+Timetable King.xcodeproj/**
+!Timetable King.xcodeproj/project.pbxproj
 
 
 ### SwiftPM ###
