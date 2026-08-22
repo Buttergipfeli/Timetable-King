@@ -4,26 +4,31 @@ struct DashboardWeeklySummaryView: View {
     @Environment(\.appTheme) private var theme
 
     let snapshot: DashboardSnapshot
-    let onOpen: () -> Void
+    let onOpenSummary: () -> Void
+    let onOpenWeekday: (Weekday) -> Void
 
     var body: some View {
-        Button(action: onOpen) {
-            DashboardSurface {
-                VStack(alignment: .leading, spacing: .contentSpacing) {
-                    Text("dashboard.week.kicker")
-                        .font(.caption2.weight(.bold))
-                        .tracking(.kickerTracking)
-                        .foregroundStyle(theme.accent)
+        DashboardSurface {
+            VStack(alignment: .leading, spacing: .contentSpacing) {
+                Button(action: onOpenSummary) {
+                    VStack(alignment: .leading, spacing: .contentSpacing) {
+                        Text("dashboard.week.kicker")
+                            .font(.caption2.weight(.bold))
+                            .tracking(.kickerTracking)
+                            .foregroundStyle(theme.accent)
 
-                    header
-                    weekdayValues
+                        header
+                    }
+                    .contentShape(Rectangle())
                 }
-                .padding(.cardPadding)
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("dashboard.weeklySummary.button")
+                .accessibilityHint("dashboard.open.details")
+
+                weekdayValues
             }
+            .padding(.cardPadding)
         }
-        .buttonStyle(.plain)
-        .accessibilityIdentifier("dashboard.weeklySummary.button")
-        .accessibilityHint("dashboard.open.details")
     }
 
     private var header: some View {
@@ -55,28 +60,36 @@ struct DashboardWeeklySummaryView: View {
             ForEach(Weekday.allCases, id: \.self) { weekday in
                 let progress = snapshot.progress(for: weekday)
 
-                VStack(spacing: .labelSpacing) {
-                    Text(progress.displayValue)
-                        .font(.caption2.monospacedDigit().weight(.bold))
-                        .foregroundStyle(valueColor(for: progress))
-                        .frame(maxWidth: .infinity, minHeight: .valueHeight)
-                        .background(valueBackground(for: progress), in: Circle())
-                        .overlay {
-                            Circle()
-                                .stroke(
-                                    weekday.isToday ? theme.accent : .primary.opacity(.borderOpacity),
-                                    lineWidth: weekday.isToday ? .todayBorderWidth : 1
-                                )
-                        }
+                Button {
+                    onOpenWeekday(weekday)
+                } label: {
+                    VStack(spacing: .labelSpacing) {
+                        Text(progress.displayValue)
+                            .font(.caption2.monospacedDigit().weight(.bold))
+                            .foregroundStyle(valueColor(for: progress))
+                            .frame(maxWidth: .infinity, minHeight: .valueHeight)
+                            .background(valueBackground(for: progress), in: Circle())
+                            .overlay {
+                                Circle()
+                                    .stroke(
+                                        weekday.isToday ? theme.accent : .primary.opacity(.borderOpacity),
+                                        lineWidth: weekday.isToday ? .todayBorderWidth : 1
+                                    )
+                            }
 
-                    Text(weekday.shortLabel)
-                        .font(.system(size: .weekdayFontSize, weight: weekday.isToday ? .bold : .medium))
-                        .foregroundStyle(weekday.isToday ? .primary : .secondary)
+                        Text(weekday.shortLabel)
+                            .font(.system(size: .weekdayFontSize, weight: weekday.isToday ? .bold : .medium))
+                            .foregroundStyle(weekday.isToday ? .primary : .secondary)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .contentShape(Rectangle())
                 }
-                .frame(maxWidth: .infinity)
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("dashboard.weeklySummary.\(weekday.rawValue).button")
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel(weekday.label)
                 .accessibilityValue(accessibilityValue(for: progress))
+                .accessibilityHint("dashboard.open.details")
             }
         }
     }

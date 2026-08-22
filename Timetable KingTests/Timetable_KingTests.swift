@@ -18,13 +18,15 @@ struct Timetable_KingTests {
             habit: habit
         )
         schedule.createdAt = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: now) ?? now
+        let result = WeekdayHabitResult(day: now, weekdayHabit: schedule, status: .failed)
 
         context.insert(habit)
         context.insert(schedule)
+        context.insert(result)
         try context.save()
 
         try HistoryStateService(modelContainerService: modelContainerService).markHistoryDeleted(at: now)
-        context.insert(WeekdayHabitResult(day: now, weekdayHabit: schedule, status: .done))
+        result.status = .done
         try context.save()
 
         let digest = WeekdayDigestService(modelContainerService: modelContainerService)
@@ -107,7 +109,7 @@ struct Timetable_KingTests {
     }
 
     @Test
-    func reloadsWeeklySummaryAfterStatusChange() throws {
+    func reloadsWeeklySummaryAfterStatusChange() async throws {
         let modelContainerService = try makeModelContainerService()
         let context = modelContainerService.context
         let now = Date.now
@@ -125,7 +127,7 @@ struct Timetable_KingTests {
         try context.save()
 
         let viewModel = WeeklySummaryViewModel(modelContainerService: modelContainerService)
-        viewModel.loadAvailableWeeks()
+        await viewModel.loadAvailableWeeks()
         let currentWeekStart = try #require(Calendar.current.dateInterval(of: .weekOfYear, for: now)?.start)
         let currentInterval = try #require(
             viewModel.availableWeeks.first(where: {
@@ -139,6 +141,7 @@ struct Timetable_KingTests {
         context.insert(WeekdayHabitResult(day: now, weekdayHabit: schedule, status: .done))
         try context.save()
         viewModel.reloadDigests(forWeekStartingAt: currentWeekStart)
+        await viewModel.reloadHistoryOverview()
 
         #expect(viewModel.entries(for: currentInterval).first(where: { $0.isCurrentDay })?.completedCount == 1)
         #expect(viewModel.overallScore.completedCount == 1)
@@ -175,6 +178,42 @@ struct Timetable_KingTests {
         #expect(resolvedCount == 1)
         #expect(results.count == 1)
         #expect(results.first?.status == .failed)
+    }
+
+    @Test
+    func resolvesEveryStoredNoneResultForSameLocalDay() throws {
+        let modelContainerService = try makeModelContainerService()
+        let context = modelContainerService.context
+        let currentWeekStart = try #require(Calendar.current.dateInterval(of: .weekOfYear, for: .now)?.start)
+        let previousWeekStart = try #require(
+            Calendar.current.date(byAdding: .weekOfYear, value: -1, to: currentWeekStart)
+        )
+        let previousMonday = try #require(date(for: .monday, inWeekStartingAt: previousWeekStart))
+        let habit = Habit(title: "Training")
+        let schedule = WeekdayHabit(
+            hour: 8,
+            minute: 0,
+            weekdayRawValue: Weekday.monday.rawValue,
+            habit: habit
+        )
+        schedule.createdAt = previousMonday
+        let firstResult = WeekdayHabitResult(day: previousMonday, weekdayHabit: schedule, status: .none)
+        let secondResult = WeekdayHabitResult(day: previousMonday, weekdayHabit: schedule, status: .none)
+        secondResult.day = try #require(Calendar.current.date(byAdding: .hour, value: 1, to: previousMonday))
+
+        context.insert(habit)
+        context.insert(schedule)
+        context.insert(firstResult)
+        context.insert(secondResult)
+        try context.save()
+
+        let resolvedCount = try TodayTaskReviewService(modelContainerService: modelContainerService)
+            .resolvePastUndefinedTasks(referenceDate: currentWeekStart)
+        let results = try context.fetch(FetchDescriptor<WeekdayHabitResult>())
+
+        #expect(resolvedCount == 1)
+        #expect(results.count == 2)
+        #expect(results.allSatisfy { $0.status == .failed })
     }
 
     @Test

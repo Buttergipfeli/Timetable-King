@@ -61,6 +61,42 @@ final class Timetable_KingUITests: XCTestCase {
     }
 
     @MainActor
+    func testOpensSelectedWeekdayFromWeeklySummary() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launch()
+        dismissReviewIfPresented(in: app)
+
+        let saturdayButton = app.buttons["dashboard.weeklySummary.saturday.button"]
+        XCTAssertTrue(saturdayButton.waitForExistence(timeout: 5))
+        saturdayButton.tap()
+
+        XCTAssertTrue(app.navigationBars["Saturday"].waitForExistence(timeout: 5))
+        let weekdaySheet = app.descendants(matching: .any)["weeklySummary.weekday.sheet"]
+        XCTAssertTrue(weekdaySheet.exists)
+    }
+
+    @MainActor
+    func testNavigatesToSelectedWeekdayWithinWeeklySummary() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launch()
+        dismissReviewIfPresented(in: app)
+
+        let weeklySummaryButton = app.buttons["dashboard.weeklySummary.button"]
+        XCTAssertTrue(weeklySummaryButton.waitForExistence(timeout: 5))
+        weeklySummaryButton.tap()
+
+        let thursdayButton = app.buttons["weeklySummary.thursday.button"].firstMatch
+        XCTAssertTrue(thursdayButton.waitForExistence(timeout: 5))
+        thursdayButton.tap()
+
+        let navigationBar = app.navigationBars["Thursday"]
+        XCTAssertTrue(navigationBar.waitForExistence(timeout: 5))
+        XCTAssertTrue(navigationBar.buttons["Weekly Summary"].exists)
+    }
+
+    @MainActor
     func testLaunchPerformance() throws {
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             XCUIApplication().launch()

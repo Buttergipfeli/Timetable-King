@@ -9,6 +9,10 @@ final class ModelContainerService {
     var context: ModelContext {
         container.mainContext
     }
+
+    var modelContainer: ModelContainer {
+        container
+    }
     
     init(container: ModelContainer) {
         self.container = container

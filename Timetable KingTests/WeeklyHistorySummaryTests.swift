@@ -6,6 +6,19 @@ import Testing
 @MainActor
 struct WeeklyHistorySummaryTests {
     @Test
+    func opensSelectedWeekdayFromDashboardSummary() throws {
+        let service = try makeModelContainerService()
+        let viewModel = TimetableKingAppViewModel(modelContainerService: service)
+        viewModel.load()
+
+        viewModel.openWeeklySummary(weekday: .saturday)
+
+        #expect(viewModel.presentedWeeklySummaryEntry?.digest.weekday == .saturday)
+        #expect(viewModel.presentedCard == nil)
+        #expect(!viewModel.isCardPresented)
+    }
+
+    @Test
     func mapsCompletionPercentagesToSharedPerformanceEmojis() {
         let scores = [
             (CompletionScore(completedCount: 0, totalCount: 0), "😶"),
@@ -23,7 +36,7 @@ struct WeeklyHistorySummaryTests {
     }
 
     @Test
-    func aggregatesScoresAcrossEveryAvailableWeek() throws {
+    func aggregatesScoresAcrossEveryAvailableWeek() async throws {
         let service = try makeModelContainerService()
         let context = service.context
         let currentWeek = try #require(Calendar.current.dateInterval(of: .weekOfYear, for: .now))
@@ -63,7 +76,7 @@ struct WeeklyHistorySummaryTests {
         try context.save()
 
         let viewModel = WeeklySummaryViewModel(modelContainerService: service)
-        viewModel.loadAvailableWeeks()
+        await viewModel.loadAvailableWeeks()
 
         #expect(viewModel.availableWeeks.count == 3)
         #expect(viewModel.digestsByWeek.count == 1)
