@@ -331,7 +331,10 @@ struct Timetable_KingTests {
         context.insert(schedule)
         try context.save()
 
-        let viewModel = TimetableKingAppViewModel(modelContainerService: modelContainerService)
+        let viewModel = TimetableKingAppViewModel(
+            modelContainerService: modelContainerService,
+            widgetSnapshotService: TimetableKingTestsWidgetSnapshotService()
+        )
         viewModel.isAddingWeeklyTask = true
         viewModel.refreshForActivation()
 
@@ -362,4 +365,13 @@ struct Timetable_KingTests {
             to: weekStart
         )
     }
+}
+
+@MainActor
+private final class TimetableKingTestsWidgetSnapshotService: WidgetSnapshotSyncing {
+    func sync(
+        _ dashboardSnapshot: DashboardSnapshot,
+        recurringDigests: [WeekdayDigest],
+        referenceDate: Date
+    ) { }
 }
