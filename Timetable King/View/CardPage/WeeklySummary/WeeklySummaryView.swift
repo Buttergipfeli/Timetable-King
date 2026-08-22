@@ -2,6 +2,8 @@ import SwiftUI
 
 struct WeeklySummaryView: View {
     @State private var viewModel = WeeklySummaryViewModel()
+    @State private var isWeekPickerPresented = false
+    @State private var selectedWeekIndex = 0
 
     var onUpdateStatus: ((TodayTaskEntry, HabitState) -> Bool)? = nil
 
@@ -9,17 +11,34 @@ struct WeeklySummaryView: View {
         @Bindable var vm = viewModel
 
         NavigationStack {
-            TabView(selection: $vm.currentWeekIndex) {
-                ForEach(Array(viewModel.availableWeeks.enumerated()), id: \.offset) { index, week in
-                    WeekPageView(
-                        weekInterval: week,
-                        entries: viewModel.entries(for: week)
-                    )
-                    .tag(index)
-                    .onAppear { viewModel.loadDigests(for: week) }
+            VStack(spacing: 0) {
+                OverallHistorySummaryView(score: viewModel.overallScore)
+                    .padding(.horizontal, .overallHorizontalPadding)
+                    .padding(.top, .overallTopPadding)
+
+                TabView(selection: $vm.currentWeekIndex) {
+                    ForEach(Array(viewModel.availableWeeks.enumerated()), id: \.offset) { index, week in
+                        WeekPageView(
+                            weekInterval: week,
+                            score: viewModel.score(for: week),
+                            entries: viewModel.entries(for: week)
+                        )
+                        .tag(index)
+                        .onAppear { viewModel.loadDigests(for: week) }
+                    }
                 }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+
+                WeeklySummaryPageControl(
+                    pageCount: viewModel.availableWeeks.count,
+                    currentPage: $vm.currentWeekIndex,
+                    onLongPress: presentWeekPicker
+                )
+                .frame(maxWidth: .pageControlMaximumWidth)
+                .frame(height: .pageControlHeight)
+                .padding(.top, .pageIndicatorTopPadding)
+                .padding(.bottom, .pageIndicatorBottomPadding)
             }
-            .tabViewStyle(.page(indexDisplayMode: .automatic))
             .background(Color(.systemGroupedBackground))
             .navigationTitle(String(localized: "timetable.weekly.summary.title"))
             .navigationBarTitleDisplayMode(.inline)
@@ -39,20 +58,39 @@ struct WeeklySummaryView: View {
             .toolbar { DismissToolbarItem() }
         }
         .onAppear { viewModel.loadAvailableWeeks() }
+        .sheet(isPresented: $isWeekPickerPresented) {
+            WeeklySummaryWeekPickerView(
+                weeks: viewModel.availableWeeks,
+                selectedIndex: $selectedWeekIndex,
+                onSelect: selectWeek
+            )
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
+        }
+    }
+
+    private func presentWeekPicker() {
+        guard !viewModel.availableWeeks.isEmpty else { return }
+        selectedWeekIndex = viewModel.currentWeekIndex
+        isWeekPickerPresented = true
+    }
+
+    private func selectWeek(at index: Int) {
+        withAnimation(.easeInOut(duration: 0.25)) {
+            viewModel.currentWeekIndex = index
+        }
     }
 }
 
 private struct WeekPageView: View {
     let weekInterval: DateInterval
+    let score: CompletionScore
     let entries: [WeeklySummaryEntry]
 
     var body: some View {
         ScrollView {
             VStack(spacing: .rowSpacing) {
-                Text(weekLabel)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                WeeklyPeriodSummaryView(title: weekLabel, score: score)
 
                 ForEach(entries) { entry in
                     NavigationLink(value: entry) {
@@ -63,6 +101,8 @@ private struct WeekPageView: View {
             }
             .padding(.horizontal, .screenPadding)
             .padding(.vertical, .screenVerticalPadding)
+            .frame(maxWidth: .pageMaximumWidth)
+            .frame(maxWidth: .infinity)
         }
         .background(Color(.systemGroupedBackground))
     }
@@ -89,7 +129,14 @@ private struct WeekPageView: View {
 }
 
 private extension CGFloat {
+    static let overallHorizontalPadding = 16.0
+    static let overallTopPadding = 12.0
     static let screenPadding = 16.0
     static let screenVerticalPadding = 20.0
     static let rowSpacing = 12.0
+    static let pageMaximumWidth = 720.0
+    static let pageControlMaximumWidth = 260.0
+    static let pageControlHeight = 30.0
+    static let pageIndicatorTopPadding = 8.0
+    static let pageIndicatorBottomPadding = 10.0
 }

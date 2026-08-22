@@ -134,12 +134,14 @@ struct Timetable_KingTests {
         )
 
         #expect(viewModel.entries(for: currentInterval).first(where: { $0.isCurrentDay })?.completedCount == 0)
+        #expect(viewModel.overallScore.completedCount == 0)
 
         context.insert(WeekdayHabitResult(day: now, weekdayHabit: schedule, status: .done))
         try context.save()
         viewModel.reloadDigests(forWeekStartingAt: currentWeekStart)
 
         #expect(viewModel.entries(for: currentInterval).first(where: { $0.isCurrentDay })?.completedCount == 1)
+        #expect(viewModel.overallScore.completedCount == 1)
     }
 
     @Test
@@ -310,6 +312,35 @@ struct Timetable_KingTests {
             .first(where: { $0.weekday == .monday })
 
         #expect(monday?.habits == [schedule])
+    }
+
+    @Test
+    func doesNotPresentReviewSessionWhileAddingTask() throws {
+        let modelContainerService = try makeModelContainerService()
+        let context = modelContainerService.context
+        let habit = Habit(title: "Training")
+        let schedule = WeekdayHabit(
+            hour: 0,
+            minute: 0,
+            weekdayRawValue: Weekday.current.rawValue,
+            habit: habit
+        )
+        schedule.createdAt = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: .now) ?? .now
+
+        context.insert(habit)
+        context.insert(schedule)
+        try context.save()
+
+        let viewModel = TimetableKingAppViewModel(modelContainerService: modelContainerService)
+        viewModel.isAddingWeeklyTask = true
+        viewModel.refreshForActivation()
+
+        #expect(viewModel.presentedReviewSession == nil)
+
+        viewModel.isAddingWeeklyTask = false
+        viewModel.refreshForActivation()
+
+        #expect(viewModel.presentedReviewSession?.entries.count == 1)
     }
 
     private func makeModelContainerService() throws -> ModelContainerService {

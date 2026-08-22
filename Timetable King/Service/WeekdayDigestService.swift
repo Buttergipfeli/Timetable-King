@@ -28,6 +28,42 @@ final class WeekdayDigestService {
         guard let allHabits = try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()),
               let fetchedResults = fetchResults(for: weekInterval) else { return nil }
 
+        return buildWeekdayDigests(
+            for: weekInterval,
+            allHabits: allHabits,
+            fetchedResults: fetchedResults
+        )
+    }
+
+    func fetchOverallCompletionScore(for weekIntervals: [DateInterval]) -> CompletionScore? {
+        guard let allHabits = try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()),
+              let allResults = try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabitResult>()) else {
+            return nil
+        }
+
+        let resultsByWeekStart = allResults.reduce(into: [Date: [WeekdayHabitResult]]()) { result, item in
+            guard let weekStart = Calendar.current.dateInterval(of: .weekOfYear, for: item.day)?.start else { return }
+            result[weekStart, default: []].append(item)
+        }
+
+        return weekIntervals.reduce(CompletionScore(completedCount: 0, totalCount: 0)) { score, weekInterval in
+            let digests = buildWeekdayDigests(
+                for: weekInterval,
+                allHabits: allHabits,
+                fetchedResults: resultsByWeekStart[weekInterval.start] ?? []
+            )
+            return CompletionScore(
+                completedCount: score.completedCount + digests.flatMap(\.results).filter(\.isDone).count,
+                totalCount: score.totalCount + digests.reduce(0) { $0 + $1.habits.count }
+            )
+        }
+    }
+
+    private func buildWeekdayDigests(
+        for weekInterval: DateInterval,
+        allHabits: [WeekdayHabit],
+        fetchedResults: [WeekdayHabitResult]
+    ) -> [WeekdayDigest] {
         let visibleResults = fetchedResults.filter { result in
             isVisibleResultAfterHistoryReset(result)
         }

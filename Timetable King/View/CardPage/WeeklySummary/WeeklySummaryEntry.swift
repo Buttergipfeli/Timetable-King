@@ -18,9 +18,8 @@ struct WeeklySummaryEntry: Identifiable, Hashable {
         digest.futureHabits.count
     }
 
-    var completionPercentage: Double {
-        guard totalCount > 0 else { return 0 }
-        return Double(completedCount) / Double(totalCount)
+    var completionScore: CompletionScore {
+        CompletionScore(completedCount: completedCount, totalCount: totalCount)
     }
 
     var performanceEmoji: String {
@@ -28,16 +27,7 @@ struct WeeklySummaryEntry: Identifiable, Hashable {
             return "⏳"
         }
 
-        guard totalCount > 0 else { return "😶" }
-
-        switch completionPercentage {
-        case 0:          return "😭"
-        case 0..<0.25:   return "😢"
-        case 0.25..<0.5: return "😬"
-        case 0.5..<0.75: return "🙂"
-        case 0.75..<1.0: return "😄"
-        default:         return "🤩"
-        }
+        return completionScore.performanceEmoji
     }
 
     var isCurrentWeek: Bool {
