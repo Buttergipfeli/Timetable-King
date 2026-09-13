@@ -12,22 +12,31 @@ struct TimetableKingAppView: View {
     var body: some View {
         @Bindable var vm = viewModel
 
-        content
-            .environment(\.appTheme, theme)
-            .tint(theme.accent)
-            .onChange(of: scenePhase, initial: true) { _, newPhase in
-                guard newPhase == .active else { return }
-                viewModel.refreshForActivation()
+        Group {
+            if viewModel.isShowingOnboarding {
+                OnboardingView(
+                    onSave: viewModel.addOnboardingTask,
+                    onFinish: viewModel.completeOnboarding
+                )
+            } else {
+                content
             }
-            .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
-                viewModel.refreshForActivation()
-            }
-            .onOpenURL(perform: viewModel.open)
-            .alert("common.operation.error.title", isPresented: $vm.isShowingOperationError) {
-                Button("common.ok", role: .cancel) {}
-            } message: {
-                Text("common.operation.error.message")
-            }
+        }
+        .environment(\.appTheme, theme)
+        .tint(theme.accent)
+        .onChange(of: scenePhase, initial: true) { _, newPhase in
+            guard newPhase == .active else { return }
+            viewModel.refreshForActivation()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
+            viewModel.refreshForActivation()
+        }
+        .onOpenURL(perform: viewModel.open)
+        .alert("common.operation.error.title", isPresented: $vm.isShowingOperationError) {
+            Button("common.ok", role: .cancel) {}
+        } message: {
+            Text("common.operation.error.message")
+        }
     }
 
     private var content: some View {
@@ -68,7 +77,10 @@ struct TimetableKingAppView: View {
             .accessibilityIdentifier("weeklySummary.weekday.sheet")
         }
         .sheet(isPresented: $viewModel.isShowingSettings) {
-            SettingsView(onDeleteHistory: viewModel.deleteHistory)
+            SettingsView(
+                onDeleteHistory: viewModel.deleteHistory,
+                onAddTask: viewModel.addOnboardingTask
+            )
         }
         .sheet(isPresented: $viewModel.isAddingWeeklyTask) {
             AddWeeklyTaskView(

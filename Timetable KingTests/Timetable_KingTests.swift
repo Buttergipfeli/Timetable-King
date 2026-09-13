@@ -355,6 +355,9 @@ struct Timetable_KingTests {
 
     @Test
     func doesNotPresentReviewSessionWhileAddingTask() throws {
+        let suiteName = "ReviewOnboardingTests.\(UUID().uuidString)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
         let modelContainerService = try makeModelContainerService()
         let context = modelContainerService.context
         let habit = Habit(title: "Training")
@@ -372,7 +375,8 @@ struct Timetable_KingTests {
 
         let viewModel = TimetableKingAppViewModel(
             modelContainerService: modelContainerService,
-            widgetSnapshotService: TimetableKingTestsWidgetSnapshotService()
+            widgetSnapshotService: TimetableKingTestsWidgetSnapshotService(),
+            onboardingStore: OnboardingStore(userDefaults: defaults)
         )
         viewModel.isAddingWeeklyTask = true
         viewModel.refreshForActivation()

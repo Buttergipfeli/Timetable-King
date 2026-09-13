@@ -7,8 +7,14 @@ import Testing
 struct WeeklyHistorySummaryTests {
     @Test
     func opensSelectedWeekdayFromDashboardSummary() throws {
+        let suiteName = "SummaryOnboardingTests.\(UUID().uuidString)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
         let service = try makeModelContainerService()
-        let viewModel = TimetableKingAppViewModel(modelContainerService: service)
+        let viewModel = TimetableKingAppViewModel(
+            modelContainerService: service,
+            onboardingStore: OnboardingStore(userDefaults: defaults)
+        )
         viewModel.load()
 
         viewModel.openWeeklySummary(weekday: .saturday)
