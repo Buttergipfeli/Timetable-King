@@ -8,7 +8,7 @@ final class Timetable_KingUITests: XCTestCase {
     @MainActor
     func testGeneratesNewPaletteFromSettings() throws {
         let app = XCUIApplication()
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchArguments = ["--demo-data", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launch()
         dismissReviewIfPresented(in: app)
 
@@ -28,7 +28,7 @@ final class Timetable_KingUITests: XCTestCase {
     @MainActor
     func testOpensWeeklyHistory() throws {
         let app = XCUIApplication()
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchArguments = ["--demo-data", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launch()
         dismissReviewIfPresented(in: app)
 
@@ -63,7 +63,7 @@ final class Timetable_KingUITests: XCTestCase {
     @MainActor
     func testOpensSelectedWeekdayFromWeeklySummary() throws {
         let app = XCUIApplication()
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchArguments = ["--demo-data", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launch()
         dismissReviewIfPresented(in: app)
 
@@ -79,7 +79,7 @@ final class Timetable_KingUITests: XCTestCase {
     @MainActor
     func testNavigatesToSelectedWeekdayWithinWeeklySummary() throws {
         let app = XCUIApplication()
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchArguments = ["--demo-data", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launch()
         dismissReviewIfPresented(in: app)
 
@@ -99,7 +99,9 @@ final class Timetable_KingUITests: XCTestCase {
     @MainActor
     func testLaunchPerformance() throws {
         measure(metrics: [XCTApplicationLaunchMetric()]) {
-            XCUIApplication().launch()
+            let app = XCUIApplication()
+            app.launchArguments = ["--demo-data"]
+            app.launch()
         }
     }
 

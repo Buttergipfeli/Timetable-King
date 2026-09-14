@@ -160,6 +160,9 @@ struct TimetableWidgetSnapshotTests {
 
     @Test
     func appRoutesTaskDeepLinkToMatchingEntry() throws {
+        let suiteName = "WidgetOnboardingTests.\(UUID().uuidString)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
         let container = Timetable_KingApp.setUpModelContainer(isStoredInMemoryOnly: true)
         let modelContainerService = ModelContainerService(container: container)
         let habit = Habit(title: "Open from widget")
@@ -175,7 +178,8 @@ struct TimetableWidgetSnapshotTests {
         try container.mainContext.save()
         let viewModel = TimetableKingAppViewModel(
             modelContainerService: modelContainerService,
-            widgetSnapshotService: NoOpWidgetSnapshotService()
+            widgetSnapshotService: NoOpWidgetSnapshotService(),
+            onboardingStore: OnboardingStore(userDefaults: defaults)
         )
         viewModel.load()
         let entry = try #require(viewModel.todayEntries.first)

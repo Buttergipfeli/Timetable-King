@@ -5,8 +5,10 @@ struct SettingsView: View {
     @Environment(AppPaletteStore.self) private var paletteStore
 
     @State private var isShowingDeleteConfirmation = false
+    @State private var isShowingOnboarding = false
 
     let onDeleteHistory: () -> Bool
+    let onAddTask: (String, Weekday, Int, Int) -> Bool
 
     var body: some View {
         NavigationStack {
@@ -39,6 +41,15 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    Button {
+                        isShowingOnboarding = true
+                    } label: {
+                        Label("settings.onboarding", systemImage: "sparkles")
+                    }
+                    .accessibilityIdentifier("settings.onboarding.button")
+                }
+
+                Section {
                     Button(role: .destructive) {
                         isShowingDeleteConfirmation = true
                     } label: {
@@ -50,6 +61,11 @@ struct SettingsView: View {
             .navigationTitle("settings.title")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { DismissToolbarItem() }
+            .fullScreenCover(isPresented: $isShowingOnboarding) {
+                OnboardingView(onSave: onAddTask) {
+                    isShowingOnboarding = false
+                }
+            }
             .confirmationDialog(
                 "settings.delete.history.confirmation.title",
                 isPresented: $isShowingDeleteConfirmation,

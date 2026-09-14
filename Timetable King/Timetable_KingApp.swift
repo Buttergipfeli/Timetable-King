@@ -10,9 +10,17 @@ struct Timetable_KingApp: App {
     
     init() {
 #if DEBUG
-        container = Timetable_KingApp.setUpModelContainer(isStoredInMemoryOnly: true)
-        Timetable_KingApp.setUpTestData(into: container.mainContext)
-        try? container.mainContext.save()
+        let arguments = ProcessInfo.processInfo.arguments
+        let usesDemoData = arguments.contains("--demo-data")
+        let usesEmptyStore = arguments.contains("--empty-store")
+        container = Timetable_KingApp.setUpModelContainer(isStoredInMemoryOnly: usesDemoData || usesEmptyStore)
+        if usesDemoData {
+            Timetable_KingApp.setUpTestData(into: container.mainContext)
+            try? container.mainContext.save()
+        }
+        if arguments.contains("--reset-onboarding") {
+            UserDefaults.standard.removeObject(forKey: OnboardingStore.completionKey)
+        }
 #else
         container = Timetable_KingApp.setUpModelContainer(isStoredInMemoryOnly: false)
 #endif

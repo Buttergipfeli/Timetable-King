@@ -13,6 +13,7 @@ final class Timetable_KingUITestsLaunchTests: XCTestCase {
     @MainActor
     func testLaunch() throws {
         let app = XCUIApplication()
+        app.launchArguments = ["--demo-data"]
         app.launch()
 
         // Insert steps here to perform after app launch but before taking a screenshot,

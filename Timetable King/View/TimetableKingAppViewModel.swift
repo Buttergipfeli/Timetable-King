@@ -13,12 +13,15 @@ final class TimetableKingAppViewModel {
     var presentedWeeklySummaryEntry: WeeklySummaryEntry?
     var presentedReviewSession: TodayTaskReviewSession?
     var isShowingOperationError = false
+    private(set) var isShowingOnboarding: Bool
 
     private let weekdayDigestService: WeekdayDigestService
     private let weeklyTaskService: WeeklyTaskService
     private let todayTaskReviewService: TodayTaskReviewService
     private let widgetSnapshotService: any WidgetSnapshotSyncing
     private let modelContainerService: ModelContainerService
+    private let onboardingStore: OnboardingStore
+    private var pendingOnboardingURL: URL?
     
     var todayEntries: [TodayTaskEntry] {
         guard let todayDigest else { return [] }
@@ -60,13 +63,17 @@ final class TimetableKingAppViewModel {
     
     init(
         modelContainerService: ModelContainerService,
-        widgetSnapshotService: (any WidgetSnapshotSyncing)? = nil
+        widgetSnapshotService: (any WidgetSnapshotSyncing)? = nil,
+        onboardingStore: OnboardingStore = OnboardingStore()
     ) {
         self.modelContainerService = modelContainerService
         weekdayDigestService = WeekdayDigestService(modelContainerService: modelContainerService)
         weeklyTaskService = WeeklyTaskService(modelContainerService: modelContainerService)
         todayTaskReviewService = TodayTaskReviewService(modelContainerService: modelContainerService)
         self.widgetSnapshotService = widgetSnapshotService ?? WidgetSnapshotService()
+        self.onboardingStore = onboardingStore
+        let taskCount = (try? modelContainerService.context.fetchCount(FetchDescriptor<Habit>())) ?? 0
+        isShowingOnboarding = onboardingStore.shouldPresent(hasExistingTasks: taskCount > 0)
     }
 
     func load() {
@@ -84,6 +91,8 @@ final class TimetableKingAppViewModel {
     }
 
     func refreshForActivation() {
+        guard !isShowingOnboarding else { return }
+
         do {
             try todayTaskReviewService.resolvePastUndefinedTasks()
         } catch {
@@ -125,6 +134,11 @@ final class TimetableKingAppViewModel {
 
     func open(url: URL) {
         guard let destination = TimetableDeepLink.destination(for: url) else { return }
+
+        if isShowingOnboarding {
+            pendingOnboardingURL = url
+            return
+        }
 
         resetPresentation()
         load()
@@ -179,6 +193,24 @@ final class TimetableKingAppViewModel {
     }
 
     @discardableResult
+    func addOnboardingTask(title: String, weekday: Weekday, hour: Int, minute: Int) -> Bool {
+        perform(showingError: false) {
+            try weeklyTaskService.save(title: title, weekday: weekday, hour: hour, minute: minute)
+        }
+    }
+
+    func completeOnboarding() {
+        onboardingStore.complete()
+        isShowingOnboarding = false
+        load()
+
+        if let url = pendingOnboardingURL {
+            pendingOnboardingURL = nil
+            open(url: url)
+        }
+    }
+
+    @discardableResult
     func deleteWeeklyTask(habit: WeekdayHabit) -> Bool {
         perform {
             try weeklyTaskService.delete(habit: habit)
@@ -193,6 +225,7 @@ final class TimetableKingAppViewModel {
     }
 
     private var canPresentReviewSession: Bool {
+        !isShowingOnboarding &&
         presentedReviewSession == nil &&
         presentedEntry == nil &&
         presentedWeeklySummaryEntry == nil &&
@@ -228,20 +261,20 @@ final class TimetableKingAppViewModel {
         isAddingWeeklyTask = false
     }
 
-    private func perform(_ operation: () throws -> Void) -> Bool {
+    private func perform(showingError: Bool = true, _ operation: () throws -> Void) -> Bool {
         do {
             try operation()
             load()
             return true
         } catch {
-            handleOperationError()
+            handleOperationError(showingAlert: showingError)
             load()
             return false
         }
     }
 
-    private func handleOperationError() {
+    private func handleOperationError(showingAlert: Bool = true) {
         modelContainerService.context.rollback()
-        isShowingOperationError = true
+        isShowingOperationError = showingAlert
     }
 }
