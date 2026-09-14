@@ -96,12 +96,46 @@ final class OnboardingUITests: XCTestCase {
     }
 
     @MainActor
-    private func launchFirstRun(language: String = "en", locale: String = "en_US") -> XCUIApplication {
+    func testGermanIntroductionWithLargeText() {
+        let app = launchFirstRun(
+            language: "de",
+            locale: "de_CH",
+            additionalArguments: [
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"
+            ]
+        )
+        let welcome = XCTAttachment(screenshot: app.screenshot())
+        welcome.name = "Onboarding Large Text Welcome"
+        welcome.lifetime = .keepAlways
+        add(welcome)
+
+        app.buttons["onboarding.start.button"].tap()
+        let templateButton = app.buttons["onboarding.template.training.button"]
+        XCTAssertTrue(templateButton.waitForExistence(timeout: 5))
+        templateButton.tap()
+
+        let saveButton = app.buttons["onboarding.routine.save.button"]
+        XCTAssertTrue(saveButton.isHittable)
+        let routine = XCTAttachment(screenshot: app.screenshot())
+        routine.name = "Onboarding Large Text Routine"
+        routine.lifetime = .keepAlways
+        add(routine)
+        saveButton.tap()
+
+        XCTAssertTrue(app.buttons["dashboard.settings.button"].waitForExistence(timeout: 5))
+    }
+
+    @MainActor
+    private func launchFirstRun(
+        language: String = "en",
+        locale: String = "en_US",
+        additionalArguments: [String] = []
+    ) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = [
             "--empty-store", "--reset-onboarding",
             "-AppleLanguages", "(\(language))", "-AppleLocale", locale
-        ]
+        ] + additionalArguments
         app.launch()
         XCTAssertTrue(app.buttons["onboarding.start.button"].waitForExistence(timeout: 5))
         return app
