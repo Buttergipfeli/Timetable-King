@@ -6,7 +6,7 @@ struct AddWeeklyTaskView: View {
     @State private var viewModel = AddWeeklyTaskViewModel()
 
     let preselectedWeekday: Weekday?
-    let onSave: (String, Weekday, Int, Int) -> Bool
+    let onSave: (String, Set<Weekday>, Int, Int) -> Bool
 
     var body: some View {
         @Bindable var vm = viewModel
@@ -15,17 +15,20 @@ struct AddWeeklyTaskView: View {
             Form {
                 Section {
                     TextField("timetable.weekly.tasks.add.placeholder", text: $vm.title)
+                        .accessibilityIdentifier("weeklyTask.add.title.field")
                 } header: {
                     Text("timetable.weekly.tasks.add.task.title")
                 }
 
                 Section {
-                    Picker("timetable.weekly.tasks.add.weekday", selection: $vm.weekday) {
-                        ForEach(Weekday.allCases, id: \.self) { day in
-                            Text(day.label).tag(day)
-                        }
-                    }
+                    WeekdaySelectionView(selection: $vm.weekdays)
+                } header: {
+                    Text("timetable.weekly.tasks.add.repeat")
+                } footer: {
+                    Text("timetable.weekly.tasks.add.repeat.description")
+                }
 
+                Section {
                     DatePicker(
                         "timetable.weekly.tasks.add.time",
                         selection: $vm.time,
@@ -49,6 +52,7 @@ struct AddWeeklyTaskView: View {
                             .font(.headline.weight(.semibold))
                     }
                     .disabled(!viewModel.isSaveable)
+                    .accessibilityIdentifier("weeklyTask.add.save.button")
                 }
             }
         }

@@ -5,7 +5,7 @@ struct WeeklyTasksView: View {
 
     let weekdayDigests: [WeekdayDigest]
     let initialWeekday: Weekday?
-    let onAddTask: (String, Weekday, Int, Int) -> Bool
+    let onAddTask: (String, Set<Weekday>, Int, Int) -> Bool
     let onDeleteTask: (WeekdayHabit) -> Bool
     let onUpdateTask: (WeekdayHabit, String, Weekday, Int, Int) -> Bool
 

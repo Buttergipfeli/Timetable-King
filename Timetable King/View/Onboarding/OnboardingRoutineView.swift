@@ -4,7 +4,7 @@ struct OnboardingRoutineView: View {
     @State private var viewModel = AddWeeklyTaskViewModel()
     @State private var isShowingSaveError = false
 
-    let onSave: (String, Weekday, Int, Int) -> Bool
+    let onSave: (String, Set<Weekday>, Int, Int) -> Bool
     let onFinish: () -> Void
 
     var body: some View {
@@ -12,9 +12,24 @@ struct OnboardingRoutineView: View {
 
         Form {
             Section {
-                templateButton(title: "onboarding.template.morning", symbol: "sun.max", hour: 8)
-                templateButton(title: "onboarding.template.training", symbol: "figure.run", hour: 18)
-                templateButton(title: "onboarding.template.household", symbol: "house", hour: 10)
+                templateButton(
+                    title: "onboarding.template.morning",
+                    symbol: "sun.max",
+                    hour: 8,
+                    weekdays: Set(Weekday.allCases)
+                )
+                templateButton(
+                    title: "onboarding.template.training",
+                    symbol: "figure.run",
+                    hour: 18,
+                    weekdays: [.monday, .wednesday, .friday]
+                )
+                templateButton(
+                    title: "onboarding.template.household",
+                    symbol: "house",
+                    hour: 10,
+                    weekdays: [.saturday]
+                )
             } header: {
                 Text("onboarding.templates.title")
             } footer: {
@@ -27,13 +42,14 @@ struct OnboardingRoutineView: View {
             }
 
             Section {
-                Picker("timetable.weekly.tasks.add.weekday", selection: $vm.weekday) {
-                    ForEach(Weekday.allCases, id: \.self) { day in
-                        Text(day.label).tag(day)
-                    }
-                }
-                .accessibilityIdentifier("onboarding.routine.weekday.picker")
+                WeekdaySelectionView(selection: $vm.weekdays)
+            } header: {
+                Text("timetable.weekly.tasks.add.repeat")
+            } footer: {
+                Text("timetable.weekly.tasks.add.repeat.description")
+            }
 
+            Section {
                 DatePicker(
                     "timetable.weekly.tasks.add.time",
                     selection: $vm.time,
@@ -82,9 +98,15 @@ struct OnboardingRoutineView: View {
         }
     }
 
-    private func templateButton(title: String, symbol: String, hour: Int) -> some View {
+    private func templateButton(
+        title: String,
+        symbol: String,
+        hour: Int,
+        weekdays: Set<Weekday>
+    ) -> some View {
         Button {
             viewModel.title = title.localized
+            viewModel.weekdays = weekdays
             viewModel.time = Calendar.current.date(
                 bySettingHour: hour,
                 minute: 0,

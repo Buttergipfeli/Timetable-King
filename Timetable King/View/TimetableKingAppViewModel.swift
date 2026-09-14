@@ -186,16 +186,16 @@ final class TimetableKingAppViewModel {
     }
 
     @discardableResult
-    func addWeeklyTask(title: String, weekday: Weekday, hour: Int, minute: Int) -> Bool {
+    func addWeeklyTask(title: String, weekdays: Set<Weekday>, hour: Int, minute: Int) -> Bool {
         perform {
-            try weeklyTaskService.save(title: title, weekday: weekday, hour: hour, minute: minute)
+            try weeklyTaskService.save(title: title, weekdays: weekdays, hour: hour, minute: minute)
         }
     }
 
     @discardableResult
-    func addOnboardingTask(title: String, weekday: Weekday, hour: Int, minute: Int) -> Bool {
+    func addOnboardingTask(title: String, weekdays: Set<Weekday>, hour: Int, minute: Int) -> Bool {
         perform(showingError: false) {
-            try weeklyTaskService.save(title: title, weekday: weekday, hour: hour, minute: minute)
+            try weeklyTaskService.save(title: title, weekdays: weekdays, hour: hour, minute: minute)
         }
     }
 

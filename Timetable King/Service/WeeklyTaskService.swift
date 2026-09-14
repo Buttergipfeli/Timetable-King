@@ -61,6 +61,14 @@ final class WeeklyTaskService {
     }
 
     func save(title: String, weekday: Weekday, hour: Int, minute: Int) throws {
+        try save(title: title, weekdays: [weekday], hour: hour, minute: minute)
+    }
+
+    func save(title: String, weekdays: Set<Weekday>, hour: Int, minute: Int) throws {
+        guard !weekdays.isEmpty else {
+            throw WeeklyTaskServiceError.missingWeekday
+        }
+
         let context = modelContainerService.context
         let descriptor = FetchDescriptor<Habit>(predicate: #Predicate { $0.title == title })
         let habit: Habit
@@ -71,16 +79,27 @@ final class WeeklyTaskService {
             context.insert(habit)
         }
 
-        guard try hasDuplicate(
-            habit: habit,
-            weekday: weekday,
-            hour: hour,
-            minute: minute
-        ).not else {
-            throw WeeklyTaskServiceError.duplicateTask
+        for weekday in weekdays {
+            guard try hasDuplicate(
+                habit: habit,
+                weekday: weekday,
+                hour: hour,
+                minute: minute
+            ).not else {
+                throw WeeklyTaskServiceError.duplicateTask
+            }
         }
 
-        context.insert(WeekdayHabit(hour: hour, minute: minute, weekdayRawValue: weekday.rawValue, habit: habit))
+        for weekday in weekdays.sorted(using: KeyPathComparator(\.sortIndex)) {
+            context.insert(
+                WeekdayHabit(
+                    hour: hour,
+                    minute: minute,
+                    weekdayRawValue: weekday.rawValue,
+                    habit: habit
+                )
+            )
+        }
         try context.save()
     }
 
@@ -104,4 +123,5 @@ final class WeeklyTaskService {
 
 private enum WeeklyTaskServiceError: Error {
     case duplicateTask
+    case missingWeekday
 }
