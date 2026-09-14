@@ -1968,6 +1968,40 @@
         }
       }
     },
+    "timetable.weekly.tasks.edit.delete.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle zukünftigen Wiederholungen werden gelöscht. Die Historie bleibt erhalten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All future repetitions will be deleted. Your history remains unchanged."
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.edit.repeat.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Änderungen gelten für zukünftige Einträge. Die Historie bleibt unverändert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changes apply to future entries. Your history remains unchanged."
+          }
+        }
+      }
+    },
     "timetable.weekly.tasks.title" : {
       "extractionState" : "manual",
       "localizations" : {

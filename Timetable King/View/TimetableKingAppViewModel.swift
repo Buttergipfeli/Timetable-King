@@ -218,9 +218,21 @@ final class TimetableKingAppViewModel {
     }
 
     @discardableResult
-    func updateWeeklyTask(habit: WeekdayHabit, title: String, weekday: Weekday, hour: Int, minute: Int) -> Bool {
+    func updateWeeklyTask(
+        habit: WeekdayHabit,
+        title: String,
+        weekdays: Set<Weekday>,
+        hour: Int,
+        minute: Int
+    ) -> Bool {
         perform {
-            try weeklyTaskService.update(habit: habit, title: title, weekday: weekday, hour: hour, minute: minute)
+            try weeklyTaskService.update(
+                habit: habit,
+                title: title,
+                weekdays: weekdays,
+                hour: hour,
+                minute: minute
+            )
         }
     }
 

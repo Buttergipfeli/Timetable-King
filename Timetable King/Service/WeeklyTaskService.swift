@@ -10,12 +10,10 @@ final class WeeklyTaskService {
         historyStateService = HistoryStateService(modelContainerService: modelContainerService)
     }
 
-    func delete(habit: WeekdayHabit) throws {
+    func delete(habit: WeekdayHabit, at date: Date = .now) throws {
         let context = modelContainerService.context
-        if habit.results.isEmpty {
-            context.delete(habit)
-        } else {
-            habit.deletedAt = .now
+        for schedule in habit.activeRecurrenceSchedules {
+            schedule.deletedAt = date
         }
         try context.save()
     }
@@ -33,6 +31,38 @@ final class WeeklyTaskService {
     }
 
     func update(habit: WeekdayHabit, title: String, weekday: Weekday, hour: Int, minute: Int) throws {
+        try update(
+            habit: habit,
+            title: title,
+            weekdays: [weekday],
+            hour: hour,
+            minute: minute
+        )
+    }
+
+    func update(
+        habit: WeekdayHabit,
+        title: String,
+        weekdays: Set<Weekday>,
+        hour: Int,
+        minute: Int,
+        at date: Date = .now
+    ) throws {
+        guard !weekdays.isEmpty else {
+            throw WeeklyTaskServiceError.missingWeekday
+        }
+
+        let currentSchedules = habit.activeRecurrenceSchedules
+        guard !currentSchedules.isEmpty else {
+            throw WeeklyTaskServiceError.missingTask
+        }
+
+        let currentWeekdays = Set(currentSchedules.map(\.weekday))
+        let isUnchanged = currentWeekdays == weekdays && currentSchedules.allSatisfy {
+            $0.habit.title == title && $0.hour == hour && $0.minute == minute
+        }
+        guard !isUnchanged else { return }
+
         let context = modelContainerService.context
         let descriptor = FetchDescriptor<Habit>(predicate: #Predicate { $0.title == title })
         let updatedHabit: Habit
@@ -43,20 +73,36 @@ final class WeeklyTaskService {
             context.insert(updatedHabit)
         }
 
-        guard try hasDuplicate(
-            habit: updatedHabit,
-            weekday: weekday,
-            hour: hour,
-            minute: minute,
-            excluding: habit
-        ).not else {
-            throw WeeklyTaskServiceError.duplicateTask
+        for weekday in weekdays {
+            guard try hasDuplicate(
+                habit: updatedHabit,
+                weekday: weekday,
+                hour: hour,
+                minute: minute,
+                excluding: currentSchedules
+            ).not else {
+                throw WeeklyTaskServiceError.duplicateTask
+            }
         }
 
-        habit.habit = updatedHabit
-        habit.weekday = weekday
-        habit.hour = hour
-        habit.minute = minute
+        for schedule in currentSchedules {
+            schedule.deletedAt = date
+        }
+
+        let recurrenceID = habit.recurrenceID ?? UUID()
+        let createdAt = recurrenceStartAfterEditing(currentSchedules, at: date)
+        for weekday in weekdays.sorted(using: KeyPathComparator(\.sortIndex)) {
+            let schedule = WeekdayHabit(
+                hour: hour,
+                minute: minute,
+                weekdayRawValue: weekday.rawValue,
+                habit: updatedHabit,
+                recurrenceID: recurrenceID
+            )
+            schedule.createdAt = createdAt
+            context.insert(schedule)
+        }
+
         try context.save()
     }
 
@@ -90,13 +136,15 @@ final class WeeklyTaskService {
             }
         }
 
+        let recurrenceID = UUID()
         for weekday in weekdays.sorted(using: KeyPathComparator(\.sortIndex)) {
             context.insert(
                 WeekdayHabit(
                     hour: hour,
                     minute: minute,
                     weekdayRawValue: weekday.rawValue,
-                    habit: habit
+                    habit: habit,
+                    recurrenceID: recurrenceID
                 )
             )
         }
@@ -108,20 +156,30 @@ final class WeeklyTaskService {
         weekday: Weekday,
         hour: Int,
         minute: Int,
-        excluding excludedSchedule: WeekdayHabit? = nil
+        excluding excludedSchedules: [WeekdayHabit] = []
     ) throws -> Bool {
         try modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()).contains {
             !$0.isDeleted &&
-            $0 != excludedSchedule &&
+            !excludedSchedules.contains($0) &&
             $0.habit == habit &&
             $0.weekday == weekday &&
             $0.hour == hour &&
             $0.minute == minute
         }
     }
+
+    private func recurrenceStartAfterEditing(_ schedules: [WeekdayHabit], at date: Date) -> Date {
+        let calendar = Calendar.current
+        let hasResultToday = schedules.contains { schedule in
+            schedule.results.contains { calendar.isDate($0.day, inSameDayAs: date) }
+        }
+        guard hasResultToday else { return date }
+        return calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: date)) ?? date
+    }
 }
 
 private enum WeeklyTaskServiceError: Error {
     case duplicateTask
     case missingWeekday
+    case missingTask
 }

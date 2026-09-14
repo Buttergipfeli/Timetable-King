@@ -105,6 +105,43 @@ final class OnboardingUITests: XCTestCase {
     }
 
     @MainActor
+    func testEditsWeekdaysOfRepeatingTask() {
+        let app = launchFirstRun()
+        app.buttons["onboarding.start.button"].tap()
+        app.buttons["onboarding.template.morning.button"].tap()
+        app.buttons["onboarding.routine.save.button"].tap()
+
+        let weeklyPlanButton = app.buttons["dashboard.weeklyPlan.button"]
+        XCTAssertTrue(weeklyPlanButton.waitForExistence(timeout: 5))
+        for _ in 0..<5 where !weeklyPlanButton.isHittable {
+            app.swipeUp()
+        }
+        XCTAssertTrue(weeklyPlanButton.isHittable)
+        weeklyPlanButton.tap()
+
+        let mondayButton = app.buttons["weeklyTasks.monday.button"]
+        XCTAssertTrue(mondayButton.waitForExistence(timeout: 5))
+        mondayButton.tap()
+        let taskRow = app.buttons["weeklyTask.row.Morning routine"]
+        XCTAssertTrue(taskRow.waitForExistence(timeout: 5))
+        taskRow.tap()
+
+        let everyDayButton = app.buttons["weekday.selection.everyDay.button"]
+        XCTAssertTrue(everyDayButton.waitForExistence(timeout: 5))
+        XCTAssertTrue(everyDayButton.isSelected)
+        app.buttons["weekday.selection.sunday.button"].tap()
+        XCTAssertFalse(everyDayButton.isSelected)
+
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = "Edit Task Recurrence"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+
+        app.buttons["weeklyTask.edit.save.button"].tap()
+        XCTAssertTrue(app.navigationBars["Monday"].waitForExistence(timeout: 5))
+    }
+
+    @MainActor
     func testGermanIntroductionAndTemplate() {
         let app = launchFirstRun(language: "de", locale: "de_CH")
         XCTAssertTrue(app.staticTexts["Deine Woche.\nDein Rhythmus."].exists)

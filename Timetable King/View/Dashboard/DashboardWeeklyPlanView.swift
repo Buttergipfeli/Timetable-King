@@ -55,6 +55,7 @@ struct DashboardWeeklyPlanView: View {
         }
         .buttonStyle(.plain)
         .accessibilityHint("dashboard.open.details")
+        .accessibilityIdentifier("dashboard.weeklyPlan.button")
     }
 
     private var weekdayDots: some View {
