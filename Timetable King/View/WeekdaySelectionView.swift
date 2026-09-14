@@ -9,7 +9,9 @@ struct WeekdaySelectionView: View {
             isSelected: selection.count == Weekday.allCases.count,
             identifier: "weekday.selection.everyDay.button"
         ) {
-            selection = Set(Weekday.allCases)
+            selection = selection.count == Weekday.allCases.count
+                ? []
+                : Set(Weekday.allCases)
         }
 
         ForEach(Weekday.allCases, id: \.self) { weekday in

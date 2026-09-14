@@ -12,8 +12,10 @@ final class WeeklyTaskService {
 
     func delete(habit: WeekdayHabit, at date: Date = .now) throws {
         let context = modelContainerService.context
-        for schedule in habit.activeRecurrenceSchedules {
-            schedule.deletedAt = date
+        let currentSchedules = habit.activeRecurrenceSchedules
+        let effectiveDate = effectiveChangeDate(for: currentSchedules, at: date)
+        for schedule in currentSchedules {
+            schedule.deletedAt = effectiveDate
         }
         try context.save()
     }
@@ -85,12 +87,18 @@ final class WeeklyTaskService {
             }
         }
 
+        let effectiveDate = effectiveChangeDate(
+            for: currentSchedules,
+            newWeekdays: weekdays,
+            hour: hour,
+            minute: minute,
+            at: date
+        )
         for schedule in currentSchedules {
-            schedule.deletedAt = date
+            schedule.deletedAt = effectiveDate
         }
 
         let recurrenceID = habit.recurrenceID ?? UUID()
-        let createdAt = recurrenceStartAfterEditing(currentSchedules, at: date)
         for weekday in weekdays.sorted(using: KeyPathComparator(\.sortIndex)) {
             let schedule = WeekdayHabit(
                 hour: hour,
@@ -99,7 +107,7 @@ final class WeeklyTaskService {
                 habit: updatedHabit,
                 recurrenceID: recurrenceID
             )
-            schedule.createdAt = createdAt
+            schedule.createdAt = effectiveDate
             context.insert(schedule)
         }
 
@@ -168,13 +176,56 @@ final class WeeklyTaskService {
         }
     }
 
-    private func recurrenceStartAfterEditing(_ schedules: [WeekdayHabit], at date: Date) -> Date {
+    private func effectiveChangeDate(
+        for schedules: [WeekdayHabit],
+        newWeekdays: Set<Weekday> = [],
+        hour: Int? = nil,
+        minute: Int? = nil,
+        at date: Date
+    ) -> Date {
         let calendar = Calendar.current
-        let hasResultToday = schedules.contains { schedule in
-            schedule.results.contains { calendar.isDate($0.day, inSameDayAs: date) }
+        let currentWeekday = Weekday(date: date)
+        let currentOccurrenceHasStarted = schedules.contains { schedule in
+            guard schedule.weekday == currentWeekday else { return false }
+            let hasResult = schedule.results.contains {
+                calendar.isDate($0.day, inSameDayAs: date)
+            }
+            return hasResult || scheduledDate(
+                hour: schedule.hour,
+                minute: schedule.minute,
+                on: date,
+                calendar: calendar
+            ) <= date
         }
-        guard hasResultToday else { return date }
+
+        let newOccurrenceWouldBeRetroactive: Bool
+        if newWeekdays.contains(currentWeekday), let hour, let minute {
+            newOccurrenceWouldBeRetroactive = scheduledDate(
+                hour: hour,
+                minute: minute,
+                on: date,
+                calendar: calendar
+            ) <= date
+        } else {
+            newOccurrenceWouldBeRetroactive = false
+        }
+
+        guard currentOccurrenceHasStarted || newOccurrenceWouldBeRetroactive else { return date }
         return calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: date)) ?? date
+    }
+
+    private func scheduledDate(
+        hour: Int,
+        minute: Int,
+        on date: Date,
+        calendar: Calendar
+    ) -> Date {
+        calendar.date(
+            bySettingHour: hour,
+            minute: minute,
+            second: 0,
+            of: date
+        ) ?? date
     }
 }
 

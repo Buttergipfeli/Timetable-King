@@ -129,6 +129,11 @@ final class OnboardingUITests: XCTestCase {
         let everyDayButton = app.buttons["weekday.selection.everyDay.button"]
         XCTAssertTrue(everyDayButton.waitForExistence(timeout: 5))
         XCTAssertTrue(everyDayButton.isSelected)
+        everyDayButton.tap()
+        XCTAssertFalse(everyDayButton.isSelected)
+        XCTAssertFalse(app.buttons["weekday.selection.monday.button"].isSelected)
+        everyDayButton.tap()
+        XCTAssertTrue(everyDayButton.isSelected)
         app.buttons["weekday.selection.sunday.button"].tap()
         XCTAssertFalse(everyDayButton.isSelected)
 

@@ -195,6 +195,85 @@ struct WeeklyTaskRecurrenceTests {
         #expect(today.futureHabits.first?.habit.title == "Read a book")
     }
 
+    @Test
+    func editingOverdueTaskPreservesTodaysOccurrence() throws {
+        let service = try makeModelContainerService()
+        let taskService = WeeklyTaskService(modelContainerService: service)
+        let referenceDate = try #require(makeReferenceDate(hour: 10))
+        let weekday = Weekday(date: referenceDate)
+        try taskService.save(title: "Read", weekday: weekday, hour: 8, minute: 0)
+
+        let originalSchedule = try #require(
+            service.context.fetch(FetchDescriptor<WeekdayHabit>()).first
+        )
+        originalSchedule.createdAt = try #require(makeReferenceDate(hour: 7))
+        try service.context.save()
+
+        try taskService.update(
+            habit: originalSchedule,
+            title: "Read a book",
+            weekdays: [weekday],
+            hour: 9,
+            minute: 0,
+            at: referenceDate
+        )
+
+        let weekInterval = try #require(
+            Calendar.current.dateInterval(of: .weekOfYear, for: referenceDate)
+        )
+        let today = try #require(
+            WeekdayDigestService(modelContainerService: service)
+                .fetchWeekdayDigests(for: weekInterval)?
+                .first { $0.weekday == weekday }
+        )
+        #expect(today.habits.map(\.habit.title) == ["Read"])
+        #expect(today.futureHabits.map(\.habit.title) == ["Read a book"])
+
+        let pendingReview = TodayTaskReviewService(modelContainerService: service)
+            .fetchPendingReviewEntries(referenceDate: referenceDate)
+        #expect(pendingReview.map(\.habit.habit.title) == ["Read"])
+    }
+
+    @Test
+    func deletingOverdueTaskPreservesTodaysOccurrence() throws {
+        let service = try makeModelContainerService()
+        let taskService = WeeklyTaskService(modelContainerService: service)
+        let referenceDate = try #require(makeReferenceDate(hour: 10))
+        let weekday = Weekday(date: referenceDate)
+        try taskService.save(title: "Read", weekday: weekday, hour: 8, minute: 0)
+
+        let schedule = try #require(
+            service.context.fetch(FetchDescriptor<WeekdayHabit>()).first
+        )
+        schedule.createdAt = try #require(makeReferenceDate(hour: 7))
+        try service.context.save()
+
+        try taskService.delete(habit: schedule, at: referenceDate)
+
+        let weekInterval = try #require(
+            Calendar.current.dateInterval(of: .weekOfYear, for: referenceDate)
+        )
+        let today = try #require(
+            WeekdayDigestService(modelContainerService: service)
+                .fetchWeekdayDigests(for: weekInterval)?
+                .first { $0.weekday == weekday }
+        )
+        #expect(today.habits.map(\.habit.title) == ["Read"])
+
+        let reviewService = TodayTaskReviewService(modelContainerService: service)
+        #expect(reviewService.fetchPendingReviewEntries(referenceDate: referenceDate).count == 1)
+
+        let nextDay = try #require(
+            Calendar.current.date(byAdding: .day, value: 1, to: referenceDate)
+        )
+        #expect(try reviewService.resolvePastUndefinedTasks(referenceDate: nextDay) == 1)
+        let result = try #require(
+            service.context.fetch(FetchDescriptor<WeekdayHabitResult>()).first
+        )
+        #expect(result.status == .failed)
+        #expect(Calendar.current.isDate(result.day, inSameDayAs: referenceDate))
+    }
+
     private func makeModelContainerService() throws -> ModelContainerService {
         let schema = Schema([
             Habit.self,
@@ -212,6 +291,17 @@ struct WeeklyTaskRecurrenceTests {
             byAdding: .day,
             value: weekday.dayOffset(from: Weekday(date: weekStart)),
             to: weekStart
+        )
+    }
+
+    private func makeReferenceDate(hour: Int) -> Date? {
+        Calendar.current.date(
+            from: DateComponents(
+                year: 2026,
+                month: 9,
+                day: 14,
+                hour: hour
+            )
         )
     }
 }
