@@ -1,16 +1,17 @@
-import Foundation
+import SwiftUI
 
 final class OnboardingStore {
     static let completionKey = "onboarding.completed"
 
-    private let userDefaults: UserDefaults
-
-    var hasCompleted: Bool {
-        userDefaults.bool(forKey: Self.completionKey)
-    }
+    @AppStorage
+    private(set) var hasCompleted: Bool
 
     init(userDefaults: UserDefaults = .standard) {
-        self.userDefaults = userDefaults
+        _hasCompleted = AppStorage(
+            wrappedValue: false,
+            Self.completionKey,
+            store: userDefaults
+        )
     }
 
     func shouldPresent(hasExistingTasks: Bool) -> Bool {
@@ -21,6 +22,6 @@ final class OnboardingStore {
     }
 
     func complete() {
-        userDefaults.set(true, forKey: Self.completionKey)
+        hasCompleted = true
     }
 }
