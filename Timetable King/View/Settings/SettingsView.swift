@@ -8,7 +8,7 @@ struct SettingsView: View {
     @State private var isShowingOnboarding = false
 
     let onDeleteHistory: () -> Bool
-    let onAddTask: (String, Weekday, Int, Int) -> Bool
+    let onAddTask: (String, Set<Weekday>, Int, Int) -> Bool
 
     var body: some View {
         NavigationStack {

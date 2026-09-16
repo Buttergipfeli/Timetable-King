@@ -6,9 +6,9 @@ struct WeeklyTasksDayView: View {
     var showCloseButton: Bool = false
 
     let digest: WeekdayDigest
-    let onAddTask: (String, Weekday, Int, Int) -> Bool
+    let onAddTask: (String, Set<Weekday>, Int, Int) -> Bool
     let onDeleteTask: (WeekdayHabit) -> Bool
-    let onUpdateTask: (WeekdayHabit, String, Weekday, Int, Int) -> Bool
+    let onUpdateTask: (WeekdayHabit, String, Set<Weekday>, Int, Int) -> Bool
 
     var body: some View {
         List {
@@ -19,6 +19,7 @@ struct WeeklyTasksDayView: View {
                     WeeklyTaskRowView(habit: habit)
                 }
                 .buttonStyle(.plain)
+                .accessibilityIdentifier("weeklyTask.row.\(habit.habit.title)")
                 .listRowBackground(Color(.systemGroupedBackground))
                 .listRowSeparator(.hidden)
                 .listRowInsets(EdgeInsets(top: .rowSpacing / 2, leading: .screenPadding, bottom: .rowSpacing / 2, trailing: .screenPadding))

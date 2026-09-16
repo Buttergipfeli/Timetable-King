@@ -3,7 +3,7 @@ import SwiftUI
 struct OnboardingView: View {
     @Environment(\.appTheme) private var theme
 
-    let onSave: (String, Weekday, Int, Int) -> Bool
+    let onSave: (String, Set<Weekday>, Int, Int) -> Bool
     let onFinish: () -> Void
 
     var body: some View {

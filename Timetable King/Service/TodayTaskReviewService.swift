@@ -47,7 +47,7 @@ final class TodayTaskReviewService {
     func fetchPendingReviewEntries(referenceDate: Date = .now) -> [TodayTaskReviewEntry] {
         let startOfToday = Calendar.current.startOfDay(for: referenceDate)
         let habits = ((try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>())) ?? [])
-            .filter { !$0.isDeleted && $0.weekday == Weekday(date: referenceDate) }
+            .filter { $0.weekday == Weekday(date: referenceDate) }
 
         return habits
             .compactMap { habit in
@@ -125,7 +125,12 @@ final class TodayTaskReviewService {
     }
 
     private func isOccurrenceValid(for habit: WeekdayHabit, scheduledDate: Date) -> Bool {
-        habit.createdAt <= scheduledDate || Calendar.current.isDate(habit.createdAt, inSameDayAs: scheduledDate)
+        let calendar = Calendar.current
+        guard habit.createdAt <= scheduledDate || calendar.isDate(habit.createdAt, inSameDayAs: scheduledDate) else {
+            return false
+        }
+        guard let deletedAt = habit.deletedAt else { return true }
+        return scheduledDate < calendar.startOfDay(for: deletedAt)
     }
 
     private func scheduledDate(for habit: WeekdayHabit, inWeekStartingAt weekStart: Date) -> Date {

@@ -452,13 +452,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lege Aufgaben mit einem festen Wochentag und einer Uhrzeit an. Sie wiederholen sich jede Woche."
+            "value" : "Lege Aufgaben mit einem oder mehreren festen Wochentagen und einer Uhrzeit an. Sie wiederholen sich jede Woche."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Give tasks a weekday and a time. They repeat every week."
+            "value" : "Give tasks one or more fixed weekdays and a time. They repeat every week."
           }
         }
       }
@@ -520,13 +520,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diese Aufgabe wiederholt sich jede Woche am gewählten Tag. Du kannst sie später im Wochenplan ändern."
+            "value" : "Diese Aufgabe wiederholt sich jede Woche an den gewählten Tagen. Du kannst einzelne Tage später im Wochenplan ändern."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This task repeats every week on the selected day. You can edit it later in your weekly plan."
+            "value" : "This task repeats every week on the selected days. You can edit individual days later in your weekly plan."
           }
         }
       }
@@ -656,13 +656,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wähle eine Vorlage oder gib eine eigene Aufgabe ein. Name, Tag und Uhrzeit kannst du frei anpassen."
+            "value" : "Wähle eine Vorlage oder gib eine eigene Aufgabe ein. Name, Wochentage und Uhrzeit kannst du frei anpassen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose a template or enter your own task. You can change the name, day and time."
+            "value" : "Choose a template or enter your own task. You can change the name, weekdays and time."
           }
         }
       }
@@ -1696,6 +1696,23 @@
         }
       }
     },
+    "timetable.weekly.tasks.add.every.day" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeden Tag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every day"
+          }
+        }
+      }
+    },
     "timetable.weekly.tasks.add.placeholder" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1709,6 +1726,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enter task name"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.repeat" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederholen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repeat"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.add.repeat.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle einen oder mehrere feste Wochentage."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose one or more fixed weekdays."
           }
         }
       }
@@ -1913,6 +1964,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete Task"
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.edit.delete.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle zukünftigen Wiederholungen werden gelöscht. Die Historie bleibt erhalten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All future repetitions will be deleted. Your history remains unchanged."
+          }
+        }
+      }
+    },
+    "timetable.weekly.tasks.edit.repeat.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Änderungen gelten für zukünftige Einträge. Die Historie bleibt unverändert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changes apply to future entries. Your history remains unchanged."
           }
         }
       }

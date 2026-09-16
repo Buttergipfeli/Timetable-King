@@ -31,6 +31,7 @@ final class OnboardingUITests: XCTestCase {
         app.buttons["onboarding.template.morning.button"].tap()
         let titleField = app.textFields["onboarding.routine.title.field"]
         XCTAssertEqual(titleField.value as? String, "Morning routine")
+        XCTAssertTrue(app.buttons["weekday.selection.everyDay.button"].isSelected)
         XCTAssertTrue(saveButton.isEnabled)
 
         titleField.tap()
@@ -75,6 +76,74 @@ final class OnboardingUITests: XCTestCase {
 
         XCTAssertTrue(app.buttons["settings.onboarding.button"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.buttons["onboarding.routine.save.button"].exists)
+    }
+
+    @MainActor
+    func testCreatesDailyTaskFromDashboard() {
+        let app = launchFirstRun()
+        app.buttons["onboarding.skip.button"].tap()
+
+        let addButton = app.buttons["dashboard.addTask.button"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 5))
+        for _ in 0..<5 where !addButton.isHittable {
+            app.swipeUp()
+        }
+        XCTAssertTrue(addButton.isHittable)
+        addButton.tap()
+
+        let titleField = app.textFields["weeklyTask.add.title.field"]
+        XCTAssertTrue(titleField.waitForExistence(timeout: 5))
+        titleField.tap()
+        titleField.typeText("Drink water")
+
+        let everyDayButton = app.buttons["weekday.selection.everyDay.button"]
+        everyDayButton.tap()
+        XCTAssertTrue(everyDayButton.isSelected)
+        app.buttons["weeklyTask.add.save.button"].tap()
+
+        XCTAssertTrue(app.staticTexts["Drink water"].firstMatch.waitForExistence(timeout: 5))
+    }
+
+    @MainActor
+    func testEditsWeekdaysOfRepeatingTask() {
+        let app = launchFirstRun()
+        app.buttons["onboarding.start.button"].tap()
+        app.buttons["onboarding.template.morning.button"].tap()
+        app.buttons["onboarding.routine.save.button"].tap()
+
+        let weeklyPlanButton = app.buttons["dashboard.weeklyPlan.button"]
+        XCTAssertTrue(weeklyPlanButton.waitForExistence(timeout: 5))
+        for _ in 0..<5 where !weeklyPlanButton.isHittable {
+            app.swipeUp()
+        }
+        XCTAssertTrue(weeklyPlanButton.isHittable)
+        weeklyPlanButton.tap()
+
+        let mondayButton = app.buttons["weeklyTasks.monday.button"]
+        XCTAssertTrue(mondayButton.waitForExistence(timeout: 5))
+        mondayButton.tap()
+        let taskRow = app.buttons["weeklyTask.row.Morning routine"]
+        XCTAssertTrue(taskRow.waitForExistence(timeout: 5))
+        taskRow.tap()
+
+        let everyDayButton = app.buttons["weekday.selection.everyDay.button"]
+        XCTAssertTrue(everyDayButton.waitForExistence(timeout: 5))
+        XCTAssertTrue(everyDayButton.isSelected)
+        everyDayButton.tap()
+        XCTAssertFalse(everyDayButton.isSelected)
+        XCTAssertFalse(app.buttons["weekday.selection.monday.button"].isSelected)
+        everyDayButton.tap()
+        XCTAssertTrue(everyDayButton.isSelected)
+        app.buttons["weekday.selection.sunday.button"].tap()
+        XCTAssertFalse(everyDayButton.isSelected)
+
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = "Edit Task Recurrence"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+
+        app.buttons["weeklyTask.edit.save.button"].tap()
+        XCTAssertTrue(app.navigationBars["Monday"].waitForExistence(timeout: 5))
     }
 
     @MainActor

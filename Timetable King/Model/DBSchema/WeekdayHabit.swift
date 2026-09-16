@@ -20,6 +20,7 @@ final class WeekdayHabit {
 
     var createdAt: Date = Date.now
     var deletedAt: Date?
+    var recurrenceID: UUID?
 
     @Transient
     var isDeleted: Bool {
@@ -29,11 +30,25 @@ final class WeekdayHabit {
     @Relationship(deleteRule: .cascade, inverse: \WeekdayHabitResult.weekdayHabit)
     var results: [WeekdayHabitResult] = []
 
-    init(hour: Int, minute: Int, weekdayRawValue: String, habit: Habit) {
+    init(
+        hour: Int,
+        minute: Int,
+        weekdayRawValue: String,
+        habit: Habit,
+        recurrenceID: UUID? = nil
+    ) {
         self.hour = hour
         self.minute = minute
         self.weekdayRawValue = weekdayRawValue
         self.habit = habit
+        self.recurrenceID = recurrenceID
+    }
+
+    var activeRecurrenceSchedules: [WeekdayHabit] {
+        guard let recurrenceID else { return isDeleted ? [] : [self] }
+        return habit.weekdayHabits.filter {
+            !$0.isDeleted && $0.recurrenceID == recurrenceID
+        }
     }
 
     @Transient

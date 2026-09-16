@@ -5,9 +5,9 @@ struct WeeklyTasksView: View {
 
     let weekdayDigests: [WeekdayDigest]
     let initialWeekday: Weekday?
-    let onAddTask: (String, Weekday, Int, Int) -> Bool
+    let onAddTask: (String, Set<Weekday>, Int, Int) -> Bool
     let onDeleteTask: (WeekdayHabit) -> Bool
-    let onUpdateTask: (WeekdayHabit, String, Weekday, Int, Int) -> Bool
+    let onUpdateTask: (WeekdayHabit, String, Set<Weekday>, Int, Int) -> Bool
 
     var body: some View {
         NavigationStack(path: $viewModel.path) {
@@ -18,6 +18,7 @@ struct WeeklyTasksView: View {
                             WeeklyTasksDayRowView(digest: digest)
                         }
                         .buttonStyle(.plain)
+                        .accessibilityIdentifier("weeklyTasks.\(digest.weekday.rawValue).button")
                     }
                 }
                 .padding(.horizontal, .screenPadding)

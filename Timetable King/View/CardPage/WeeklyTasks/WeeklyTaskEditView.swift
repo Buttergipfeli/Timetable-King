@@ -6,7 +6,7 @@ struct WeeklyTaskEditView: View {
     @State private var viewModel = WeeklyTaskEditViewModel()
 
     let habit: WeekdayHabit
-    let onSave: (WeekdayHabit, String, Weekday, Int, Int) -> Bool
+    let onSave: (WeekdayHabit, String, Set<Weekday>, Int, Int) -> Bool
     let onDelete: (WeekdayHabit) -> Bool
 
     var body: some View {
@@ -15,17 +15,20 @@ struct WeeklyTaskEditView: View {
         Form {
             Section {
                 TextField("timetable.weekly.tasks.add.placeholder", text: $vm.title)
+                    .accessibilityIdentifier("weeklyTask.edit.title.field")
             } header: {
                 Text("timetable.weekly.tasks.add.task.title")
             }
 
             Section {
-                Picker("timetable.weekly.tasks.add.weekday", selection: $vm.weekday) {
-                    ForEach(Weekday.allCases, id: \.self) { day in
-                        Text(day.label).tag(day)
-                    }
-                }
+                WeekdaySelectionView(selection: $vm.weekdays)
+            } header: {
+                Text("timetable.weekly.tasks.add.repeat")
+            } footer: {
+                Text("timetable.weekly.tasks.edit.repeat.description")
+            }
 
+            Section {
                 DatePicker(
                     "timetable.weekly.tasks.add.time",
                     selection: $vm.time,
@@ -41,6 +44,8 @@ struct WeeklyTaskEditView: View {
                         dismiss()
                     }
                 }
+            } footer: {
+                Text("timetable.weekly.tasks.edit.delete.description")
             }
         }
         .navigationTitle(habit.habit.title)
@@ -56,6 +61,7 @@ struct WeeklyTaskEditView: View {
                         .font(.headline.weight(.semibold))
                 }
                 .disabled(!viewModel.isSaveable)
+                .accessibilityIdentifier("weeklyTask.edit.save.button")
             }
         }
         .onAppear {

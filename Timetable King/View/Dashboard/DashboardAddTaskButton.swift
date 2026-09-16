@@ -35,6 +35,7 @@ struct DashboardAddTaskButton: View {
             }
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier("dashboard.addTask.button")
     }
 }
 

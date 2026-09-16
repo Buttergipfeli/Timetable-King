@@ -42,7 +42,12 @@ struct OnboardingTests {
         defer { fixture.cleanUp() }
         let viewModel = fixture.makeViewModel()
 
-        let saved = viewModel.addOnboardingTask(title: "Stretch", weekday: .current, hour: 8, minute: 15)
+        let saved = viewModel.addOnboardingTask(
+            title: "Stretch",
+            weekdays: [.current],
+            hour: 8,
+            minute: 15
+        )
         #expect(saved)
         viewModel.completeOnboarding()
 
@@ -61,13 +66,36 @@ struct OnboardingTests {
         defer { fixture.cleanUp() }
         let viewModel = fixture.makeViewModel()
 
-        #expect(viewModel.addOnboardingTask(title: "Training", weekday: .monday, hour: 18, minute: 0))
-        #expect(!viewModel.addOnboardingTask(title: "Training", weekday: .monday, hour: 18, minute: 0))
+        #expect(viewModel.addOnboardingTask(title: "Training", weekdays: [.monday], hour: 18, minute: 0))
+        #expect(!viewModel.addOnboardingTask(title: "Training", weekdays: [.monday], hour: 18, minute: 0))
 
         #expect(viewModel.isShowingOnboarding)
         #expect(!fixture.store.hasCompleted)
         #expect(!viewModel.isShowingOperationError)
         #expect(try fixture.service.context.fetchCount(FetchDescriptor<WeekdayHabit>()) == 1)
+    }
+
+    @Test
+    func dailyRoutineCreatesOneScheduleForEveryWeekday() throws {
+        let fixture = try OnboardingFixture()
+        defer { fixture.cleanUp() }
+        let viewModel = fixture.makeViewModel()
+
+        #expect(
+            viewModel.addOnboardingTask(
+                title: "Morning routine",
+                weekdays: Set(Weekday.allCases),
+                hour: 8,
+                minute: 0
+            )
+        )
+        viewModel.completeOnboarding()
+
+        let schedules = try fixture.service.context.fetch(FetchDescriptor<WeekdayHabit>())
+        #expect(schedules.count == Weekday.allCases.count)
+        #expect(Set(schedules.map(\.weekday)) == Set(Weekday.allCases))
+        #expect(Set(schedules.map(\.habit.title)) == ["Morning routine"])
+        #expect(viewModel.dashboardSnapshot.weeklyTaskCount == Weekday.allCases.count)
     }
 
     @Test

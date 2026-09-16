@@ -1,10 +1,10 @@
 # Timetable King App
 
-Timetable King is a powerful and user friendly application designed to help people manage their weekly schedules effectively. With its intuitive and compact interface, Timetable King allows users to create, organize and customize their timetables with ease.
+Timetable King is a powerful and user friendly application designed to help people manage their weekly schedules effectively. With its intuitive and compact interface, Timetable King allows users to create, organize and customize their timetables with ease. Tasks can repeat on one or more fixed weekdays, with a shortcut for every day. Repetitions can be edited or deleted as a series without changing historical entries.
 
 ## Onboarding
 
-New users see a short introduction and can create their first weekly task from an editable morning routine, training or household template, or enter their own task. The introduction can be skipped and reopened from Settings. Existing users with saved tasks go straight to their dashboard.
+New users see a short introduction and can create their first weekly task from an editable morning routine, training or household template, or enter their own task. Templates include suitable weekday repetitions that remain fully editable. The introduction can be skipped and reopened from Settings. Existing users with saved tasks go straight to their dashboard.
 
 Debug builds use persistent data by default. These launch arguments support manual checks and UI tests:
 
