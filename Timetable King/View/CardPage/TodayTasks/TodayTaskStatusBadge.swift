@@ -27,6 +27,15 @@ struct TodayTaskStatusBadge: View {
                 }
 
                 Button {
+                    _ = onSelectStatus(.skipped)
+                } label: {
+                    menuOption(
+                        title: "timetable.today.task.status.skipped".localized,
+                        color: TodayTaskDisplayStatus.skipped.color
+                    )
+                }
+
+                Button {
                     _ = onSelectStatus(.none)
                 } label: {
                     menuOption(
@@ -71,7 +80,7 @@ extension TodayTaskDisplayStatus {
             .green
         case .failed:
             .red
-        case .todo:
+        case .todo, .skipped:
             .gray
         case .future:
             .blue

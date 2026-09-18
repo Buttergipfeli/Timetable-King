@@ -21,6 +21,7 @@ final class TimetableKingAppViewModel {
     private let widgetSnapshotService: any WidgetSnapshotSyncing
     private let modelContainerService: ModelContainerService
     private let onboardingStore: OnboardingStore
+    private let reminderService: (any TaskReminderSyncing)?
     private var pendingOnboardingURL: URL?
     
     var todayEntries: [TodayTaskEntry] {
@@ -44,13 +45,13 @@ final class TimetableKingAppViewModel {
             .flatMap(\.results)
             .filter(\.isDone)
             .count
-        let weeklyTotalCount = weekdayDigests.reduce(0) { $0 + $1.habits.count }
+        let weeklyTotalCount = weekdayDigests.reduce(0) { $0 + $1.scoredTaskCount }
         let activeWeeklyDigests = weeklyTaskDigests.filter { $0.habits.isEmpty.not }
 
         return DashboardSnapshot(
             todayEntries: todayEntries,
             completedTodayCount: completedTodayCount,
-            totalTodayCount: todayEntries.count,
+            totalTodayCount: todayEntries.filter { $0.displayStatus != .skipped }.count,
             nextTask: todayEntries.first { $0.displayStatus == .todo },
             weekdayDigests: weekdayDigests,
             weeklyCompletedCount: weeklyCompletedCount,
@@ -64,7 +65,8 @@ final class TimetableKingAppViewModel {
     init(
         modelContainerService: ModelContainerService,
         widgetSnapshotService: (any WidgetSnapshotSyncing)? = nil,
-        onboardingStore: OnboardingStore = OnboardingStore()
+        onboardingStore: OnboardingStore = OnboardingStore(),
+        reminderService: (any TaskReminderSyncing)? = nil
     ) {
         self.modelContainerService = modelContainerService
         weekdayDigestService = WeekdayDigestService(modelContainerService: modelContainerService)
@@ -72,6 +74,7 @@ final class TimetableKingAppViewModel {
         todayTaskReviewService = TodayTaskReviewService(modelContainerService: modelContainerService)
         self.widgetSnapshotService = widgetSnapshotService ?? WidgetSnapshotService()
         self.onboardingStore = onboardingStore
+        self.reminderService = reminderService
         let taskCount = (try? modelContainerService.context.fetchCount(FetchDescriptor<Habit>())) ?? 0
         isShowingOnboarding = onboardingStore.shouldPresent(hasExistingTasks: taskCount > 0)
     }
@@ -88,6 +91,10 @@ final class TimetableKingAppViewModel {
             referenceDate: .now
         )
         syncPresentedData()
+        if let reminderService,
+           let schedules = try? modelContainerService.context.fetch(FetchDescriptor<WeekdayHabit>()) {
+            reminderService.sync(schedules: schedules)
+        }
     }
 
     func refreshForActivation() {
@@ -148,6 +155,13 @@ final class TimetableKingAppViewModel {
             open(card: .todayTasks)
         case .weeklySummary:
             openWeeklySummary()
+        case .reminder(let scheduleID, let taskDate):
+            if Calendar.current.isDateInToday(taskDate),
+               let entry = todayEntries.first(where: { $0.habit.reminderID == scheduleID }) {
+                open(entry: entry)
+            } else {
+                open(card: .todayTasks)
+            }
         case .task(let taskID):
             if let entry = todayEntries.first(where: { $0.widgetIdentifier == taskID }) {
                 open(entry: entry)
@@ -186,16 +200,16 @@ final class TimetableKingAppViewModel {
     }
 
     @discardableResult
-    func addWeeklyTask(title: String, weekdays: Set<Weekday>, hour: Int, minute: Int) -> Bool {
+    func addWeeklyTask(title: String, weekdays: Set<Weekday>, hour: Int, minute: Int, reminder: TaskReminder = .off) -> Bool {
         perform {
-            try weeklyTaskService.save(title: title, weekdays: weekdays, hour: hour, minute: minute)
+            try weeklyTaskService.save(title: title, weekdays: weekdays, hour: hour, minute: minute, reminder: reminder)
         }
     }
 
     @discardableResult
-    func addOnboardingTask(title: String, weekdays: Set<Weekday>, hour: Int, minute: Int) -> Bool {
+    func addOnboardingTask(title: String, weekdays: Set<Weekday>, hour: Int, minute: Int, reminder: TaskReminder = .off) -> Bool {
         perform(showingError: false) {
-            try weeklyTaskService.save(title: title, weekdays: weekdays, hour: hour, minute: minute)
+            try weeklyTaskService.save(title: title, weekdays: weekdays, hour: hour, minute: minute, reminder: reminder)
         }
     }
 
@@ -223,7 +237,8 @@ final class TimetableKingAppViewModel {
         title: String,
         weekdays: Set<Weekday>,
         hour: Int,
-        minute: Int
+        minute: Int,
+        reminder: TaskReminder
     ) -> Bool {
         perform {
             try weeklyTaskService.update(
@@ -231,7 +246,8 @@ final class TimetableKingAppViewModel {
                 title: title,
                 weekdays: weekdays,
                 hour: hour,
-                minute: minute
+                minute: minute,
+                reminder: reminder
             )
         }
     }

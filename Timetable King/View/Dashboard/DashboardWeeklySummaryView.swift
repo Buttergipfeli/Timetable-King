@@ -96,7 +96,9 @@ struct DashboardWeeklySummaryView: View {
 
     private var progressDescription: String {
         guard snapshot.weeklyTotalCount > 0 else {
-            return "dashboard.week.empty".localized
+            return snapshot.weeklySkippedCount > 0
+                ? "timetable.today.task.status.skipped".localized
+                : "dashboard.week.empty".localized
         }
 
         return "dashboard.week.progress".localized(
@@ -122,7 +124,11 @@ struct DashboardWeeklySummaryView: View {
     }
 
     private func accessibilityValue(for progress: DashboardWeekdayProgress) -> String {
-        guard progress.totalCount > 0 else { return "dashboard.week.day.empty".localized }
+        guard progress.totalCount > 0 else {
+            return progress.skippedCount > 0
+                ? "timetable.today.task.status.skipped".localized
+                : "dashboard.week.day.empty".localized
+        }
         return "dashboard.week.day.progress".localized(progress.completedCount, progress.totalCount)
     }
 }

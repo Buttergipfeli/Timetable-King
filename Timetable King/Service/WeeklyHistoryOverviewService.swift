@@ -94,7 +94,7 @@ actor WeeklyHistoryOverviewService {
             }
             return count + 1
         }
-        return results.count + scheduledCount
+        return results.filter { $0.status != .skipped }.count + scheduledCount
     }
 
     private func scheduledDate(

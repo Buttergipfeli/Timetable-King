@@ -58,14 +58,14 @@ struct TimetableMediumWidgetView: View {
     }
 
     private var resolvedStateIcon: String {
-        if snapshot.totalTodayCount == 0 {
+        if !snapshot.hasTasksToday {
             return "calendar.badge.checkmark"
         }
         return snapshot.isTodayComplete ? "checkmark.circle.fill" : "checkmark.circle"
     }
 
     private var resolvedStateTitle: String {
-        if snapshot.totalTodayCount == 0 {
+        if !snapshot.hasTasksToday {
             return "No tasks today"
         }
         return snapshot.isTodayComplete ? "All tasks completed" : "No open tasks"

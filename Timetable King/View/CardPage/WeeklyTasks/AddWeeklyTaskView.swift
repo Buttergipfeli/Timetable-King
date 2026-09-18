@@ -6,7 +6,7 @@ struct AddWeeklyTaskView: View {
     @State private var viewModel = AddWeeklyTaskViewModel()
 
     let preselectedWeekday: Weekday?
-    let onSave: (String, Set<Weekday>, Int, Int) -> Bool
+    let onSave: (String, Set<Weekday>, Int, Int, TaskReminder) -> Bool
 
     var body: some View {
         @Bindable var vm = viewModel
@@ -37,6 +37,7 @@ struct AddWeeklyTaskView: View {
                 } header: {
                     Text("timetable.weekly.tasks.add.schedule")
                 }
+                TaskReminderSection(reminder: $vm.reminder)
             }
             .navigationTitle("timetable.weekly.tasks.add.title")
             .navigationBarTitleDisplayMode(.inline)

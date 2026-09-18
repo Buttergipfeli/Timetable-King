@@ -106,6 +106,14 @@ struct TodayTaskReviewView: View {
                 )
             }
 
+            Button("timetable.today.review.skip") {
+                process(.skipped)
+            }
+            .font(.headline)
+            .foregroundStyle(.white)
+            .disabled(isProcessingAction)
+            .accessibilityIdentifier("todayReview.skip.button")
+
             Button("timetable.today.review.later") {
                 process(.later)
             }
@@ -293,6 +301,7 @@ struct TodayTaskReviewView: View {
 private enum TodayTaskReviewAction {
     case done
     case failed
+    case skipped
     case later
 
     var feedbackEmoji: String {
@@ -305,6 +314,8 @@ private enum TodayTaskReviewAction {
             ["🥳", "😄", "🤩", "😁", "😊", "😎", "🙂", "🤓", "🫡"]
         case .failed:
             ["😴", "🥱", "😪", "💤", "🛌", "😮‍💨", "😡", "😖", "🙄"]
+        case .skipped:
+            ["⏭️"]
         case .later:
             ["🤷", "🤔", "😅", "🤨"]
         }
@@ -316,6 +327,8 @@ private enum TodayTaskReviewAction {
             .done
         case .failed:
             .failed
+        case .skipped:
+            .skipped
         case .later:
             nil
         }
@@ -327,7 +340,7 @@ private enum TodayTaskReviewAction {
             1
         case .failed:
             -1
-        case .later:
+        case .later, .skipped:
             0
         }
     }

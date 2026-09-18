@@ -4,7 +4,7 @@ struct TimetableLargeWidgetView: View {
     let snapshot: TimetableWidgetSnapshot
 
     var body: some View {
-        if snapshot.weeklyTotalCount > 0 {
+        if snapshot.hasTasksThisWeek {
             weeklyOverview
         } else {
             emptyState

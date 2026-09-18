@@ -63,6 +63,32 @@ struct TimetableWidgetSnapshotTests {
     }
 
     @Test
+    func skippedTasksRemainPresentWithoutCountingAsOpenFailedOrCompleted() {
+        let referenceDate = Date.now
+        let task = TimetableWidgetTask(id: "skipped", title: "Walk", hour: 8, minute: 0, status: .skipped)
+        let day = TimetableWidgetDay(
+            id: "today", weekdayIndex: TimetableWidgetSnapshot.weekdayIndex(for: referenceDate),
+            label: "Today", tasks: [task]
+        )
+        let snapshot = TimetableWidgetSnapshot(
+            generatedAt: referenceDate,
+            weekStart: TimetableWidgetSnapshot.weekStart(for: referenceDate),
+            week: [day], recurringWeek: [day.resettingStatuses()]
+        )
+
+        #expect(snapshot.hasTasksToday)
+        #expect(snapshot.hasTasksThisWeek)
+        #expect(snapshot.totalTodayCount == 0)
+        #expect(snapshot.weeklyTotalCount == 0)
+        #expect(snapshot.completedTodayCount == 0)
+        #expect(!snapshot.isTodayComplete)
+        #expect(snapshot.nextTask == nil)
+        #expect(snapshot.recurringWeek.first?.tasks.first?.status == .todo)
+        #expect(!TimetableWidgetSnapshot.empty().hasTasksToday)
+        #expect(!TimetableWidgetSnapshot.empty().hasTasksThisWeek)
+    }
+
+    @Test
     func resolvingSnapshotForNewWeekUsesRecurringTasks() throws {
         let calendar = Calendar(identifier: .gregorian)
         let monday = try #require(calendar.date(from: DateComponents(year: 2026, month: 8, day: 17, hour: 12)))

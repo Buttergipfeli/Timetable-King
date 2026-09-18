@@ -18,10 +18,10 @@ struct TimetableAccessoryCircularView: View {
             .accessibilityLabel("Daily progress")
             .accessibilityValue("\(snapshot.completedTodayCount) of \(snapshot.totalTodayCount) completed")
         } else {
-            Image(systemName: "calendar.badge.checkmark")
+            Image(systemName: snapshot.hasTasksToday ? "forward.end.circle" : "calendar.badge.checkmark")
                 .font(.title2)
                 .widgetAccentable()
-                .accessibilityLabel("No tasks today")
+                .accessibilityLabel(snapshot.hasTasksToday ? "No open tasks" : "No tasks today")
         }
     }
 }

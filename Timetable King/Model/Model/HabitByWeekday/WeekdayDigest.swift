@@ -19,6 +19,10 @@ struct WeekdayDigest: Equatable, Hashable {
     var isEmpty: Bool {
         return habits.isEmpty && results.isEmpty && futureHabits.isEmpty
     }
+
+    var scoredTaskCount: Int {
+        habits.count - results.filter { $0.status == .skipped }.count
+    }
 }
 
 extension WeekdayDigest: Identifiable {

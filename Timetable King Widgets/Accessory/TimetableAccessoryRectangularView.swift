@@ -9,7 +9,10 @@ struct TimetableAccessoryRectangularView: View {
             progressContent
         } else {
             VStack(alignment: .leading, spacing: 4) {
-                Label("No tasks today", systemImage: "calendar.badge.checkmark")
+                Label(
+                    snapshot.hasTasksToday ? "No open tasks" : "No tasks today",
+                    systemImage: snapshot.hasTasksToday ? "forward.end.circle" : "calendar.badge.checkmark"
+                )
                     .font(.headline)
                 Text("Your schedule is clear")
                     .font(.caption)

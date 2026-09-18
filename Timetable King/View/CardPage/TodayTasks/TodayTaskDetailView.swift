@@ -59,7 +59,7 @@ struct TodayTaskDetailView: View {
                 .font(.headline.weight(.semibold))
                 .foregroundStyle(.secondary)
 
-            if allowsStatusEditing, let onUpdateStatus {
+            if allowsStatusEditing, entry.displayStatus != .future, let onUpdateStatus {
                 Menu {
                     Button {
                         if onUpdateStatus(entry, .done) {
@@ -80,6 +80,17 @@ struct TodayTaskDetailView: View {
                         statusOptionLabel(
                             title: "timetable.today.task.status.failed".localized,
                             status: .failed
+                        )
+                    }
+
+                    Button {
+                        if onUpdateStatus(entry, .skipped) {
+                            viewModel.setStatus(.skipped)
+                        }
+                    } label: {
+                        statusOptionLabel(
+                            title: "timetable.today.task.status.skipped".localized,
+                            status: .skipped
                         )
                     }
 

@@ -4,7 +4,7 @@ struct OnboardingRoutineView: View {
     @State private var viewModel = AddWeeklyTaskViewModel()
     @State private var isShowingSaveError = false
 
-    let onSave: (String, Set<Weekday>, Int, Int) -> Bool
+    let onSave: (String, Set<Weekday>, Int, Int, TaskReminder) -> Bool
     let onFinish: () -> Void
 
     var body: some View {
@@ -60,6 +60,7 @@ struct OnboardingRoutineView: View {
             } footer: {
                 Text("onboarding.routine.repeat")
             }
+            TaskReminderSection(reminder: $vm.reminder)
         }
         .navigationTitle("onboarding.routine.title")
         .navigationBarTitleDisplayMode(.inline)

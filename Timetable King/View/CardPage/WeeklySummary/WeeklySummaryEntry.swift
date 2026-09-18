@@ -11,7 +11,7 @@ struct WeeklySummaryEntry: Identifiable, Hashable {
     }
 
     var totalCount: Int {
-        digest.habits.count
+        digest.scoredTaskCount
     }
 
     var futureCount: Int {
