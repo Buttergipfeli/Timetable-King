@@ -1,0 +1,746 @@
+{
+  "Timetable King Shared/AppPalette.swift": {
+    "mtime": 1787428274.874101,
+    "seen": 1789813182.1392498,
+    "ast_hash": "a5ca971010b4f25208fa96b095356af9",
+    "semantic_hash": "a5ca971010b4f25208fa96b095356af9"
+  },
+  "Timetable King Shared/AppPaletteStorage.swift": {
+    "mtime": 1787428274.874361,
+    "seen": 1789813182.139253,
+    "ast_hash": "49cd6a96fd9c20c03b0659198d95d4e9",
+    "semantic_hash": "49cd6a96fd9c20c03b0659198d95d4e9"
+  },
+  "Timetable King Shared/HSLColor.swift": {
+    "mtime": 1787428274.8744678,
+    "seen": 1789813182.139254,
+    "ast_hash": "2c52265465196c8b6efc53288a712717",
+    "semantic_hash": "2c52265465196c8b6efc53288a712717"
+  },
+  "Timetable King Shared/TimetableDeepLink.swift": {
+    "mtime": 1789746235.3146503,
+    "seen": 1789813182.139255,
+    "ast_hash": "e5fb626673a0635ddcfa7fefd5f16358",
+    "semantic_hash": "e5fb626673a0635ddcfa7fefd5f16358"
+  },
+  "Timetable King Shared/TimetableKingAppGroup.swift": {
+    "mtime": 1787428274.8747647,
+    "seen": 1789813182.139256,
+    "ast_hash": "0d4b1f6392a3d5c5dfe62cffcbe90d05",
+    "semantic_hash": "0d4b1f6392a3d5c5dfe62cffcbe90d05"
+  },
+  "Timetable King Shared/TimetableWidgetSnapshot.swift": {
+    "mtime": 1789811197.107162,
+    "seen": 1789813182.139256,
+    "ast_hash": "395ce1d798de5e2db94d88ef50fa992b",
+    "semantic_hash": "395ce1d798de5e2db94d88ef50fa992b"
+  },
+  "Timetable King Widgets/Accessory/TimetableAccessoryCircularView.swift": {
+    "mtime": 1789811197.4496758,
+    "seen": 1789813182.1392572,
+    "ast_hash": "d0c083add1399cf2da57cc72e30a30d1",
+    "semantic_hash": "d0c083add1399cf2da57cc72e30a30d1"
+  },
+  "Timetable King Widgets/Accessory/TimetableAccessoryInlineView.swift": {
+    "mtime": 1789811197.5387154,
+    "seen": 1789813182.1392572,
+    "ast_hash": "78c66cfb97c2f446cfed33461fc11b52",
+    "semantic_hash": "78c66cfb97c2f446cfed33461fc11b52"
+  },
+  "Timetable King Widgets/Accessory/TimetableAccessoryRectangularView.swift": {
+    "mtime": 1789811197.6246395,
+    "seen": 1789813182.1392581,
+    "ast_hash": "a7f6333c3cb5ee5908d6df4c5c416c10",
+    "semantic_hash": "a7f6333c3cb5ee5908d6df4c5c416c10"
+  },
+  "Timetable King Widgets/Home/TimetableLargeWidgetView.swift": {
+    "mtime": 1789811197.3642042,
+    "seen": 1789813182.1392589,
+    "ast_hash": "032061276b6491063291d65f3a0e0060",
+    "semantic_hash": "032061276b6491063291d65f3a0e0060"
+  },
+  "Timetable King Widgets/Home/TimetableMediumWidgetView.swift": {
+    "mtime": 1789811197.2793639,
+    "seen": 1789813182.1392589,
+    "ast_hash": "d40bb62766ae6123155c62515ab80718",
+    "semantic_hash": "d40bb62766ae6123155c62515ab80718"
+  },
+  "Timetable King Widgets/Home/TimetableSmallWidgetView.swift": {
+    "mtime": 1789811197.1941035,
+    "seen": 1789813182.1392598,
+    "ast_hash": "245185b244ac828018f1a62448cbb91c",
+    "semantic_hash": "245185b244ac828018f1a62448cbb91c"
+  },
+  "Timetable King Widgets/TimetableKingWidget.swift": {
+    "mtime": 1787428274.8761907,
+    "seen": 1789813182.1392598,
+    "ast_hash": "bb894aa1de779a8cbb4206e65f8a8f35",
+    "semantic_hash": "bb894aa1de779a8cbb4206e65f8a8f35"
+  },
+  "Timetable King Widgets/TimetableKingWidgetBundle.swift": {
+    "mtime": 1787428274.8763552,
+    "seen": 1789813182.139261,
+    "ast_hash": "3940c6491815708acc403c7e9eb7f9ef",
+    "semantic_hash": "3940c6491815708acc403c7e9eb7f9ef"
+  },
+  "Timetable King Widgets/TimetableWidgetEntry.swift": {
+    "mtime": 1787428274.8764815,
+    "seen": 1789813182.139262,
+    "ast_hash": "b3c7c88281abe462449ec0ee75e7fe1d",
+    "semantic_hash": "b3c7c88281abe462449ec0ee75e7fe1d"
+  },
+  "Timetable King Widgets/TimetableWidgetProvider.swift": {
+    "mtime": 1787428274.8766065,
+    "seen": 1789813182.139262,
+    "ast_hash": "3e069edfba690edc939dc92bd449bd38",
+    "semantic_hash": "3e069edfba690edc939dc92bd449bd38"
+  },
+  "Timetable King Widgets/TimetableWidgetView.swift": {
+    "mtime": 1787428274.8768296,
+    "seen": 1789813182.139263,
+    "ast_hash": "0d63719ee9febf9a1d58649837c51155",
+    "semantic_hash": "0d63719ee9febf9a1d58649837c51155"
+  },
+  "Timetable King/Assets.xcassets/AccentColor.colorset/Contents.json": {
+    "mtime": 1758728173.6484191,
+    "seen": 1789813182.139263,
+    "ast_hash": "55019f7265dde0a78318b0807f98e847",
+    "semantic_hash": "55019f7265dde0a78318b0807f98e847"
+  },
+  "Timetable King/Assets.xcassets/AppIcon.appiconset/Contents.json": {
+    "mtime": 1758728175.014258,
+    "seen": 1789813182.139264,
+    "ast_hash": "cbe75704b2680422c4156009a528e292",
+    "semantic_hash": "cbe75704b2680422c4156009a528e292"
+  },
+  "Timetable King/Assets.xcassets/Contents.json": {
+    "mtime": 1758728173.6492782,
+    "seen": 1789813182.139264,
+    "ast_hash": "9deb2ada1cc834bbebf8bbad9c8978a1",
+    "semantic_hash": "9deb2ada1cc834bbebf8bbad9c8978a1"
+  },
+  "Timetable King/Design/AppTheme.swift": {
+    "mtime": 1787422781.8361742,
+    "seen": 1789813182.139265,
+    "ast_hash": "9fc686a9a971b1fe932bc4b6ab8c6010",
+    "semantic_hash": "9fc686a9a971b1fe932bc4b6ab8c6010"
+  },
+  "Timetable King/Extension/Bool+Extensions.swift": {
+    "mtime": 1772122845.2968638,
+    "seen": 1789813182.139266,
+    "ast_hash": "959fe6f8193a4010e6c21d6c0707df5e",
+    "semantic_hash": "959fe6f8193a4010e6c21d6c0707df5e"
+  },
+  "Timetable King/Extension/Environment+Extension.swift": {
+    "mtime": 1787422781.8369274,
+    "seen": 1789813182.139266,
+    "ast_hash": "dfcd703c409bdd468a38dd74ee11b914",
+    "semantic_hash": "dfcd703c409bdd468a38dd74ee11b914"
+  },
+  "Timetable King/Extension/String+Extensions.swift": {
+    "mtime": 1772038344.7407227,
+    "seen": 1789813182.139267,
+    "ast_hash": "0bd9bb2cd7de89972ba21ce63babd618",
+    "semantic_hash": "0bd9bb2cd7de89972ba21ce63babd618"
+  },
+  "Timetable King/Model/Comparator/WeekdayHabitableComparator.swift": {
+    "mtime": 1772051247.5623927,
+    "seen": 1789813182.139267,
+    "ast_hash": "8106c6a1d11f16259dbfec4ed191dc77",
+    "semantic_hash": "8106c6a1d11f16259dbfec4ed191dc77"
+  },
+  "Timetable King/Model/DBSchema/Habit.swift": {
+    "mtime": 1786630149.499129,
+    "seen": 1789813182.1392682,
+    "ast_hash": "3692b478abccb56b0ed5946fb39f2adf",
+    "semantic_hash": "3692b478abccb56b0ed5946fb39f2adf"
+  },
+  "Timetable King/Model/DBSchema/HabitState.swift": {
+    "mtime": 1789811195.6838179,
+    "seen": 1789813182.139269,
+    "ast_hash": "1cfccac342bf4b51e59836254e074e32",
+    "semantic_hash": "1cfccac342bf4b51e59836254e074e32"
+  },
+  "Timetable King/Model/DBSchema/HistoryState.swift": {
+    "mtime": 1786630149.4997313,
+    "seen": 1789813182.139269,
+    "ast_hash": "b84c3ee79e6a2a74a8a775c81b1563f8",
+    "semantic_hash": "b84c3ee79e6a2a74a8a775c81b1563f8"
+  },
+  "Timetable King/Model/DBSchema/Weekday.swift": {
+    "mtime": 1786630149.5016632,
+    "seen": 1789813182.1392698,
+    "ast_hash": "164f5571e95c376e6f4dd76d30908493",
+    "semantic_hash": "164f5571e95c376e6f4dd76d30908493"
+  },
+  "Timetable King/Model/DBSchema/WeekdayHabit.swift": {
+    "mtime": 1789591893.1322598,
+    "seen": 1789813182.1392698,
+    "ast_hash": "f7fc6fde84886bfd37d6db5fcda7365a",
+    "semantic_hash": "f7fc6fde84886bfd37d6db5fcda7365a"
+  },
+  "Timetable King/Model/DBSchema/WeekdayHabitResult.swift": {
+    "mtime": 1786630149.5170543,
+    "seen": 1789813182.139271,
+    "ast_hash": "118365b3d83c2c9968c5f9ffd8f7ebc2",
+    "semantic_hash": "118365b3d83c2c9968c5f9ffd8f7ebc2"
+  },
+  "Timetable King/Model/Model/CompletionScore.swift": {
+    "mtime": 1787422781.837324,
+    "seen": 1789813182.139271,
+    "ast_hash": "4b3e7f43e3eb3846f651ce88f2dc8ed9",
+    "semantic_hash": "4b3e7f43e3eb3846f651ce88f2dc8ed9"
+  },
+  "Timetable King/Model/Model/HabitByWeekday/WeekdayBucket.swift": {
+    "mtime": 1772123159.7662623,
+    "seen": 1789813182.139272,
+    "ast_hash": "42ce11d2c49098e673c1b6cd8b411e01",
+    "semantic_hash": "42ce11d2c49098e673c1b6cd8b411e01"
+  },
+  "Timetable King/Model/Model/HabitByWeekday/WeekdayDigest.swift": {
+    "mtime": 1789811195.7737417,
+    "seen": 1789813182.139272,
+    "ast_hash": "e940b33613f1b7502ca5822d5a8a8e24",
+    "semantic_hash": "e940b33613f1b7502ca5822d5a8a8e24"
+  },
+  "Timetable King/Model/Model/HabitByWeekday/WeekdayDigestBuilder.swift": {
+    "mtime": 1786630149.5322,
+    "seen": 1789813182.139273,
+    "ast_hash": "685150b61b1aea2f2ae7feb45d6a76a2",
+    "semantic_hash": "685150b61b1aea2f2ae7feb45d6a76a2"
+  },
+  "Timetable King/Model/Model/TaskReminder.swift": {
+    "mtime": 1789591893.0553021,
+    "seen": 1789813182.139273,
+    "ast_hash": "6be0f5dc97d0e514763f57444058c2ca",
+    "semantic_hash": "6be0f5dc97d0e514763f57444058c2ca"
+  },
+  "Timetable King/Model/Model/TodayTaskReview/TodayTaskReviewEntry.swift": {
+    "mtime": 1786630149.546003,
+    "seen": 1789813182.139274,
+    "ast_hash": "768329c49ea9c4086a4070ca84721ba9",
+    "semantic_hash": "768329c49ea9c4086a4070ca84721ba9"
+  },
+  "Timetable King/Model/Model/TodayTaskReview/TodayTaskReviewSession.swift": {
+    "mtime": 1786630149.5588188,
+    "seen": 1789813182.139275,
+    "ast_hash": "366c43037d3d933482bd8de1544cf6a2",
+    "semantic_hash": "366c43037d3d933482bd8de1544cf6a2"
+  },
+  "Timetable King/Model/Protocol/WeekdayHabitable.swift": {
+    "mtime": 1772049412.3899,
+    "seen": 1789813182.139275,
+    "ast_hash": "5b6b9b996daf70ecd648f04788e496c3",
+    "semantic_hash": "5b6b9b996daf70ecd648f04788e496c3"
+  },
+  "Timetable King/Page/CardPage.swift": {
+    "mtime": 1787422781.837639,
+    "seen": 1789813182.139276,
+    "ast_hash": "5af86cafe133986e78d7c52ddfccbdfd",
+    "semantic_hash": "5af86cafe133986e78d7c52ddfccbdfd"
+  },
+  "Timetable King/Service/AppPaletteGenerator.swift": {
+    "mtime": 1787422781.837766,
+    "seen": 1789813182.139276,
+    "ast_hash": "f1ac00f1a9a4dc52338bc8de642f2de1",
+    "semantic_hash": "f1ac00f1a9a4dc52338bc8de642f2de1"
+  },
+  "Timetable King/Service/AppPaletteRepository.swift": {
+    "mtime": 1787428274.8775759,
+    "seen": 1789813182.139277,
+    "ast_hash": "c670b85014710a921cc75ab222feffd8",
+    "semantic_hash": "c670b85014710a921cc75ab222feffd8"
+  },
+  "Timetable King/Service/AppPaletteStore.swift": {
+    "mtime": 1787428274.8777866,
+    "seen": 1789813182.139277,
+    "ast_hash": "faa9b437a3c3476e0a72086941599f24",
+    "semantic_hash": "faa9b437a3c3476e0a72086941599f24"
+  },
+  "Timetable King/Service/HistoryStateService.swift": {
+    "mtime": 1786630149.571573,
+    "seen": 1789813182.1392782,
+    "ast_hash": "a3d5ba01379208e7d531228a415e9903",
+    "semantic_hash": "a3d5ba01379208e7d531228a415e9903"
+  },
+  "Timetable King/Service/ModelContainerService.swift": {
+    "mtime": 1787433504.7821429,
+    "seen": 1789813182.1392791,
+    "ast_hash": "495f3239329bf7ca7706b8581580ef57",
+    "semantic_hash": "495f3239329bf7ca7706b8581580ef57"
+  },
+  "Timetable King/Service/OnboardingStore.swift": {
+    "mtime": 1789403055.6036773,
+    "seen": 1789813182.1392791,
+    "ast_hash": "c5369812039bb10c8811424aec5dd35b",
+    "semantic_hash": "c5369812039bb10c8811424aec5dd35b"
+  },
+  "Timetable King/Service/TaskReminderDeliveryState.swift": {
+    "mtime": 1789746109.9223104,
+    "seen": 1789813182.1392798,
+    "ast_hash": "3dacf693433894ad5d32801c4c7a3f2c",
+    "semantic_hash": "3dacf693433894ad5d32801c4c7a3f2c"
+  },
+  "Timetable King/Service/TaskReminderPlanner.swift": {
+    "mtime": 1789746235.4032285,
+    "seen": 1789813182.1392798,
+    "ast_hash": "e2aadf1795d347b2e45f0c880dfaa642",
+    "semantic_hash": "e2aadf1795d347b2e45f0c880dfaa642"
+  },
+  "Timetable King/Service/TaskReminderService.swift": {
+    "mtime": 1789746235.4888568,
+    "seen": 1789813182.1392808,
+    "ast_hash": "f1a4bd7d2831b0171fd9411f94d6871a",
+    "semantic_hash": "f1a4bd7d2831b0171fd9411f94d6871a"
+  },
+  "Timetable King/Service/TodayTaskReviewService.swift": {
+    "mtime": 1789591678.4048426,
+    "seen": 1789813182.1392808,
+    "ast_hash": "25ffe33a4deff57acebeba97dbf184f2",
+    "semantic_hash": "25ffe33a4deff57acebeba97dbf184f2"
+  },
+  "Timetable King/Service/WeekdayDigestService.swift": {
+    "mtime": 1787433504.7827108,
+    "seen": 1789813182.139282,
+    "ast_hash": "9fe264dc5c6b2cfed1f11f1f346b1f08",
+    "semantic_hash": "9fe264dc5c6b2cfed1f11f1f346b1f08"
+  },
+  "Timetable King/Service/WeeklyHistoryOverviewService.swift": {
+    "mtime": 1789811195.861649,
+    "seen": 1789813182.139282,
+    "ast_hash": "666280cc7717b124e5d18cd79d7be20c",
+    "semantic_hash": "666280cc7717b124e5d18cd79d7be20c"
+  },
+  "Timetable King/Service/WeeklyTaskService.swift": {
+    "mtime": 1789592752.6647124,
+    "seen": 1789813182.139283,
+    "ast_hash": "e3381cb12c593825f5cbbb947954071c",
+    "semantic_hash": "e3381cb12c593825f5cbbb947954071c"
+  },
+  "Timetable King/Service/WidgetSnapshotService.swift": {
+    "mtime": 1789811195.9490283,
+    "seen": 1789813182.139283,
+    "ast_hash": "edb63e34af0817e32c758335cb8c026a",
+    "semantic_hash": "edb63e34af0817e32c758335cb8c026a"
+  },
+  "Timetable King/SetUp/Timetable_KingApp+Extension.swift": {
+    "mtime": 1787428258.8173757,
+    "seen": 1789813182.139284,
+    "ast_hash": "9898d0da55eb53b979924f69d8976810",
+    "semantic_hash": "9898d0da55eb53b979924f69d8976810"
+  },
+  "Timetable King/SetUp/Timetable_KingApp+Test+Extension.swift": {
+    "mtime": 1787422781.838619,
+    "seen": 1789813182.139285,
+    "ast_hash": "f58be4dff80714bab2bbd6e80b9f9de8",
+    "semantic_hash": "f58be4dff80714bab2bbd6e80b9f9de8"
+  },
+  "Timetable King/Timetable_KingApp.swift": {
+    "mtime": 1789592079.9396703,
+    "seen": 1789813182.139285,
+    "ast_hash": "c34c383f3945028fc76f4b6d4ba00e83",
+    "semantic_hash": "c34c383f3945028fc76f4b6d4ba00e83"
+  },
+  "Timetable King/View/CardPage/TodayTasks/Review/TodayTaskReviewView.swift": {
+    "mtime": 1789811196.759923,
+    "seen": 1789813182.139286,
+    "ast_hash": "72c374568dfcb45a907fdf4200093387",
+    "semantic_hash": "72c374568dfcb45a907fdf4200093387"
+  },
+  "Timetable King/View/CardPage/TodayTasks/Review/TodayTaskReviewViewModel.swift": {
+    "mtime": 1786630149.7205906,
+    "seen": 1789813182.139286,
+    "ast_hash": "9192a776c8827431e19203f24d83dd6c",
+    "semantic_hash": "9192a776c8827431e19203f24d83dd6c"
+  },
+  "Timetable King/View/CardPage/TodayTasks/TodayTaskDetailView.swift": {
+    "mtime": 1789811196.4788334,
+    "seen": 1789813182.139287,
+    "ast_hash": "ea5209770448bb224b22e3d2541dc926",
+    "semantic_hash": "ea5209770448bb224b22e3d2541dc926"
+  },
+  "Timetable King/View/CardPage/TodayTasks/TodayTaskDetailViewModel.swift": {
+    "mtime": 1786630149.7345667,
+    "seen": 1789813182.139287,
+    "ast_hash": "e51b5d203d512a6af242ae02cf2b39de",
+    "semantic_hash": "e51b5d203d512a6af242ae02cf2b39de"
+  },
+  "Timetable King/View/CardPage/TodayTasks/TodayTaskEntry.swift": {
+    "mtime": 1789811196.2984138,
+    "seen": 1789813182.139288,
+    "ast_hash": "923a76586604f60a2bd8615d7c749dfa",
+    "semantic_hash": "923a76586604f60a2bd8615d7c749dfa"
+  },
+  "Timetable King/View/CardPage/TodayTasks/TodayTaskRowView.swift": {
+    "mtime": 1786630149.7761762,
+    "seen": 1789813182.139288,
+    "ast_hash": "b0b33a17577eced41769c7e37c488469",
+    "semantic_hash": "b0b33a17577eced41769c7e37c488469"
+  },
+  "Timetable King/View/CardPage/TodayTasks/TodayTaskStatusBadge.swift": {
+    "mtime": 1789811196.3849397,
+    "seen": 1789813182.1392891,
+    "ast_hash": "c391358addddc25feed9da2e57996724",
+    "semantic_hash": "c391358addddc25feed9da2e57996724"
+  },
+  "Timetable King/View/CardPage/TodayTasks/TodayTasksEmptyStateView.swift": {
+    "mtime": 1786630149.776974,
+    "seen": 1789813182.13929,
+    "ast_hash": "b14bad38e94d4daf796abbfe2dfa7b7f",
+    "semantic_hash": "b14bad38e94d4daf796abbfe2dfa7b7f"
+  },
+  "Timetable King/View/CardPage/TodayTasks/TodayTasksSectionView.swift": {
+    "mtime": 1786630149.777307,
+    "seen": 1789813182.13929,
+    "ast_hash": "7c4db5b29f800a23fee14a9c61044248",
+    "semantic_hash": "7c4db5b29f800a23fee14a9c61044248"
+  },
+  "Timetable King/View/CardPage/TodayTasks/TodayTasksView.swift": {
+    "mtime": 1789811196.6696873,
+    "seen": 1789813182.1392908,
+    "ast_hash": "22f3db731a585cc3989b9a6c127b3245",
+    "semantic_hash": "22f3db731a585cc3989b9a6c127b3245"
+  },
+  "Timetable King/View/CardPage/TodayTasks/TodayTasksViewModel.swift": {
+    "mtime": 1789811196.5702965,
+    "seen": 1789813182.1392908,
+    "ast_hash": "2205a068ddbf98f34140429d3d2be3ef",
+    "semantic_hash": "2205a068ddbf98f34140429d3d2be3ef"
+  },
+  "Timetable King/View/CardPage/WeeklySummary/OverallHistorySummaryView.swift": {
+    "mtime": 1787422781.839209,
+    "seen": 1789813182.139292,
+    "ast_hash": "dbbe2781b514191b9de95bbddb49213f",
+    "semantic_hash": "dbbe2781b514191b9de95bbddb49213f"
+  },
+  "Timetable King/View/CardPage/WeeklySummary/WeeklyPeriodSummaryView.swift": {
+    "mtime": 1787422781.8393168,
+    "seen": 1789813182.139292,
+    "ast_hash": "538e32c6fbb81e61d2f0243e635b8b94",
+    "semantic_hash": "538e32c6fbb81e61d2f0243e635b8b94"
+  },
+  "Timetable King/View/CardPage/WeeklySummary/WeeklySummaryEntry.swift": {
+    "mtime": 1789811196.1228719,
+    "seen": 1789813182.139293,
+    "ast_hash": "60a19415296b986ac0e17617df5af56d",
+    "semantic_hash": "60a19415296b986ac0e17617df5af56d"
+  },
+  "Timetable King/View/CardPage/WeeklySummary/WeeklySummaryPageControl.swift": {
+    "mtime": 1787422781.839939,
+    "seen": 1789813182.139294,
+    "ast_hash": "1aecb8030f9860c8fa0547473e02afc2",
+    "semantic_hash": "1aecb8030f9860c8fa0547473e02afc2"
+  },
+  "Timetable King/View/CardPage/WeeklySummary/WeeklySummaryRowView.swift": {
+    "mtime": 1786630149.7792494,
+    "seen": 1789813182.139294,
+    "ast_hash": "746d5faac327d250211a4c4c0497e140",
+    "semantic_hash": "746d5faac327d250211a4c4c0497e140"
+  },
+  "Timetable King/View/CardPage/WeeklySummary/WeeklySummaryView.swift": {
+    "mtime": 1787433504.7831395,
+    "seen": 1789813182.1392949,
+    "ast_hash": "bc44cc99b0f28f6632501e500b3bf514",
+    "semantic_hash": "bc44cc99b0f28f6632501e500b3bf514"
+  },
+  "Timetable King/View/CardPage/WeeklySummary/WeeklySummaryViewModel.swift": {
+    "mtime": 1789811196.2125578,
+    "seen": 1789813182.1392949,
+    "ast_hash": "e92dd87bf36de437f298ac7df2c0ccf3",
+    "semantic_hash": "e92dd87bf36de437f298ac7df2c0ccf3"
+  },
+  "Timetable King/View/CardPage/WeeklySummary/WeeklySummaryWeekPickerView.swift": {
+    "mtime": 1787422781.840485,
+    "seen": 1789813182.139296,
+    "ast_hash": "caa9334e80f5bc485b0ad39e4ec940e4",
+    "semantic_hash": "caa9334e80f5bc485b0ad39e4ec940e4"
+  },
+  "Timetable King/View/CardPage/WeeklyTasks/AddWeeklyTaskView.swift": {
+    "mtime": 1789592079.5132802,
+    "seen": 1789813182.139296,
+    "ast_hash": "ec4cc52412a953dff85265d8a1af334a",
+    "semantic_hash": "ec4cc52412a953dff85265d8a1af334a"
+  },
+  "Timetable King/View/CardPage/WeeklyTasks/AddWeeklyTaskViewModel.swift": {
+    "mtime": 1789591955.947188,
+    "seen": 1789813182.139297,
+    "ast_hash": "16dccf4f2e8cb9c01211e9a476e4dfff",
+    "semantic_hash": "16dccf4f2e8cb9c01211e9a476e4dfff"
+  },
+  "Timetable King/View/CardPage/WeeklyTasks/WeeklyTaskEditView.swift": {
+    "mtime": 1789592752.4507294,
+    "seen": 1789813182.139297,
+    "ast_hash": "c128d2c536392324793c223e62641930",
+    "semantic_hash": "c128d2c536392324793c223e62641930"
+  },
+  "Timetable King/View/CardPage/WeeklyTasks/WeeklyTaskEditViewModel.swift": {
+    "mtime": 1789591956.0246587,
+    "seen": 1789813182.139298,
+    "ast_hash": "f898b2f8319680de0cd81f0a45c85284",
+    "semantic_hash": "f898b2f8319680de0cd81f0a45c85284"
+  },
+  "Timetable King/View/CardPage/WeeklyTasks/WeeklyTaskRowView.swift": {
+    "mtime": 1786630149.8052714,
+    "seen": 1789813182.1392992,
+    "ast_hash": "e19864b629dc60d33af3cee882367c41",
+    "semantic_hash": "e19864b629dc60d33af3cee882367c41"
+  },
+  "Timetable King/View/CardPage/WeeklyTasks/WeeklyTasksDayRowView.swift": {
+    "mtime": 1786630149.8177524,
+    "seen": 1789813182.1392992,
+    "ast_hash": "601e46e691afb6f8b150166316cab046",
+    "semantic_hash": "601e46e691afb6f8b150166316cab046"
+  },
+  "Timetable King/View/CardPage/WeeklyTasks/WeeklyTasksDayView.swift": {
+    "mtime": 1789592752.5222137,
+    "seen": 1789813182.1393,
+    "ast_hash": "344894e73d1fe6a01c3e1cbc28542a9d",
+    "semantic_hash": "344894e73d1fe6a01c3e1cbc28542a9d"
+  },
+  "Timetable King/View/CardPage/WeeklyTasks/WeeklyTasksDayViewModel.swift": {
+    "mtime": 1786630149.9145405,
+    "seen": 1789813182.1393,
+    "ast_hash": "eb119f1d3f8994dfaaa7cc0403d74457",
+    "semantic_hash": "eb119f1d3f8994dfaaa7cc0403d74457"
+  },
+  "Timetable King/View/CardPage/WeeklyTasks/WeeklyTasksView.swift": {
+    "mtime": 1789591955.461679,
+    "seen": 1789813182.139301,
+    "ast_hash": "a02a121298a59b736c614d765126089a",
+    "semantic_hash": "a02a121298a59b736c614d765126089a"
+  },
+  "Timetable King/View/CardPage/WeeklyTasks/WeeklyTasksViewModel.swift": {
+    "mtime": 1786630149.9180005,
+    "seen": 1789813182.139301,
+    "ast_hash": "ee2ebdcd21e39eb36a24e29c81a274da",
+    "semantic_hash": "ee2ebdcd21e39eb36a24e29c81a274da"
+  },
+  "Timetable King/View/Dashboard/DashboardAddTaskButton.swift": {
+    "mtime": 1789591678.409095,
+    "seen": 1789813182.1393049,
+    "ast_hash": "dfe7d5ccec2c06aead427d0d4bb48887",
+    "semantic_hash": "dfe7d5ccec2c06aead427d0d4bb48887"
+  },
+  "Timetable King/View/Dashboard/DashboardHeaderView.swift": {
+    "mtime": 1787422781.8407438,
+    "seen": 1789813182.139306,
+    "ast_hash": "5d86a28887331b9fd2dc24e7792eb703",
+    "semantic_hash": "5d86a28887331b9fd2dc24e7792eb703"
+  },
+  "Timetable King/View/Dashboard/DashboardProgressRing.swift": {
+    "mtime": 1787422781.8408341,
+    "seen": 1789813182.139306,
+    "ast_hash": "45b948d9fa48ab8e6f8dbcfb99e9160f",
+    "semantic_hash": "45b948d9fa48ab8e6f8dbcfb99e9160f"
+  },
+  "Timetable King/View/Dashboard/DashboardSnapshot.swift": {
+    "mtime": 1789811196.8455667,
+    "seen": 1789813182.139307,
+    "ast_hash": "8f41d98cb8cfa90a5dc64cb57554d136",
+    "semantic_hash": "8f41d98cb8cfa90a5dc64cb57554d136"
+  },
+  "Timetable King/View/Dashboard/DashboardSurface.swift": {
+    "mtime": 1787422781.8410242,
+    "seen": 1789813182.139307,
+    "ast_hash": "c24b63655b3a2d358cf0131fb9c6d0b4",
+    "semantic_hash": "c24b63655b3a2d358cf0131fb9c6d0b4"
+  },
+  "Timetable King/View/Dashboard/DashboardTaskStatusControl.swift": {
+    "mtime": 1789811197.0215042,
+    "seen": 1789813182.139308,
+    "ast_hash": "077bd7e0e5d71153571657b2bf779fdf",
+    "semantic_hash": "077bd7e0e5d71153571657b2bf779fdf"
+  },
+  "Timetable King/View/Dashboard/DashboardTodayOverviewView.swift": {
+    "mtime": 1787422781.8412738,
+    "seen": 1789813182.139308,
+    "ast_hash": "a027be64f5138b859f1d99d4554f2464",
+    "semantic_hash": "a027be64f5138b859f1d99d4554f2464"
+  },
+  "Timetable King/View/Dashboard/DashboardTodayTaskRow.swift": {
+    "mtime": 1787422781.8413866,
+    "seen": 1789813182.1393092,
+    "ast_hash": "8ce565022b69f38eb0e0c648fb1c3fb5",
+    "semantic_hash": "8ce565022b69f38eb0e0c648fb1c3fb5"
+  },
+  "Timetable King/View/Dashboard/DashboardTodayTasksView.swift": {
+    "mtime": 1787422781.8415098,
+    "seen": 1789813182.1393101,
+    "ast_hash": "30dfa0dfc54af780c18341d9881ea862",
+    "semantic_hash": "30dfa0dfc54af780c18341d9881ea862"
+  },
+  "Timetable King/View/Dashboard/DashboardView.swift": {
+    "mtime": 1787433504.783767,
+    "seen": 1789813182.1393101,
+    "ast_hash": "c6802df081f80005955188bb462cbe2c",
+    "semantic_hash": "c6802df081f80005955188bb462cbe2c"
+  },
+  "Timetable King/View/Dashboard/DashboardWeeklyPlanView.swift": {
+    "mtime": 1789591678.4095116,
+    "seen": 1789813182.139311,
+    "ast_hash": "e8fa0d0bd0cc3c1b7ad131fb2cc9eae6",
+    "semantic_hash": "e8fa0d0bd0cc3c1b7ad131fb2cc9eae6"
+  },
+  "Timetable King/View/Dashboard/DashboardWeeklySummaryView.swift": {
+    "mtime": 1789811196.9351609,
+    "seen": 1789813182.139311,
+    "ast_hash": "7c1e9e4db8f347e4eef338598017a6e8",
+    "semantic_hash": "7c1e9e4db8f347e4eef338598017a6e8"
+  },
+  "Timetable King/View/DismissToolbarItem.swift": {
+    "mtime": 1786630149.9184513,
+    "seen": 1789813182.139312,
+    "ast_hash": "27a16409f354024468a022fa74f13b33",
+    "semantic_hash": "27a16409f354024468a022fa74f13b33"
+  },
+  "Timetable King/View/Onboarding/OnboardingRoutineView.swift": {
+    "mtime": 1789592079.5831733,
+    "seen": 1789813182.139312,
+    "ast_hash": "8e2ec9e0d7424f8e421ba3e981dea8b5",
+    "semantic_hash": "8e2ec9e0d7424f8e421ba3e981dea8b5"
+  },
+  "Timetable King/View/Onboarding/OnboardingView.swift": {
+    "mtime": 1789591955.626235,
+    "seen": 1789813182.139313,
+    "ast_hash": "6e4f702a79ac7405e251cf2e2316bf40",
+    "semantic_hash": "6e4f702a79ac7405e251cf2e2316bf40"
+  },
+  "Timetable King/View/Settings/SettingsView.swift": {
+    "mtime": 1789592138.1839318,
+    "seen": 1789813182.139313,
+    "ast_hash": "a6213e158c23083e153d64dea2cbda81",
+    "semantic_hash": "a6213e158c23083e153d64dea2cbda81"
+  },
+  "Timetable King/View/TaskReminderSection.swift": {
+    "mtime": 1789592033.1554797,
+    "seen": 1789813182.139314,
+    "ast_hash": "f107dd9e4b192d3c7aef6cce5fb88589",
+    "semantic_hash": "f107dd9e4b192d3c7aef6cce5fb88589"
+  },
+  "Timetable King/View/TimetableKingAppView.swift": {
+    "mtime": 1789592079.868518,
+    "seen": 1789813182.139314,
+    "ast_hash": "445725d39cc0388900f4a66efb959a04",
+    "semantic_hash": "445725d39cc0388900f4a66efb959a04"
+  },
+  "Timetable King/View/TimetableKingAppViewModel.swift": {
+    "mtime": 1789811196.0337393,
+    "seen": 1789813182.139315,
+    "ast_hash": "eaf1eef0a8619b1c5388711ea8de5f1e",
+    "semantic_hash": "eaf1eef0a8619b1c5388711ea8de5f1e"
+  },
+  "Timetable King/View/WeekdaySelectionView.swift": {
+    "mtime": 1789591678.4120831,
+    "seen": 1789813182.139315,
+    "ast_hash": "3ea3941ed256e79f4255bb1e7b178375",
+    "semantic_hash": "3ea3941ed256e79f4255bb1e7b178375"
+  },
+  "Timetable King/ViewModifier/NavigationTransitionScreenViewModifier.swift": {
+    "mtime": 1772139409.749633,
+    "seen": 1789813182.139316,
+    "ast_hash": "5b53189cf8bb5b2dd05a06aeaa2e18c4",
+    "semantic_hash": "5b53189cf8bb5b2dd05a06aeaa2e18c4"
+  },
+  "Timetable KingTests/AppPaletteTests.swift": {
+    "mtime": 1787422781.8424852,
+    "seen": 1789813182.139317,
+    "ast_hash": "301f70ccff8fe7901dbe18819813ee76",
+    "semantic_hash": "301f70ccff8fe7901dbe18819813ee76"
+  },
+  "Timetable KingTests/DashboardSnapshotTests.swift": {
+    "mtime": 1787422781.8425725,
+    "seen": 1789813182.139317,
+    "ast_hash": "f01f23f4ecdecacea28ebd5316bc2c87",
+    "semantic_hash": "f01f23f4ecdecacea28ebd5316bc2c87"
+  },
+  "Timetable KingTests/DebugTestDataTests.swift": {
+    "mtime": 1787433504.7845993,
+    "seen": 1789813182.139318,
+    "ast_hash": "fe5884557381d2b4f18635103ec2a9e6",
+    "semantic_hash": "fe5884557381d2b4f18635103ec2a9e6"
+  },
+  "Timetable KingTests/OnboardingTests.swift": {
+    "mtime": 1789591678.4124978,
+    "seen": 1789813182.139318,
+    "ast_hash": "e18aee9e461b4eb18fca3e5762ae7c41",
+    "semantic_hash": "e18aee9e461b4eb18fca3e5762ae7c41"
+  },
+  "Timetable KingTests/TaskReminderDeliveryTests.swift": {
+    "mtime": 1789811197.7975225,
+    "seen": 1789813182.139319,
+    "ast_hash": "ecc97af2c37f39ca1883b725e8fc5cd1",
+    "semantic_hash": "ecc97af2c37f39ca1883b725e8fc5cd1"
+  },
+  "Timetable KingTests/TaskReminderTests.swift": {
+    "mtime": 1789811197.7079482,
+    "seen": 1789813182.139319,
+    "ast_hash": "08ed1b3c71bc55e574a5362080a542b9",
+    "semantic_hash": "08ed1b3c71bc55e574a5362080a542b9"
+  },
+  "Timetable KingTests/TimetableWidgetSnapshotTests.swift": {
+    "mtime": 1789811197.884564,
+    "seen": 1789813182.1393201,
+    "ast_hash": "7cf501030cddf43f2be5ed1cf75907b0",
+    "semantic_hash": "7cf501030cddf43f2be5ed1cf75907b0"
+  },
+  "Timetable KingTests/Timetable_KingTests.swift": {
+    "mtime": 1789811484.1968262,
+    "seen": 1789813182.139321,
+    "ast_hash": "f5b3d9e6633bb79a4635532093fb4355",
+    "semantic_hash": "f5b3d9e6633bb79a4635532093fb4355"
+  },
+  "Timetable KingTests/WeeklyHistorySummaryTests.swift": {
+    "mtime": 1789403055.6082377,
+    "seen": 1789813182.139321,
+    "ast_hash": "19c4ac9eddb12ade772402a8ea27445d",
+    "semantic_hash": "19c4ac9eddb12ade772402a8ea27445d"
+  },
+  "Timetable KingTests/WeeklyTaskRecurrenceTests.swift": {
+    "mtime": 1789591678.4130158,
+    "seen": 1789813182.139322,
+    "ast_hash": "85709759485c10022f7683d71a4f60d6",
+    "semantic_hash": "85709759485c10022f7683d71a4f60d6"
+  },
+  "Timetable KingUITests/OnboardingUITests.swift": {
+    "mtime": 1789591678.4135334,
+    "seen": 1789813182.139322,
+    "ast_hash": "f3ec1465501b3b3b802bca20d9a91bf7",
+    "semantic_hash": "f3ec1465501b3b3b802bca20d9a91bf7"
+  },
+  "Timetable KingUITests/TaskFeaturesUITests.swift": {
+    "mtime": 1789811617.6719975,
+    "seen": 1789813182.139323,
+    "ast_hash": "55bab8fa5c14bbab9354c11ba1dcf027",
+    "semantic_hash": "55bab8fa5c14bbab9354c11ba1dcf027"
+  },
+  "Timetable KingUITests/Timetable_KingUITests.swift": {
+    "mtime": 1789403055.6090229,
+    "seen": 1789813182.139323,
+    "ast_hash": "0c9e2515d7675ec4f2e5c6652a9419c5",
+    "semantic_hash": "0c9e2515d7675ec4f2e5c6652a9419c5"
+  },
+  "Timetable KingUITests/Timetable_KingUITestsLaunchTests.swift": {
+    "mtime": 1789403055.6094081,
+    "seen": 1789813182.139324,
+    "ast_hash": "945316929dc5cb6dfd530072833dfe7e",
+    "semantic_hash": "945316929dc5cb6dfd530072833dfe7e"
+  },
+  "AGENTS.md": {
+    "mtime": 1789812364.342845,
+    "seen": 1789813182.139324,
+    "ast_hash": "c2f5383c33099c48609347eafa3bf7df",
+    "semantic_hash": "c2f5383c33099c48609347eafa3bf7df"
+  },
+  "CLAUDE.md": {
+    "mtime": 1789812445.620851,
+    "seen": 1789813182.139325,
+    "ast_hash": "0765857faa39eafe87b27570208fe6dd",
+    "semantic_hash": "0765857faa39eafe87b27570208fe6dd"
+  },
+  "README.md": {
+    "mtime": 1789811195.5944426,
+    "seen": 1789813182.1393259,
+    "ast_hash": "98365ea828d7429de425ae27f03e4d25",
+    "semantic_hash": "98365ea828d7429de425ae27f03e4d25"
+  }
+}
