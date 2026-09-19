@@ -1,3 +1,7 @@
+.agents/
+.claude/
+.codex/
+
 # Created by https://www.toptal.com/developers/gitignore/api/xcode,swift,swiftpackagemanager,swiftpm,intellij,intellij+iml,intellij+all,visualstudiocode,visualstudio,windows,linux,macos,androidstudio
 # Edit at https://www.toptal.com/developers/gitignore?templates=xcode,swift,swiftpackagemanager,swiftpm,intellij,intellij+iml,intellij+all,visualstudiocode,visualstudio,windows,linux,macos,androidstudio
 
