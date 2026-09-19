@@ -6,9 +6,10 @@ struct SettingsView: View {
 
     @State private var isShowingDeleteConfirmation = false
     @State private var isShowingOnboarding = false
+    @State private var reminderService = TaskReminderService.shared
 
     let onDeleteHistory: () -> Bool
-    let onAddTask: (String, Set<Weekday>, Int, Int) -> Bool
+    let onAddTask: (String, Set<Weekday>, Int, Int, TaskReminder) -> Bool
 
     var body: some View {
         NavigationStack {
@@ -47,6 +48,17 @@ struct SettingsView: View {
                         Label("settings.onboarding", systemImage: "sparkles")
                     }
                     .accessibilityIdentifier("settings.onboarding.button")
+                }
+
+                Section("task.reminder.title") {
+                    Text("task.reminder.scheduling.description")
+                    if reminderService.hasSchedulingError {
+                        Text("task.reminder.error")
+                            .foregroundStyle(.red)
+                    }
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        Link("task.reminder.open.settings", destination: url)
+                    }
                 }
 
                 Section {

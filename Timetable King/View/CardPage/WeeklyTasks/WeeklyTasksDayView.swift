@@ -2,13 +2,15 @@ import SwiftUI
 
 struct WeeklyTasksDayView: View {
     @State private var viewModel = WeeklyTasksDayViewModel()
+    @State private var taskToDelete: WeekdayHabit?
+    @State private var isShowingDeleteConfirmation = false
 
     var showCloseButton: Bool = false
 
     let digest: WeekdayDigest
-    let onAddTask: (String, Set<Weekday>, Int, Int) -> Bool
+    let onAddTask: (String, Set<Weekday>, Int, Int, TaskReminder) -> Bool
     let onDeleteTask: (WeekdayHabit) -> Bool
-    let onUpdateTask: (WeekdayHabit, String, Set<Weekday>, Int, Int) -> Bool
+    let onUpdateTask: (WeekdayHabit, String, Set<Weekday>, Int, Int, TaskReminder) -> Bool
 
     var body: some View {
         List {
@@ -23,9 +25,10 @@ struct WeeklyTasksDayView: View {
                 .listRowBackground(Color(.systemGroupedBackground))
                 .listRowSeparator(.hidden)
                 .listRowInsets(EdgeInsets(top: .rowSpacing / 2, leading: .screenPadding, bottom: .rowSpacing / 2, trailing: .screenPadding))
-                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                     Button(role: .destructive) {
-                        _ = onDeleteTask(habit)
+                        taskToDelete = habit
+                        isShowingDeleteConfirmation = true
                     } label: {
                         Label("timetable.weekly.tasks.edit.delete", systemImage: "trash")
                     }
@@ -46,6 +49,19 @@ struct WeeklyTasksDayView: View {
         }
         .navigationTitle(digest.weekday.label)
         .navigationBarTitleDisplayMode(.inline)
+        .alert(
+            "task.delete.confirmation.title",
+            isPresented: $isShowingDeleteConfirmation,
+            presenting: taskToDelete
+        ) { habit in
+            Button("task.delete.confirm", role: .destructive) {
+                _ = onDeleteTask(habit)
+                taskToDelete = nil
+            }
+            Button("common.cancel", role: .cancel) { taskToDelete = nil }
+        } message: { _ in
+            Text("task.delete.confirmation.message")
+        }
         .navigationDestination(item: $viewModel.selectedHabit) { habit in
             WeeklyTaskEditView(habit: habit, onSave: onUpdateTask, onDelete: onDeleteTask)
         }

@@ -15,6 +15,7 @@ struct DashboardTaskStatusControl: View {
         }
         .disabled(entry.displayStatus == .future)
         .accessibilityLabel(entry.statusTitle)
+        .accessibilityIdentifier("task.status.\(entry.title)")
     }
 
     @ViewBuilder

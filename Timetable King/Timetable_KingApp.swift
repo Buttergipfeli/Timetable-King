@@ -26,6 +26,7 @@ struct Timetable_KingApp: App {
 #endif
         
         ModelContainerService.initialize(container: container)
+        _ = TaskReminderService.shared
     }
     
     var body: some Scene {

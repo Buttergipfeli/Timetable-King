@@ -5,6 +5,7 @@ enum TimetableDeepLink {
         case todayTasks
         case weeklySummary
         case task(String)
+        case reminder(scheduleID: UUID, taskDate: Date)
     }
 
     static let scheme = "timetableking"
@@ -33,8 +34,25 @@ enum TimetableDeepLink {
                 return nil
             }
             return .task(taskID)
+        case "reminder":
+            guard let items = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems,
+                  let id = items.first(where: { $0.name == "schedule" })?.value.flatMap(UUID.init(uuidString:)),
+                  let timestamp = items.first(where: { $0.name == "date" })?.value.flatMap(TimeInterval.init),
+                  timestamp.isFinite else { return nil }
+            return .reminder(scheduleID: id, taskDate: Date(timeIntervalSince1970: timestamp))
         default:
             return nil
         }
+    }
+
+    static func reminderURL(scheduleID: UUID, taskDate: Date) -> URL {
+        var components = URLComponents()
+        components.scheme = scheme
+        components.host = "reminder"
+        components.queryItems = [
+            URLQueryItem(name: "schedule", value: scheduleID.uuidString),
+            URLQueryItem(name: "date", value: String(taskDate.timeIntervalSince1970))
+        ]
+        return components.url!
     }
 }

@@ -7,7 +7,11 @@ struct TimetableKingAppView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppPaletteStore.self) private var paletteStore
 
-    @State private var viewModel = TimetableKingAppViewModel(modelContainerService: .shared)
+    @State private var viewModel = TimetableKingAppViewModel(
+        modelContainerService: .shared,
+        reminderService: TaskReminderService.shared
+    )
+    @State private var reminderService = TaskReminderService.shared
 
     var body: some View {
         @Bindable var vm = viewModel
@@ -32,6 +36,14 @@ struct TimetableKingAppView: View {
             viewModel.refreshForActivation()
         }
         .onOpenURL(perform: viewModel.open)
+        .onChange(of: reminderService.openedTaskURL, initial: true) {
+            guard let url = reminderService.openedTaskURL else { return }
+            viewModel.open(url: url)
+            reminderService.openedTaskURL = nil
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.significantTimeChangeNotification)) { _ in
+            viewModel.refreshForActivation()
+        }
         .alert("common.operation.error.title", isPresented: $vm.isShowingOperationError) {
             Button("common.ok", role: .cancel) {}
         } message: {

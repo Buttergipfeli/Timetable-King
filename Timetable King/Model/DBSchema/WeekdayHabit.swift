@@ -21,6 +21,8 @@ final class WeekdayHabit {
     var createdAt: Date = Date.now
     var deletedAt: Date?
     var recurrenceID: UUID?
+    var reminderMinutesBefore: Int?
+    var reminderID: UUID?
 
     @Transient
     var isDeleted: Bool {
@@ -35,13 +37,25 @@ final class WeekdayHabit {
         minute: Int,
         weekdayRawValue: String,
         habit: Habit,
-        recurrenceID: UUID? = nil
+        recurrenceID: UUID? = nil,
+        reminder: TaskReminder = .off
     ) {
         self.hour = hour
         self.minute = minute
         self.weekdayRawValue = weekdayRawValue
         self.habit = habit
         self.recurrenceID = recurrenceID
+        self.reminder = reminder
+    }
+
+    var reminder: TaskReminder {
+        get { reminderMinutesBefore.flatMap(TaskReminder.init(rawValue:)) ?? .off }
+        set {
+            reminderMinutesBefore = newValue.minutesBefore
+            if newValue != .off && reminderID == nil {
+                reminderID = UUID()
+            }
+        }
     }
 
     var activeRecurrenceSchedules: [WeekdayHabit] {

@@ -4,9 +4,10 @@ struct WeeklyTaskEditView: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var viewModel = WeeklyTaskEditViewModel()
+    @State private var isShowingDeleteConfirmation = false
 
     let habit: WeekdayHabit
-    let onSave: (WeekdayHabit, String, Set<Weekday>, Int, Int) -> Bool
+    let onSave: (WeekdayHabit, String, Set<Weekday>, Int, Int, TaskReminder) -> Bool
     let onDelete: (WeekdayHabit) -> Bool
 
     var body: some View {
@@ -38,18 +39,30 @@ struct WeeklyTaskEditView: View {
                 Text("timetable.weekly.tasks.add.schedule")
             }
 
+            TaskReminderSection(reminder: $vm.reminder)
+
             Section {
                 Button("timetable.weekly.tasks.edit.delete", role: .destructive) {
-                    if onDelete(habit) {
-                        dismiss()
-                    }
+                    isShowingDeleteConfirmation = true
                 }
+                .accessibilityIdentifier("weeklyTask.delete.button")
             } footer: {
                 Text("timetable.weekly.tasks.edit.delete.description")
             }
         }
         .navigationTitle(habit.habit.title)
         .navigationBarTitleDisplayMode(.inline)
+        .alert(
+            "task.delete.confirmation.title",
+            isPresented: $isShowingDeleteConfirmation
+        ) {
+            Button("task.delete.confirm", role: .destructive) {
+                if onDelete(habit) { dismiss() }
+            }
+            Button("common.cancel", role: .cancel) {}
+        } message: {
+            Text("task.delete.confirmation.message")
+        }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {

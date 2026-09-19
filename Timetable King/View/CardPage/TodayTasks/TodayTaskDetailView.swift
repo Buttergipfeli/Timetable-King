@@ -59,7 +59,7 @@ struct TodayTaskDetailView: View {
                 .font(.headline.weight(.semibold))
                 .foregroundStyle(.secondary)
 
-            if allowsStatusEditing, let onUpdateStatus {
+            if allowsStatusEditing, entry.displayStatus != .future, let onUpdateStatus {
                 Menu {
                     Button {
                         if onUpdateStatus(entry, .done) {

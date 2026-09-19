@@ -48,6 +48,7 @@ final class WeeklyTaskService {
         weekdays: Set<Weekday>,
         hour: Int,
         minute: Int,
+        reminder: TaskReminder? = nil,
         at date: Date = .now
     ) throws {
         guard !weekdays.isEmpty else {
@@ -58,12 +59,17 @@ final class WeeklyTaskService {
         guard !currentSchedules.isEmpty else {
             throw WeeklyTaskServiceError.missingTask
         }
+        let reminder = reminder ?? habit.reminder
 
         let currentWeekdays = Set(currentSchedules.map(\.weekday))
         let isUnchanged = currentWeekdays == weekdays && currentSchedules.allSatisfy {
             $0.habit.title == title && $0.hour == hour && $0.minute == minute
         }
-        guard !isUnchanged else { return }
+        if isUnchanged {
+            currentSchedules.forEach { $0.reminder = reminder }
+            try modelContainerService.context.save()
+            return
+        }
 
         let context = modelContainerService.context
         let descriptor = FetchDescriptor<Habit>(predicate: #Predicate { $0.title == title })
@@ -87,13 +93,13 @@ final class WeeklyTaskService {
             }
         }
 
-        let effectiveDate = effectiveChangeDate(
+        let effectiveDate = max(currentSchedules.map(\.createdAt).min() ?? date, effectiveChangeDate(
             for: currentSchedules,
             newWeekdays: weekdays,
             hour: hour,
             minute: minute,
             at: date
-        )
+        ))
         for schedule in currentSchedules {
             schedule.deletedAt = effectiveDate
         }
@@ -105,7 +111,8 @@ final class WeeklyTaskService {
                 minute: minute,
                 weekdayRawValue: weekday.rawValue,
                 habit: updatedHabit,
-                recurrenceID: recurrenceID
+                recurrenceID: recurrenceID,
+                reminder: reminder
             )
             schedule.createdAt = effectiveDate
             context.insert(schedule)
@@ -118,7 +125,13 @@ final class WeeklyTaskService {
         try save(title: title, weekdays: [weekday], hour: hour, minute: minute)
     }
 
-    func save(title: String, weekdays: Set<Weekday>, hour: Int, minute: Int) throws {
+    func save(
+        title: String,
+        weekdays: Set<Weekday>,
+        hour: Int,
+        minute: Int,
+        reminder: TaskReminder = .off
+    ) throws {
         guard !weekdays.isEmpty else {
             throw WeeklyTaskServiceError.missingWeekday
         }
@@ -152,7 +165,8 @@ final class WeeklyTaskService {
                     minute: minute,
                     weekdayRawValue: weekday.rawValue,
                     habit: habit,
-                    recurrenceID: recurrenceID
+                    recurrenceID: recurrenceID,
+                    reminder: reminder
                 )
             )
         }
