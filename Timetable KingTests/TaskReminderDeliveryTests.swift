@@ -13,7 +13,7 @@ struct TaskReminderDeliveryTests {
         container.mainContext.insert(first)
         container.mainContext.insert(second)
         let date = Date.now
-        container.mainContext.insert(WeekdayHabitResult(day: date, weekdayHabit: first, status: .skipped))
+        container.mainContext.insert(WeekdayHabitResult(day: date, weekdayHabit: first, status: .done))
         try container.mainContext.save()
 
         let state = TaskReminderDeliveryState(schedules: [first, second])

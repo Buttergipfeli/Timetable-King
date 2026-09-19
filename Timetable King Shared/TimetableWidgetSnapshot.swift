@@ -7,7 +7,6 @@ enum TimetableWidgetConstants {
 enum TimetableWidgetTaskStatus: String, Codable, Sendable {
     case done
     case failed
-    case skipped
     case todo
 }
 
@@ -48,7 +47,7 @@ struct TimetableWidgetDay: Codable, Equatable, Identifiable, Sendable {
     }
 
     var totalCount: Int {
-        tasks.filter { $0.status != .skipped }.count
+        tasks.count
     }
 
     var progress: Double {
@@ -74,14 +73,6 @@ struct TimetableWidgetSnapshot: Codable, Equatable, Sendable {
 
     var todayTasks: [TimetableWidgetTask] {
         today?.tasks ?? []
-    }
-
-    var hasTasksToday: Bool {
-        !todayTasks.isEmpty
-    }
-
-    var hasTasksThisWeek: Bool {
-        week.contains { !$0.tasks.isEmpty }
     }
 
     var completedTodayCount: Int {

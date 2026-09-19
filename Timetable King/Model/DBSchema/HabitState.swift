@@ -1,3 +1,3 @@
 enum HabitState: String, Codable, CaseIterable, Sendable {
-    case done, failed, skipped, none
+    case done, failed, none
 }

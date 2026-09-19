@@ -24,11 +24,11 @@ struct TaskReminderTests {
     }
 
     @Test
-    func skipsResolvedOccurrencesWithoutLosingFollowingWeeks() throws {
+    func excludesResolvedOccurrencesWithoutLosingFollowingWeeks() throws {
         let service = makeService()
         let task = schedule(weekday: .monday, hour: 10, reminder: .atTime)
         service.context.insert(task)
-        service.context.insert(WeekdayHabitResult(day: try date(day: 14), weekdayHabit: task, status: .skipped))
+        service.context.insert(WeekdayHabitResult(day: try date(day: 14), weekdayHabit: task, status: .done))
         try service.context.save()
         let reference = try date(day: 14, hour: 8)
         let reminders = TaskReminderPlanner().plan(schedules: [task], referenceDate: reference, calendar: calendar)
@@ -94,7 +94,7 @@ struct TaskReminderTests {
         let original = try service.context.fetch(FetchDescriptor<WeekdayHabit>())
         let selected = try #require(original.first)
         let createdAt = selected.createdAt
-        service.context.insert(WeekdayHabitResult(day: try date(day: 7), weekdayHabit: selected, status: .skipped))
+        service.context.insert(WeekdayHabitResult(day: try date(day: 7), weekdayHabit: selected, status: .done))
         try service.context.save()
 
         try taskService.update(
@@ -106,7 +106,7 @@ struct TaskReminderTests {
         #expect(persisted.count == 2)
         #expect(persisted.allSatisfy { $0.reminder == .tenMinutesBefore && $0.reminderID != nil && !$0.isDeleted })
         #expect(selected.createdAt == createdAt)
-        #expect(selected.results.first?.status == .skipped)
+        #expect(selected.results.first?.status == .done)
     }
 
     @Test

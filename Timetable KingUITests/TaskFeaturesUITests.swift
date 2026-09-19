@@ -6,18 +6,15 @@ final class TaskFeaturesUITests: XCTestCase {
         continueAfterFailure = false
     }
 
-    func testCanSkipAndReopenTodaysTask() {
+    func testTaskStatusDoesNotOfferSkipping() {
         let app = createDailyRoutine()
         let status = app.buttons["task.status.Morning routine"]
         XCTAssertTrue(status.waitForExistence(timeout: 5))
         status.tap()
-        app.buttons["Skipped"].tap()
-        XCTAssertEqual(status.label, "Skipped")
-        attachScreenshot(app, name: "Skipped task")
-
-        status.tap()
-        app.buttons["Undefined"].tap()
-        XCTAssertEqual(status.label, "Undefined")
+        XCTAssertTrue(app.buttons["Finished"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["Not done"].exists)
+        XCTAssertTrue(app.buttons["Undefined"].exists)
+        XCTAssertFalse(app.buttons["Skipped"].exists)
     }
 
     func testReminderPersistsAndDeletionRequiresConfirmation() {

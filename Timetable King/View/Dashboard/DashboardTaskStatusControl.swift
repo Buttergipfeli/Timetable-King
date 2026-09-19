@@ -8,7 +8,6 @@ struct DashboardTaskStatusControl: View {
         Menu {
             statusButton(status: .done, label: "timetable.today.task.status.done")
             statusButton(status: .failed, label: "timetable.today.task.status.failed")
-            statusButton(status: .skipped, label: "timetable.today.task.status.skipped")
             statusButton(status: .none, label: "timetable.today.task.status.none")
         } label: {
             statusIcon
@@ -31,9 +30,6 @@ struct DashboardTaskStatusControl: View {
         case .todo:
             Image(systemName: "circle")
                 .foregroundStyle(.secondary)
-        case .skipped:
-            Image(systemName: "forward.end.circle.fill")
-                .foregroundStyle(.secondary)
         case .future:
             Image(systemName: "clock.badge")
                 .foregroundStyle(.blue)
@@ -52,7 +48,6 @@ struct DashboardTaskStatusControl: View {
         switch status {
         case .done: "checkmark.circle"
         case .failed: "xmark.circle"
-        case .skipped: "forward.end.circle"
         case .none: "circle"
         }
     }

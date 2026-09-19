@@ -94,7 +94,7 @@ final class WeeklySummaryViewModel {
     private func score(for digests: [WeekdayDigest]) -> CompletionScore {
         CompletionScore(
             completedCount: digests.flatMap(\.results).filter(\.isDone).count,
-            totalCount: digests.reduce(0) { $0 + $1.scoredTaskCount }
+            totalCount: digests.reduce(0) { $0 + $1.habits.count }
         )
     }
 

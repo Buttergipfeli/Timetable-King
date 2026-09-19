@@ -49,18 +49,6 @@ struct TodayTasksView: View {
                     onSelectStatus: updateStatus
                 )
 
-                if !viewModel.skippedEntries.isEmpty {
-                    TodayTasksSectionView(
-                        title: "timetable.today.task.status.skipped",
-                        entries: viewModel.skippedEntries,
-                        emptyTitle: "timetable.today.task.status.skipped",
-                        emptyMessage: "timetable.today.task.status.description.skipped",
-                        allowsStatusEditing: allowsStatusEditing,
-                        onSelectEntry: { selectedEntry = $0 },
-                        onSelectStatus: updateStatus
-                    )
-                }
-
                 if viewModel.futureEntries.isEmpty.not {
                     TodayTasksSectionView(
                         title: "timetable.today.tasks.section.future",

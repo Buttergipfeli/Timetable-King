@@ -46,8 +46,6 @@ struct TodayTaskEntry: Identifiable, Hashable {
             "timetable.today.task.status.description.done".localized
         case .failed:
             "timetable.today.task.status.description.failed".localized
-        case .skipped:
-            "timetable.today.task.status.description.skipped".localized
         case .todo:
             "timetable.today.task.status.description.none".localized
         case .future:
@@ -63,7 +61,6 @@ struct TodayTaskEntry: Identifiable, Hashable {
 enum TodayTaskDisplayStatus: Hashable {
     case done
     case failed
-    case skipped
     case todo
     case future
 
@@ -73,8 +70,6 @@ enum TodayTaskDisplayStatus: Hashable {
             self = .done
         case .failed:
             self = .failed
-        case .skipped:
-            self = .skipped
         case .none:
             self = .todo
         }
@@ -88,8 +83,6 @@ extension TodayTaskDisplayStatus {
             "timetable.today.task.status.done".localized
         case .failed:
             "timetable.today.task.status.failed".localized
-        case .skipped:
-            "timetable.today.task.status.skipped".localized
         case .todo:
             "timetable.today.task.status.none".localized
         case .future:
@@ -103,8 +96,6 @@ extension TodayTaskDisplayStatus {
             "timetable.today.task.detail.description.done".localized(timeString)
         case .failed:
             "timetable.today.task.detail.description.failed".localized(timeString)
-        case .skipped:
-            "timetable.today.task.detail.description.skipped".localized(timeString)
         case .todo:
             "timetable.today.task.detail.description.none".localized(timeString)
         case .future:

@@ -45,13 +45,13 @@ final class TimetableKingAppViewModel {
             .flatMap(\.results)
             .filter(\.isDone)
             .count
-        let weeklyTotalCount = weekdayDigests.reduce(0) { $0 + $1.scoredTaskCount }
+        let weeklyTotalCount = weekdayDigests.reduce(0) { $0 + $1.habits.count }
         let activeWeeklyDigests = weeklyTaskDigests.filter { $0.habits.isEmpty.not }
 
         return DashboardSnapshot(
             todayEntries: todayEntries,
             completedTodayCount: completedTodayCount,
-            totalTodayCount: todayEntries.filter { $0.displayStatus != .skipped }.count,
+            totalTodayCount: todayEntries.count,
             nextTask: todayEntries.first { $0.displayStatus == .todo },
             weekdayDigests: weekdayDigests,
             weeklyCompletedCount: weeklyCompletedCount,

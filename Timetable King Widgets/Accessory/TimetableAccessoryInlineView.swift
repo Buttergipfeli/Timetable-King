@@ -15,10 +15,7 @@ struct TimetableAccessoryInlineView: View {
             }
         } else {
             Link(destination: TimetableDeepLink.todayTasksURL) {
-                Label(
-                    snapshot.hasTasksToday ? "No open tasks" : "No tasks today",
-                    systemImage: snapshot.hasTasksToday ? "forward.end.circle" : "calendar.badge.checkmark"
-                )
+                Label("No tasks today", systemImage: "calendar.badge.checkmark")
             }
         }
     }

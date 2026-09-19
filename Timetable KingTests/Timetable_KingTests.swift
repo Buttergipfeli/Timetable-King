@@ -389,6 +389,45 @@ struct Timetable_KingTests {
         #expect(viewModel.presentedReviewSession?.entries.count == 1)
     }
 
+    @Test
+    func decidingLaterKeepsTaskPendingForNextActivation() throws {
+        let suiteName = "ReviewLaterTests.\(UUID().uuidString)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        let modelContainerService = try makeModelContainerService()
+        let context = modelContainerService.context
+        let habit = Habit(title: "Training")
+        let schedule = WeekdayHabit(
+            hour: 0,
+            minute: 0,
+            weekdayRawValue: Weekday.current.rawValue,
+            habit: habit
+        )
+        schedule.createdAt = Calendar.current.startOfDay(for: .now)
+
+        context.insert(habit)
+        context.insert(schedule)
+        try context.save()
+
+        let viewModel = TimetableKingAppViewModel(
+            modelContainerService: modelContainerService,
+            widgetSnapshotService: TimetableKingTestsWidgetSnapshotService(),
+            onboardingStore: OnboardingStore(userDefaults: defaults)
+        )
+        viewModel.refreshForActivation()
+
+        #expect(viewModel.presentedReviewSession?.entries.count == 1)
+
+        viewModel.dismissReviewSession()
+
+        let results = try context.fetch(FetchDescriptor<WeekdayHabitResult>())
+        #expect(results.isEmpty)
+
+        viewModel.refreshForActivation()
+
+        #expect(viewModel.presentedReviewSession?.entries.count == 1)
+    }
+
     private func makeModelContainerService() throws -> ModelContainerService {
         let schema = Schema([
             Habit.self,

@@ -84,17 +84,6 @@ struct TodayTaskDetailView: View {
                     }
 
                     Button {
-                        if onUpdateStatus(entry, .skipped) {
-                            viewModel.setStatus(.skipped)
-                        }
-                    } label: {
-                        statusOptionLabel(
-                            title: "timetable.today.task.status.skipped".localized,
-                            status: .skipped
-                        )
-                    }
-
-                    Button {
                         if onUpdateStatus(entry, .none) {
                             viewModel.setStatus(.none)
                         }

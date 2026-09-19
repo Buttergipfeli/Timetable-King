@@ -101,8 +101,6 @@ final class WidgetSnapshotService: WidgetSnapshotSyncing {
             .done
         case .failed:
             .failed
-        case .skipped:
-            .skipped
         case .todo, .future:
             .todo
         }

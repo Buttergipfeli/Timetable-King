@@ -5,14 +5,12 @@ import Foundation
 final class TodayTasksViewModel {
     private(set) var finishedEntries = [TodayTaskEntry]()
     private(set) var todoEntries = [TodayTaskEntry]()
-    private(set) var skippedEntries = [TodayTaskEntry]()
     private(set) var futureEntries = [TodayTaskEntry]()
 
     func map(todayDigest: WeekdayDigest?) {
         guard let todayDigest else {
             finishedEntries = []
             todoEntries = []
-            skippedEntries = []
             futureEntries = []
             return
         }
@@ -40,7 +38,7 @@ final class TodayTasksViewModel {
             result: entry.result,
             displayStatus: TodayTaskDisplayStatus(resultStatus: status)
         )
-        let entries = (finishedEntries + todoEntries + skippedEntries).map {
+        let entries = (finishedEntries + todoEntries).map {
             $0.id == entry.id ? updatedEntry : $0
         }
         mapCurrentEntries(entries)
@@ -51,6 +49,5 @@ final class TodayTasksViewModel {
             $0.displayStatus == .done || $0.displayStatus == .failed
         }
         todoEntries = entries.filter { $0.displayStatus == .todo }
-        skippedEntries = entries.filter { $0.displayStatus == .skipped }
     }
 }
