@@ -18,8 +18,8 @@
     "semantic_hash": "2c52265465196c8b6efc53288a712717"
   },
   "Timetable King Shared/TimetableDeepLink.swift": {
-    "mtime": 1789746235.3146503,
-    "seen": 1789813182.139255,
+    "mtime": 1789813719.522598,
+    "seen": 1790629598.6397839,
     "ast_hash": "e5fb626673a0635ddcfa7fefd5f16358",
     "semantic_hash": "e5fb626673a0635ddcfa7fefd5f16358"
   },
@@ -174,8 +174,8 @@
     "semantic_hash": "164f5571e95c376e6f4dd76d30908493"
   },
   "Timetable King/Model/DBSchema/WeekdayHabit.swift": {
-    "mtime": 1789591893.1322598,
-    "seen": 1789813182.1392698,
+    "mtime": 1789813719.522995,
+    "seen": 1790629598.639807,
     "ast_hash": "f7fc6fde84886bfd37d6db5fcda7365a",
     "semantic_hash": "f7fc6fde84886bfd37d6db5fcda7365a"
   },
@@ -210,8 +210,8 @@
     "semantic_hash": "685150b61b1aea2f2ae7feb45d6a76a2"
   },
   "Timetable King/Model/Model/TaskReminder.swift": {
-    "mtime": 1789591893.0553021,
-    "seen": 1789813182.139273,
+    "mtime": 1789813719.5231762,
+    "seen": 1790629598.639811,
     "ast_hash": "6be0f5dc97d0e514763f57444058c2ca",
     "semantic_hash": "6be0f5dc97d0e514763f57444058c2ca"
   },
@@ -276,20 +276,20 @@
     "semantic_hash": "c5369812039bb10c8811424aec5dd35b"
   },
   "Timetable King/Service/TaskReminderDeliveryState.swift": {
-    "mtime": 1789746109.9223104,
-    "seen": 1789813182.1392798,
+    "mtime": 1789813719.5233362,
+    "seen": 1790629598.639819,
     "ast_hash": "3dacf693433894ad5d32801c4c7a3f2c",
     "semantic_hash": "3dacf693433894ad5d32801c4c7a3f2c"
   },
   "Timetable King/Service/TaskReminderPlanner.swift": {
-    "mtime": 1789746235.4032285,
-    "seen": 1789813182.1392798,
+    "mtime": 1789813719.523432,
+    "seen": 1790629598.63982,
     "ast_hash": "e2aadf1795d347b2e45f0c880dfaa642",
     "semantic_hash": "e2aadf1795d347b2e45f0c880dfaa642"
   },
   "Timetable King/Service/TaskReminderService.swift": {
-    "mtime": 1789746235.4888568,
-    "seen": 1789813182.1392808,
+    "mtime": 1789813719.5235493,
+    "seen": 1790629598.639821,
     "ast_hash": "f1a4bd7d2831b0171fd9411f94d6871a",
     "semantic_hash": "f1a4bd7d2831b0171fd9411f94d6871a"
   },
@@ -306,14 +306,14 @@
     "semantic_hash": "9fe264dc5c6b2cfed1f11f1f346b1f08"
   },
   "Timetable King/Service/WeeklyHistoryOverviewService.swift": {
-    "mtime": 1789811195.861649,
-    "seen": 1789813182.139282,
+    "mtime": 1790629597.7055728,
+    "seen": 1790629598.6398232,
     "ast_hash": "666280cc7717b124e5d18cd79d7be20c",
     "semantic_hash": "666280cc7717b124e5d18cd79d7be20c"
   },
   "Timetable King/Service/WeeklyTaskService.swift": {
-    "mtime": 1789592752.6647124,
-    "seen": 1789813182.139283,
+    "mtime": 1789813719.5237226,
+    "seen": 1790629598.639824,
     "ast_hash": "e3381cb12c593825f5cbbb947954071c",
     "semantic_hash": "e3381cb12c593825f5cbbb947954071c"
   },
@@ -336,8 +336,8 @@
     "semantic_hash": "f58be4dff80714bab2bbd6e80b9f9de8"
   },
   "Timetable King/Timetable_KingApp.swift": {
-    "mtime": 1789592079.9396703,
-    "seen": 1789813182.139285,
+    "mtime": 1789813719.5238519,
+    "seen": 1790629598.6398258,
     "ast_hash": "c34c383f3945028fc76f4b6d4ba00e83",
     "semantic_hash": "c34c383f3945028fc76f4b6d4ba00e83"
   },
@@ -354,8 +354,8 @@
     "semantic_hash": "9192a776c8827431e19203f24d83dd6c"
   },
   "Timetable King/View/CardPage/TodayTasks/TodayTaskDetailView.swift": {
-    "mtime": 1789811196.4788334,
-    "seen": 1789813182.139287,
+    "mtime": 1789813719.5240536,
+    "seen": 1790629598.639828,
     "ast_hash": "ea5209770448bb224b22e3d2541dc926",
     "semantic_hash": "ea5209770448bb224b22e3d2541dc926"
   },
@@ -408,8 +408,8 @@
     "semantic_hash": "2205a068ddbf98f34140429d3d2be3ef"
   },
   "Timetable King/View/CardPage/WeeklySummary/OverallHistorySummaryView.swift": {
-    "mtime": 1787422781.839209,
-    "seen": 1789813182.139292,
+    "mtime": 1790629597.7057655,
+    "seen": 1790629598.639835,
     "ast_hash": "dbbe2781b514191b9de95bbddb49213f",
     "semantic_hash": "dbbe2781b514191b9de95bbddb49213f"
   },
@@ -438,14 +438,14 @@
     "semantic_hash": "746d5faac327d250211a4c4c0497e140"
   },
   "Timetable King/View/CardPage/WeeklySummary/WeeklySummaryView.swift": {
-    "mtime": 1787433504.7831395,
-    "seen": 1789813182.1392949,
+    "mtime": 1790629597.7059488,
+    "seen": 1790629598.639839,
     "ast_hash": "bc44cc99b0f28f6632501e500b3bf514",
     "semantic_hash": "bc44cc99b0f28f6632501e500b3bf514"
   },
   "Timetable King/View/CardPage/WeeklySummary/WeeklySummaryViewModel.swift": {
-    "mtime": 1789811196.2125578,
-    "seen": 1789813182.1392949,
+    "mtime": 1790629597.7061327,
+    "seen": 1790629598.639839,
     "ast_hash": "e92dd87bf36de437f298ac7df2c0ccf3",
     "semantic_hash": "e92dd87bf36de437f298ac7df2c0ccf3"
   },
@@ -456,26 +456,26 @@
     "semantic_hash": "caa9334e80f5bc485b0ad39e4ec940e4"
   },
   "Timetable King/View/CardPage/WeeklyTasks/AddWeeklyTaskView.swift": {
-    "mtime": 1789592079.5132802,
-    "seen": 1789813182.139296,
+    "mtime": 1789813719.5241776,
+    "seen": 1790629598.639841,
     "ast_hash": "ec4cc52412a953dff85265d8a1af334a",
     "semantic_hash": "ec4cc52412a953dff85265d8a1af334a"
   },
   "Timetable King/View/CardPage/WeeklyTasks/AddWeeklyTaskViewModel.swift": {
-    "mtime": 1789591955.947188,
-    "seen": 1789813182.139297,
+    "mtime": 1789813719.5242953,
+    "seen": 1790629598.639841,
     "ast_hash": "16dccf4f2e8cb9c01211e9a476e4dfff",
     "semantic_hash": "16dccf4f2e8cb9c01211e9a476e4dfff"
   },
   "Timetable King/View/CardPage/WeeklyTasks/WeeklyTaskEditView.swift": {
-    "mtime": 1789592752.4507294,
-    "seen": 1789813182.139297,
+    "mtime": 1789813719.5244176,
+    "seen": 1790629598.639842,
     "ast_hash": "c128d2c536392324793c223e62641930",
     "semantic_hash": "c128d2c536392324793c223e62641930"
   },
   "Timetable King/View/CardPage/WeeklyTasks/WeeklyTaskEditViewModel.swift": {
-    "mtime": 1789591956.0246587,
-    "seen": 1789813182.139298,
+    "mtime": 1789813719.524518,
+    "seen": 1790629598.639843,
     "ast_hash": "f898b2f8319680de0cd81f0a45c85284",
     "semantic_hash": "f898b2f8319680de0cd81f0a45c85284"
   },
@@ -492,8 +492,8 @@
     "semantic_hash": "601e46e691afb6f8b150166316cab046"
   },
   "Timetable King/View/CardPage/WeeklyTasks/WeeklyTasksDayView.swift": {
-    "mtime": 1789592752.5222137,
-    "seen": 1789813182.1393,
+    "mtime": 1789813719.5246484,
+    "seen": 1790629598.6398451,
     "ast_hash": "344894e73d1fe6a01c3e1cbc28542a9d",
     "semantic_hash": "344894e73d1fe6a01c3e1cbc28542a9d"
   },
@@ -504,8 +504,8 @@
     "semantic_hash": "eb119f1d3f8994dfaaa7cc0403d74457"
   },
   "Timetable King/View/CardPage/WeeklyTasks/WeeklyTasksView.swift": {
-    "mtime": 1789591955.461679,
-    "seen": 1789813182.139301,
+    "mtime": 1789813719.5247653,
+    "seen": 1790629598.6398458,
     "ast_hash": "a02a121298a59b736c614d765126089a",
     "semantic_hash": "a02a121298a59b736c614d765126089a"
   },
@@ -546,8 +546,8 @@
     "semantic_hash": "c24b63655b3a2d358cf0131fb9c6d0b4"
   },
   "Timetable King/View/Dashboard/DashboardTaskStatusControl.swift": {
-    "mtime": 1789811197.0215042,
-    "seen": 1789813182.139308,
+    "mtime": 1789813719.524888,
+    "seen": 1790629598.639852,
     "ast_hash": "077bd7e0e5d71153571657b2bf779fdf",
     "semantic_hash": "077bd7e0e5d71153571657b2bf779fdf"
   },
@@ -594,38 +594,38 @@
     "semantic_hash": "27a16409f354024468a022fa74f13b33"
   },
   "Timetable King/View/Onboarding/OnboardingRoutineView.swift": {
-    "mtime": 1789592079.5831733,
-    "seen": 1789813182.139312,
+    "mtime": 1789813719.5250192,
+    "seen": 1790629598.639858,
     "ast_hash": "8e2ec9e0d7424f8e421ba3e981dea8b5",
     "semantic_hash": "8e2ec9e0d7424f8e421ba3e981dea8b5"
   },
   "Timetable King/View/Onboarding/OnboardingView.swift": {
-    "mtime": 1789591955.626235,
-    "seen": 1789813182.139313,
+    "mtime": 1789813719.525135,
+    "seen": 1790629598.639858,
     "ast_hash": "6e4f702a79ac7405e251cf2e2316bf40",
     "semantic_hash": "6e4f702a79ac7405e251cf2e2316bf40"
   },
   "Timetable King/View/Settings/SettingsView.swift": {
-    "mtime": 1789592138.1839318,
-    "seen": 1789813182.139313,
+    "mtime": 1789813719.5252612,
+    "seen": 1790629598.639859,
     "ast_hash": "a6213e158c23083e153d64dea2cbda81",
     "semantic_hash": "a6213e158c23083e153d64dea2cbda81"
   },
   "Timetable King/View/TaskReminderSection.swift": {
-    "mtime": 1789592033.1554797,
-    "seen": 1789813182.139314,
+    "mtime": 1789813719.5253346,
+    "seen": 1790629598.63986,
     "ast_hash": "f107dd9e4b192d3c7aef6cce5fb88589",
     "semantic_hash": "f107dd9e4b192d3c7aef6cce5fb88589"
   },
   "Timetable King/View/TimetableKingAppView.swift": {
-    "mtime": 1789592079.868518,
-    "seen": 1789813182.139314,
+    "mtime": 1789813719.5254533,
+    "seen": 1790629598.63986,
     "ast_hash": "445725d39cc0388900f4a66efb959a04",
     "semantic_hash": "445725d39cc0388900f4a66efb959a04"
   },
   "Timetable King/View/TimetableKingAppViewModel.swift": {
-    "mtime": 1789811196.0337393,
-    "seen": 1789813182.139315,
+    "mtime": 1789813719.525604,
+    "seen": 1790629598.639861,
     "ast_hash": "eaf1eef0a8619b1c5388711ea8de5f1e",
     "semantic_hash": "eaf1eef0a8619b1c5388711ea8de5f1e"
   },
@@ -666,14 +666,14 @@
     "semantic_hash": "e18aee9e461b4eb18fca3e5762ae7c41"
   },
   "Timetable KingTests/TaskReminderDeliveryTests.swift": {
-    "mtime": 1789811197.7975225,
-    "seen": 1789813182.139319,
+    "mtime": 1789813719.5257022,
+    "seen": 1790629598.639871,
     "ast_hash": "ecc97af2c37f39ca1883b725e8fc5cd1",
     "semantic_hash": "ecc97af2c37f39ca1883b725e8fc5cd1"
   },
   "Timetable KingTests/TaskReminderTests.swift": {
-    "mtime": 1789811197.7079482,
-    "seen": 1789813182.139319,
+    "mtime": 1789813719.5257955,
+    "seen": 1790629598.639871,
     "ast_hash": "08ed1b3c71bc55e574a5362080a542b9",
     "semantic_hash": "08ed1b3c71bc55e574a5362080a542b9"
   },
@@ -684,14 +684,14 @@
     "semantic_hash": "7cf501030cddf43f2be5ed1cf75907b0"
   },
   "Timetable KingTests/Timetable_KingTests.swift": {
-    "mtime": 1789811484.1968262,
-    "seen": 1789813182.139321,
+    "mtime": 1790629597.7064364,
+    "seen": 1790629598.639873,
     "ast_hash": "f5b3d9e6633bb79a4635532093fb4355",
     "semantic_hash": "f5b3d9e6633bb79a4635532093fb4355"
   },
   "Timetable KingTests/WeeklyHistorySummaryTests.swift": {
-    "mtime": 1789403055.6082377,
-    "seen": 1789813182.139321,
+    "mtime": 1790629597.7067626,
+    "seen": 1790629598.639873,
     "ast_hash": "19c4ac9eddb12ade772402a8ea27445d",
     "semantic_hash": "19c4ac9eddb12ade772402a8ea27445d"
   },
@@ -708,14 +708,14 @@
     "semantic_hash": "f3ec1465501b3b3b802bca20d9a91bf7"
   },
   "Timetable KingUITests/TaskFeaturesUITests.swift": {
-    "mtime": 1789811617.6719975,
-    "seen": 1789813182.139323,
+    "mtime": 1789813719.5260398,
+    "seen": 1790629598.6398752,
     "ast_hash": "55bab8fa5c14bbab9354c11ba1dcf027",
     "semantic_hash": "55bab8fa5c14bbab9354c11ba1dcf027"
   },
   "Timetable KingUITests/Timetable_KingUITests.swift": {
-    "mtime": 1789403055.6090229,
-    "seen": 1789813182.139323,
+    "mtime": 1790629597.7071023,
+    "seen": 1790629598.6398761,
     "ast_hash": "0c9e2515d7675ec4f2e5c6652a9419c5",
     "semantic_hash": "0c9e2515d7675ec4f2e5c6652a9419c5"
   },
@@ -726,20 +726,20 @@
     "semantic_hash": "945316929dc5cb6dfd530072833dfe7e"
   },
   "AGENTS.md": {
-    "mtime": 1789812364.342845,
-    "seen": 1789813182.139324,
+    "mtime": 1790629597.7050967,
+    "seen": 1790629598.639877,
     "ast_hash": "c2f5383c33099c48609347eafa3bf7df",
     "semantic_hash": "c2f5383c33099c48609347eafa3bf7df"
   },
   "CLAUDE.md": {
-    "mtime": 1789812445.620851,
-    "seen": 1789813182.139325,
+    "mtime": 1789813719.522283,
+    "seen": 1790629598.6398778,
     "ast_hash": "0765857faa39eafe87b27570208fe6dd",
     "semantic_hash": "0765857faa39eafe87b27570208fe6dd"
   },
   "README.md": {
-    "mtime": 1789811195.5944426,
-    "seen": 1789813182.1393259,
+    "mtime": 1789813719.52245,
+    "seen": 1790629598.639879,
     "ast_hash": "98365ea828d7429de425ae27f03e4d25",
     "semantic_hash": "98365ea828d7429de425ae27f03e4d25"
   }
